@@ -41,7 +41,7 @@ body {
 }
 
 .js-fullheight {
-  background-image: url("/src/assets/img/bg/bg.jpg");
+  background-image: url("/assets/img/bg.jpg");
   overflow: hidden;
   height: 100vh;
   width: 100vw;
