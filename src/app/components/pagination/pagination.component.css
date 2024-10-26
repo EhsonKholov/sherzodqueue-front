@@ -1,0 +1,43 @@
+input, select, button, ul > li > a, span {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.navigation * {
+  color: rgba(47, 43, 61, 0.7);
+  font-size: .9375rem !important;
+}
+
+ul.pagination > .page-link {
+  cursor: pointer;
+}
+
+ul.pagination .page-link:focus {
+  box-shadow: none !important;
+}
+
+ul.pagination .page-link:focus:not(.active) {
+  box-shadow: none !important;
+  background-color: #ffffff !important;
+}
+
+ul.pagination li.disabled {
+  cursor: default;
+  opacity: .45;
+}
+
+.items-per-page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.items-per-page > span {
+  padding-inline-end: 8px;
+}
+
+.active {
+  background: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
+  border: 1px solid #dee2e6 !important;
+  font-weight: bold;
+}

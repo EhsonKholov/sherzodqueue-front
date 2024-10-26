@@ -1,0 +1,37 @@
+<div class="img js-fullheight">
+  <div class="container-fluid">
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mt-5">
+          <div class="col-md-6 col-lg-4 form-login">
+            <div class="login-wrap p-0">
+              <h3 class="mb-5 text-center">LOGIN</h3>
+              <form [formGroup]="loginFormGroup" class="signin-form">
+                <div class="form-group">
+                  <input formControlName="login"  type="text" class="form-control is-invalid" placeholder="Login" required
+                         [class.is-invalid]="loginFormGroup.controls['login'].invalid && (loginFormGroup.controls['login'].dirty || loginFormGroup.controls['login'].touched)"
+                  >
+                </div>
+                <div class="form-group">
+                  <input formControlName="password" id="password-field" type="{{togglePassword() ? 'text' : 'password'}}" class="form-control" placeholder="Password" required
+                         [class.is-invalid]="loginFormGroup.controls['password'].invalid && (loginFormGroup.controls['password'].dirty || loginFormGroup.controls['password'].touched)"
+                  >
+                  <span class="toggle-password" (click)="togglePassword.set(!togglePassword())">
+                  @if (togglePassword()) {
+                    <i class="bi bi-eye"></i>
+                  } @else {
+                    <i class="bi bi-eye-slash"></i>
+                  }
+                </span>
+                </div>
+                <div class="form-group">
+                  <button [disabled]="loginFormGroup.invalid" [class.disabled]="loginFormGroup.invalid" (click)="login()" type="button" class="form-control btn btn-primary submit px-3">Sign In</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

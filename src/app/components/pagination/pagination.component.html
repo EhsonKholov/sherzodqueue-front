@@ -1,0 +1,48 @@
+@if (total_pages > 0) {
+  <div class="p-3 bg-white rounded mb-3 shadow-sm">
+    <nav class="d-flex justify-content-between align-items-center navigation">
+      <div class="items-per-page">
+        <span>Записей на странице:</span>
+        <div>
+          <select [(ngModel)]="page_size" id="page_size" class="form-select form-select-sm" (change)="changePageSize()">
+            @for (option of page_size_options; track option) {
+              <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="ms-5">
+        <ul class="pagination m-0">
+          <li class="page-item" [class.disabled]="pagination.current<=1">
+            <button (click)="goToPage(1)" [disabled]="pagination.current<=1" class="page-link">
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="pagination.current<=1">
+            <button (click)="goToPage(pagination.current - 1)" [disabled]="pagination.current<=1" class="page-link">
+              <span aria-hidden="true">&lsaquo;</span>
+            </button>
+          </li>
+
+          @for (page of pages; track $index) {
+            <li class="page-item">
+              <button class="page-link" [class.active]="pagination.current == page" [disabled]="!isValidPageNumber(page)" (click)="goToPage(page)">{{page}}</button>
+            </li>
+          }
+
+          <li class="page-item" [class.disabled]="pagination.current>=total_pages">
+            <button class="page-link" (click)="goToPage(pagination.current+1)">
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="pagination.current>=total_pages">
+            <button class="page-link" (click)="goToPage(total_pages)">
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+}
