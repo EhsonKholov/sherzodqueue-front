@@ -29,6 +29,8 @@ export class CustomersComponent implements OnInit {
   total_pages: number = 0
   totalElements: number = 0
   addCustomerModalShow: WritableSignal<boolean> = signal(false)
+  isCustEdit = false
+  customer: any
 
   filter = new FormGroup({
     startDate: new FormControl<Date | null>(null),
@@ -68,5 +70,16 @@ export class CustomersComponent implements OnInit {
 
   closeAddCustomerModal(event: any) {
     this.addCustomerModalShow.set(event)
+  }
+
+  editCustomer(item: any) {
+    this.addCustomerModalShow.set(true)
+    this.isCustEdit = true
+    this.customer = item
+  }
+
+  addCustomer() {
+    this.addCustomerModalShow.set(true)
+    this.customer = null
   }
 }

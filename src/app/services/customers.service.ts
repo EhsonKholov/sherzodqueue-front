@@ -16,4 +16,8 @@ export class CustomersService {
   addCustomer(customer: any) {
     return this.http.post(`api/customers`, customer)
   }
+
+  getCustomerById(id: number) {
+    return this.http.get(`api/customers/${id}`)
+  }
 }

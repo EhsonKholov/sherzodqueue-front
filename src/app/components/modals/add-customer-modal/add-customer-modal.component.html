@@ -1,13 +1,13 @@
 <!-- Modal -->
-<div class="modal modal-dialog-centered fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+<div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="addCustomerModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{edit ? 'Изменить' : 'Добавить'}}</h1>
         <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form [formGroup]="addCustomerFormGroup" (submit)="addCustomer()">
+      <form [formGroup]="addCustomerFormGroup" (submit)="addEditCustomer()">
         <div class="modal-body">
           <div class="mb-3">
             <label for="address" class="form-label required">№ документа</label>

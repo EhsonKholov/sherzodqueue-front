@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CustomersService} from '../../../services/customers.service';
 import {ToastService} from '../../../services/toast.service';
@@ -6,19 +6,22 @@ import {ToastService} from '../../../services/toast.service';
 @Component({
   selector: 'app-add-customer-modal',
   standalone: true,
-    imports: [
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './add-customer-modal.component.html',
   styleUrl: './add-customer-modal.component.css'
 })
-export class AddCustomerModalComponent {
+export class AddCustomerModalComponent implements OnInit {
 
+  @Input() edit: boolean = false
+  @Input() customer: any
   @Output() close = new EventEmitter<any>();
   @Output() getCustomers: EventEmitter<any> = new EventEmitter<any>()
 
   addCustomerFormGroup = new FormGroup({
+    id: new FormControl(null),
     fullName: new FormControl('', [Validators.required]),
     address: new FormControl(''),
     phoneNumber: new FormControl('', [Validators.required]),
@@ -30,9 +33,21 @@ export class AddCustomerModalComponent {
     private toastService: ToastService,
   ) {}
 
-  addCustomer() {
-    const customer = this.addCustomerFormGroup.value
-    this.customerService.addCustomer(customer)
+  ngOnInit(): void {
+    if (this.edit) {
+      this.addCustomerFormGroup.setValue({
+        id: this.customer.id,
+        address: this.customer.address,
+        docNumber: this.customer.docNumber,
+        fullName: this.customer.fullName,
+        phoneNumber: this.customer.phoneNumber,
+      })
+    }
+  }
+
+  addEditCustomer() {
+    const body = this.addCustomerFormGroup.value
+    this.customerService.addCustomer(body)
       .subscribe({
         next: (res: any) => {
           this.getCustomers.emit()

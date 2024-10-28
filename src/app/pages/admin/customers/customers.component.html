@@ -2,6 +2,8 @@
   <app-add-customer-modal
     (close)="closeAddCustomerModal($event)"
     (getCustomers)="getCustomers()"
+    [edit]="isCustEdit"
+    [customer]="customer"
   />
 }
 
@@ -12,7 +14,7 @@
       <div class="px-2 py-1 bg-light text-dark rounded fw-bold">{{ totalElements || '0' }}</div>
     </div>
     <div class="col d-flex justify-content-end align-items-center">
-      <button type="button" class="btn btn-light me-2" (click)="addCustomerModalShow.set(true)">
+      <button type="button" class="btn btn-light me-2" (click)="addCustomer()">
         Добавить
       </button>
       <button class="btn btn-light d-flex align-items-center" (click)="show_filter.set(!show_filter())">
@@ -49,6 +51,10 @@
         <div class="mb-2">
           <label class="form-label mb-1">До:</label>
           <input type="date" class="form-control" formControlName="endDate">
+        </div>
+        <div class="mb-2">
+          <label class="form-label mb-1">Query</label>
+          <input type="text" class="form-control" formControlName="query">
         </div>
         <div class="pt-4">
           <button type="submit" class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center"
@@ -89,6 +95,7 @@
           <th scope="col">ФИО</th>
           <th scope="col">Телефон</th>
           <th scope="col">Адрес</th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -100,6 +107,7 @@
               <td>{{ item.fullName }}</td>
               <td>{{ item.phoneNumber }}</td>
               <td>{{ item.address }}</td>
+              <td><span (click)="editCustomer(item)"><i class="bi bi-pencil-square"></i></span></td>
             </tr>
           }
         </tbody>
