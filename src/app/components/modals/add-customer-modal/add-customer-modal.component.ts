@@ -54,7 +54,7 @@ export class AddCustomerModalComponent implements OnInit {
           this.toastService.success('Данные клиента сохранены!')
           this.closeModal()
         }, error: (err: any) => {
-          this.toastService.error('Не удалось созранить данные клиента!')
+          this.toastService.error('Не удалось сохранить данные клиента!')
         }
       })
   }
