@@ -56,7 +56,6 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   goToPage(num: number) {
-    console.log('pagination', this.pagination)
     if (this.isValidPageNumber(num) && this.pagination.current != num) {
       this.pages = this.generatePagesArray(num, this.paginationRange);
       this.pagination.current = num;

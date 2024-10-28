@@ -35,9 +35,9 @@ export class AddCustomerModalComponent {
     this.customerService.addCustomer(customer)
       .subscribe({
         next: (res: any) => {
+          this.getCustomers.emit()
           this.toastService.success('Данные пользователя сохранены!')
           this.closeModal()
-          this.getCustomers.emit()
         }, error: (err: any) => {
           this.toastService.error('Не удалось созранить данные пользователя!')
         }
