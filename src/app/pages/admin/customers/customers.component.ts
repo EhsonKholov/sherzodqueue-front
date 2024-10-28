@@ -83,6 +83,7 @@ export class CustomersComponent implements OnInit {
   addCustomer() {
     this.addCustomerModalShow.set(true)
     this.customer = null
+    this.isCustEdit = false
   }
 
   deleteCustomerInit(item: any) {
@@ -95,6 +96,8 @@ export class CustomersComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.toastService.success('Клиент удален!')
+          this.deleteCustomerModalShow.set(false)
+          this.getCustomers()
         }, error: (error: any) => {
           this.toastService.success('Ошибка удаления клиента!')
         }
