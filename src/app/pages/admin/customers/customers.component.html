@@ -96,6 +96,7 @@
           <th scope="col">Телефон</th>
           <th scope="col">Адрес</th>
           <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -107,7 +108,8 @@
               <td>{{ item.fullName }}</td>
               <td>{{ item.phoneNumber }}</td>
               <td>{{ item.address }}</td>
-              <td><span (click)="editCustomer(item)"><i class="bi bi-pencil-square"></i></span></td>
+              <td><span (click)="editCustomer(item)"><i class="bi bi-pencil-square text-warning"></i></span></td>
+              <td><span (click)="deleteCustomerInit(item)"><i class="bi bi-trash text-danger"></i></span></td>
             </tr>
           }
         </tbody>
@@ -119,3 +121,28 @@
 
 </div>
 
+
+@if (deleteCustomerModalShow()) {
+  <!-- Modal -->
+  <div class="modal fade show d-block" style="background: rgba(0,0,0,.7)" id="deleteCustomerConfirm"
+       data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteCustomerConfirmLabel">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteCustomerConfirmLabel">Удаление клиента</h1>
+          <button type="button" class="btn-close" (click)="deleteCustomerModalShow.set(false)" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-danger fs-5">Удалить клиента?</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="deleteCustomerModalShow.set(false)"
+                  data-bs-dismiss="modal">Отмена
+          </button>
+          <button type="button" (click)="deleteCustomer()" class="btn btn-danger">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

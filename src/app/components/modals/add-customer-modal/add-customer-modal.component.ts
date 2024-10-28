@@ -51,10 +51,10 @@ export class AddCustomerModalComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.getCustomers.emit()
-          this.toastService.success('Данные пользователя сохранены!')
+          this.toastService.success('Данные клиента сохранены!')
           this.closeModal()
         }, error: (err: any) => {
-          this.toastService.error('Не удалось созранить данные пользователя!')
+          this.toastService.error('Не удалось созранить данные клиента!')
         }
       })
   }

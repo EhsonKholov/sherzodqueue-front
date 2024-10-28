@@ -29,7 +29,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.generatePagination()
-    this.page_size_options = [10, 25, 50, 100, 200]
+    this.page_size_options = [10, 25, 50, 100]
     this.page_size = this.page_size_options[0]
     this.changePageSize()
   }

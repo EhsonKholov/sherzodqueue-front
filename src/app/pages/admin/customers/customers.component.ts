@@ -5,6 +5,7 @@ import {DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
+import {ToastService} from '../../../services/toast.service';
 
 @Component({
   selector: 'app-customers',
@@ -29,6 +30,7 @@ export class CustomersComponent implements OnInit {
   total_pages: number = 0
   totalElements: number = 0
   addCustomerModalShow: WritableSignal<boolean> = signal(false)
+  deleteCustomerModalShow: WritableSignal<boolean> = signal(false)
   isCustEdit = false
   customer: any
 
@@ -38,7 +40,7 @@ export class CustomersComponent implements OnInit {
     query: new FormControl<string | null>(null),
   })
 
-  constructor(private customerService: CustomersService) {
+  constructor(private customerService: CustomersService, private toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -81,5 +83,21 @@ export class CustomersComponent implements OnInit {
   addCustomer() {
     this.addCustomerModalShow.set(true)
     this.customer = null
+  }
+
+  deleteCustomerInit(item: any) {
+    this.customer = item
+    this.deleteCustomerModalShow.set(true)
+  }
+
+  deleteCustomer() {
+    this.customerService.deleteCustomer(this.customer.id)
+      .subscribe({
+        next: (res: any) => {
+          this.toastService.success('Клиент удален!')
+        }, error: (error: any) => {
+          this.toastService.success('Ошибка удаления клиента!')
+        }
+      })
   }
 }

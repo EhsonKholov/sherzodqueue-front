@@ -20,4 +20,8 @@ export class CustomersService {
   getCustomerById(id: number) {
     return this.http.get(`api/customers/${id}`)
   }
+
+  deleteCustomer(id: number) {
+    return this.http.delete(`api/customers/${id}`)
+  }
 }
