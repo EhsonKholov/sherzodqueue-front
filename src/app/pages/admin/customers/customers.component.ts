@@ -1,9 +1,10 @@
 import {Component, OnInit, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomersService} from '../../../services/customers.service';
 import {DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
+import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
 
 @Component({
   selector: 'app-customers',
@@ -12,7 +13,8 @@ import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
     DatePipe,
     FormsModule,
     PaginationComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AddCustomerModalComponent
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css',
@@ -26,13 +28,13 @@ export class CustomersComponent implements OnInit {
   page_size: number = 10
   total_pages: number = 0
   totalElements: number = 0
+  addCustomerModalShow: WritableSignal<boolean> = signal(false)
 
   filter = new FormGroup({
     startDate: new FormControl<Date | null>(null),
     endDate: new FormControl<Date | null>(null),
     query: new FormControl<string | null>(null),
   })
-
 
   constructor(private customerService: CustomersService) {
   }
@@ -45,7 +47,6 @@ export class CustomersComponent implements OnInit {
     this.customerService.getCustomers(this.filter.controls['query'].value, this.page_num, this.page_size)
       .subscribe({
         next: (res: any) => {
-          console.log(res)
           this.customers.set(res?.data?.items)
           this.page_num = res?.data?.page
           this.page_size = res?.data?.size
@@ -65,4 +66,7 @@ export class CustomersComponent implements OnInit {
     this.getCustomers()
   }
 
+  closeAddCustomerModal(event: any) {
+    this.addCustomerModalShow.set(event)
+  }
 }

@@ -1,3 +1,10 @@
+@if (addCustomerModalShow()) {
+  <app-add-customer-modal
+    (close)="closeAddCustomerModal($event)"
+    (getCustomers)="getCustomers()"
+  />
+}
+
 <div class="p-3 bg-white rounded mb-3 mt-3 shadow-sm">
   <div class="row justify-content-between">
     <div class="col d-flex align-items-center">
@@ -5,6 +12,9 @@
       <div class="px-2 py-1 bg-light text-dark rounded fw-bold">{{ totalElements || '0' }}</div>
     </div>
     <div class="col d-flex justify-content-end align-items-center">
+      <button type="button" class="btn btn-light me-2" (click)="addCustomerModalShow.set(true)">
+        Добавить
+      </button>
       <button class="btn btn-light d-flex align-items-center" (click)="show_filter.set(!show_filter())">
         @if (show_filter()) {
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill"
@@ -98,3 +108,4 @@
   <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
 
 </div>
+

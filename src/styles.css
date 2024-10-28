@@ -112,3 +112,10 @@ input, select, button, ul > li > a, span {
 tr:hover > td {
   background-color: rgb(250, 250, 250);
 }
+
+.required:after {
+  content: '*';
+  color: red;
+  margin-left: .25rem;
+}
+

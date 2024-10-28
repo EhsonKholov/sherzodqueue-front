@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import {ToastComponent} from '../../../components/toast/toast.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [
-    RouterOutlet
+    RouterOutlet,
+    ToastComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'

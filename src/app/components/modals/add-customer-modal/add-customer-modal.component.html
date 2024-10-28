@@ -1,0 +1,36 @@
+<!-- Modal -->
+<div class="modal modal-dialog-centered fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addCustomerModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="addCustomerFormGroup" (submit)="addCustomer()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="address" class="form-label required">№ документа</label>
+            <input type="text" class="form-control" id="docNumber" formControlName="docNumber">
+          </div>
+          <div class="mb-3">
+            <label for="fullName" class="form-label required">ФОИ</label>
+            <input type="text" class="form-control" id="fullName" formControlName="fullName">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Адрес</label>
+            <input type="text" class="form-control" id="address" formControlName="address">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label required">Телефон</label>
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary" [disabled]="addCustomerFormGroup.invalid">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

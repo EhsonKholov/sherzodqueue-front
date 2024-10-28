@@ -10,7 +10,11 @@ export class CustomersService {
 
   getCustomers(Query: any, Page: number, PerPage: number) {
     let s = !!Query ? `Query=${Query}&` : '';
-    return this.http.get(`http://94.241.142.207:6099/api/customers?${s}Page=${Page}&PerPage=${PerPage}`);
+    //return this.http.get(`http://94.241.142.207:6099/api/customers?${s}Page=${Page}&PerPage=${PerPage}`);
+    return this.http.get(`http://94.241.142.207:6099/api/customers?Page=1&PerPage=10`);
   }
 
+  addCustomer(customer: any) {
+    return this.http.post(`http://94.241.142.207:6099/api/customers`, customer)
+  }
 }
