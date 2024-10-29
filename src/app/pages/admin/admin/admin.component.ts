@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ToastComponent} from '../../../components/toast/toast.component';
-import {LoadingComponent} from '../../../components/loading/loading.component';
+import {LoadingComponent} from '../../../components/layouts/loading/loading.component';
+import {HeaderComponent} from '../../../components/layouts/header/header.component';
 
 @Component({
   selector: 'app-admin',
@@ -9,7 +10,8 @@ import {LoadingComponent} from '../../../components/loading/loading.component';
   imports: [
     RouterOutlet,
     ToastComponent,
-    LoadingComponent
+    LoadingComponent,
+    HeaderComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'

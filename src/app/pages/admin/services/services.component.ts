@@ -1,40 +1,44 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CustomersService} from '../../../services/customers.service';
-import {DatePipe} from '@angular/common';
-import {PaginationComponent} from '../../../components/pagination/pagination.component';
-import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
-import {ToastService} from '../../../services/toast.service';
+import {CurrencyPipe, DatePipe} from '@angular/common';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {Subject, takeUntil} from 'rxjs';
+import {ToastService} from '../../../services/toast.service';
+import {ServicesService} from '../../../services/services.service';
+import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
+import {
+  AddEditServiceModalComponent
+} from '../../../components/modals/add-edit-service-modal/add-edit-service-modal.component';
 
 @Component({
-  selector: 'app-customers',
+  selector: 'app-services',
   standalone: true,
   imports: [
     DatePipe,
     FormsModule,
     PaginationComponent,
     ReactiveFormsModule,
-    AddCustomerModalComponent
+    CurrencyPipe,
+    AddEditServiceModalComponent
   ],
-  templateUrl: './customers.component.html',
-  styleUrl: './customers.component.css',
-  animations: [slideLeftMargin],
+  templateUrl: './services.component.html',
+  styleUrl: './services.component.css',
+  animations: [slideLeftMargin]
 })
-export class CustomersComponent implements OnInit, OnDestroy {
+export class ServicesComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
-  customers: WritableSignal<any[]> = signal([])
+  services: WritableSignal<any[]> = signal([])
   show_filter: WritableSignal<boolean> = signal(true)
   page_num: number = 1
   page_size: number = 10
   total_pages: number = 0
   totalElements: number = 0
-  addCustomerModalShow: WritableSignal<boolean> = signal(false)
-  deleteCustomerModalShow: WritableSignal<boolean> = signal(false)
-  isCustEdit = false
-  customer: any
+  addServiceModalShow: WritableSignal<boolean> = signal(false)
+  deleteServiceModalShow: WritableSignal<boolean> = signal(false)
+  isServiceEdit = false
+  service: any
 
   filter = new FormGroup({
     startDate: new FormControl<Date | null>(null),
@@ -42,11 +46,10 @@ export class CustomersComponent implements OnInit, OnDestroy {
     query: new FormControl<string | null>(null),
   })
 
-  constructor(private customerService: CustomersService, private toastService: ToastService) {
-  }
+  constructor(private servicesService: ServicesService, private toastService: ToastService) {}
 
   ngOnInit(): void {
-    this.getCustomers()
+    this.getServices()
   }
 
   ngOnDestroy(): void {
@@ -54,12 +57,12 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getCustomers() {
-    this.customerService.getCustomers(this.filter.controls['query'].value, this.page_num, this.page_size)
+  getServices() {
+    this.servicesService.getServices(this.filter.controls['query'].value, this.page_num, this.page_size)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.customers.set(res?.data?.items)
+          this.services.set(res?.data?.items)
           this.page_num = res?.data?.page
           this.page_size = res?.data?.size
           this.totalElements = res?.data?.totalCount
@@ -77,41 +80,42 @@ export class CustomersComponent implements OnInit, OnDestroy {
   onPageChange(event: { page_number: number; page_size: number }): void {
     this.page_num = event.page_number
     this.page_size = event.page_size
-    this.getCustomers()
+    this.getServices()
   }
 
   closeAddCustomerModal(event: any) {
-    this.addCustomerModalShow.set(event)
+    this.addServiceModalShow.set(event)
   }
 
   editCustomer(item: any) {
-    this.addCustomerModalShow.set(true)
-    this.isCustEdit = true
-    this.customer = item
+    this.addServiceModalShow.set(true)
+    this.isServiceEdit = true
+    this.service = item
   }
 
   addCustomer() {
-    this.addCustomerModalShow.set(true)
-    this.customer = null
-    this.isCustEdit = false
+    this.addServiceModalShow.set(true)
+    this.service = null
+    this.isServiceEdit = false
   }
 
   deleteCustomerInit(item: any) {
-    this.customer = item
-    this.deleteCustomerModalShow.set(true)
+    this.service = item
+    this.deleteServiceModalShow.set(true)
   }
 
   deleteCustomer() {
-    this.customerService.deleteCustomer(this.customer.id)
+    this.servicesService.deleteService(this.service.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
           this.toastService.success('Клиент удален!')
-          this.deleteCustomerModalShow.set(false)
-          this.getCustomers()
+          this.deleteServiceModalShow.set(false)
+          this.getServices()
         }, error: (error: any) => {
           this.toastService.success('Ошибка удаления клиента!')
         }
       })
   }
+
 }

@@ -1,0 +1,99 @@
+.ib-nav-item-active:has(.active) > a {
+  color: #000 !important;
+}
+
+.ib-nav-main {
+  background-color: #eaeaea;
+  color: #000;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ib-nav-main a {
+  color: #000;
+  text-decoration: none;
+}
+
+.ib-logo {
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+}
+
+.ib-nm-content {
+  display: flex;
+  height: 100%;
+}
+
+.ib-nm-list {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ib-nm-list > li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 .5em;
+  position: relative;
+}
+
+.ib-nm-list > li > div {
+  display: none;
+  position: absolute;
+  top: 100%;
+  padding: .5em;
+  background-color: #ffffff;
+  border: 1px solid silver;
+  min-width: 120%;
+}
+
+.ib-nm-list > li:hover > div {
+  display: block;
+}
+
+.ib-nm-list > li > div > a {
+  display: block;
+}
+
+.ib-nm-profile {
+  padding: 0 1em;
+}
+
+.ib-profile {
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-left: 1em;
+}
+
+.ib-profile-links > span {
+  cursor: pointer;
+  color: #000;
+}
+
+.ib-profile-links > span:hover {
+  text-decoration: underline;
+}
+
+.navbar-toggler {
+  border: none
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.nav-link {
+  color: rgba(0,0,0,.5);
+}
+
+.nav-link.active {
+  color: #000;
+}

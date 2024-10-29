@@ -1,8 +1,13 @@
-<main style="background-image: url('/assets/img/bg/bg{{randomIdx}}.jpg');">
-  <div class="container-fluid">
-    <router-outlet />
-  </div>
-</main>
+<section class="main-section" style="background-image: url('/assets/img/bg/bg{{randomIdx}}.jpg');">
+  <app-header/>
 
-<app-toast></app-toast>
-<app-loading></app-loading>
+  <main>
+    <div class="container-fluid">
+      <router-outlet/>
+    </div>
+  </main>
+
+  <app-toast></app-toast>
+  <app-loading></app-loading>
+
+</section>

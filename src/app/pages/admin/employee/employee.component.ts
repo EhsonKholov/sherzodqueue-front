@@ -1,4 +1,4 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {EmployeeService} from '../../../services/employee.service';
@@ -9,6 +9,7 @@ import {
   AddEditEmployeeModalComponent
 } from '../../../components/modals/add-edit-employee-modal/add-edit-employee-modal.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-employee',
@@ -25,8 +26,9 @@ import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
   styleUrl: './employee.component.css',
   animations: [slideLeftMargin]
 })
-export class EmployeeComponent implements OnInit {
+export class EmployeeComponent implements OnInit, OnDestroy {
 
+  private destroy$ = new Subject<void>()
   employees: WritableSignal<any[]> = signal([])
   show_filter: WritableSignal<boolean> = signal(true)
   page_num: number = 1
@@ -51,8 +53,14 @@ export class EmployeeComponent implements OnInit {
     this.getEmployees()
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getEmployees() {
     this.employeeService.getEmployees(this.filter.controls['query'].value, this.page_num, this.page_size)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
           this.employees.set(res?.data?.items)
@@ -60,6 +68,8 @@ export class EmployeeComponent implements OnInit {
           this.page_size = res?.data?.size
           this.totalElements = res?.data?.totalCount
           this.total_pages = res?.data?.totalPages
+        }, error: (error: any) => {
+          this.toastService.error('ошибка получения данных!')
         }
       })
   }
@@ -97,6 +107,7 @@ export class EmployeeComponent implements OnInit {
 
   deleteEmployee() {
     this.employeeService.deleteEmployee(this.employee.id)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
           this.toastService.success('Сотрудник удален!')

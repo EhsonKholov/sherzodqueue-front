@@ -1,48 +1,46 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {CustomersService} from '../../../services/customers.service';
-import {ToastService} from '../../../services/toast.service';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Subject, takeUntil} from 'rxjs';
+import {ToastService} from '../../../services/toast.service';
+import {ServicesService} from '../../../services/services.service';
 
 @Component({
-  selector: 'app-add-customer-modal',
+  selector: 'app-add-edit-service-modal',
   standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: './add-customer-modal.component.html',
-  styleUrl: './add-customer-modal.component.css'
+  templateUrl: './add-edit-service-modal.component.html',
+  styleUrl: './add-edit-service-modal.component.css'
 })
-export class AddCustomerModalComponent implements OnInit, OnDestroy {
+export class AddEditServiceModalComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
   @Input() edit: boolean = false
-  @Input() customer: any
+  @Input() service: any
   @Output() close = new EventEmitter<any>();
-  @Output() getCustomers: EventEmitter<any> = new EventEmitter<any>()
+  @Output() getServices: EventEmitter<any> = new EventEmitter<any>()
 
-  addCustomerFormGroup = new FormGroup({
+  addServiceFormGroup = new FormGroup({
     id: new FormControl(null),
-    fullName: new FormControl('', [Validators.required]),
-    address: new FormControl(''),
-    phoneNumber: new FormControl('', [Validators.required]),
-    docNumber: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+    duration: new FormControl(null, [Validators.required]),
+    price: new FormControl(0, [Validators.required]),
   })
 
   constructor(
-    private customerService: CustomersService,
+    private servicesService: ServicesService,
     private toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
     if (this.edit) {
-      this.addCustomerFormGroup.setValue({
-        id: this.customer.id,
-        address: this.customer.address,
-        docNumber: this.customer.docNumber,
-        fullName: this.customer.fullName,
-        phoneNumber: this.customer.phoneNumber,
+      this.addServiceFormGroup.setValue({
+        id: this.service.id,
+        name: this.service.name,
+        duration: this.service.duration,
+        price: this.service.price,
       })
     }
   }
@@ -52,13 +50,13 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
   addEditCustomer() {
-    const body = this.addCustomerFormGroup.value
+    const body = this.addServiceFormGroup.value
     if (this.edit) {
-      this.customerService.editCustomer(body)
+      this.servicesService.editService(body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
-            this.getCustomers.emit()
+            this.getServices.emit()
             this.toastService.success('Данные клиента сохранены!')
             this.closeModal()
           }, error: (err: any) => {
@@ -66,11 +64,11 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
           }
         })
     } else {
-      this.customerService.addCustomer(body)
+      this.servicesService.addService(body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
-            this.getCustomers.emit()
+            this.getServices.emit()
             this.toastService.success('Данные клиента сохранены!')
             this.closeModal()
           }, error: (err: any) => {

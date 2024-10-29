@@ -1,0 +1,24 @@
+<div class="d-flex align-items-center">
+  <div class="form-group position-relative w-100">
+    <label class="ms-1 mb-2 required" for="currencyPair">{{ label }}</label>
+    <div class="position-relative my-dropdown" dropdown [open]="options_toggle()" (clickOutside)="closeOptions()">
+      <input id="currencyPair" [(ngModel)]="filterParam" (focus)="options_toggle.set(true)"
+             type="text" class="form-control" (input)="filter()">
+      <span class="toggle-options">
+        @if (filterParam) {
+          <span (click)="clear()"><i class="bi fs-4 bi-x"></i></span>
+        }
+        <span (click)="options_toggle.set(!options_toggle())" class="ms-1">
+          <i class="bi fs-4 bi-chevron-compact-{{options_toggle()?'down':'up'}}"></i>
+        </span>
+      </span>
+      <div class="options">
+        @for (o of options(); track o) {
+          <div (click)="selectOption(o)" class="option-item">{{ o[objParamView] }}</div>
+        } @empty {
+          <div class="m-3">Ничего не найдено...</div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

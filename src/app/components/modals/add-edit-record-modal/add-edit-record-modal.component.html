@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{ edit ? 'Изменить' : 'Добавить' }}</h1>
+        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <form [formGroup]="addRecordFormGroup" (submit)="addEditCustomer()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <app-select
+              [label]="'Сотрудник'"
+              [objParamView]="'fullName'"
+              [options]="employeesOptions"
+              (selectFilterParam)="selectFilterEmployees($event)"
+              [selectedOption]="this.addRecordFormGroup.controls['employee'].value"
+              (selectedOptionEmmit)="selectEmployee($event)"
+              [filterParam]="this.addRecordFormGroup.controls['employee'].value?.fullName"
+            ></app-select>
+          </div>
+          <div class="mb-3">
+            <app-select
+              [label]="'Клиент'"
+              [objParamView]="'fullName'"
+              [options]="customersOptions"
+              (selectFilterParam)="selectFilterCustomers($event)"
+              [selectedOption]="this.addRecordFormGroup.controls['customer'].value"
+              (selectedOptionEmmit)="selectCustomer($event)"
+              [filterParam]="this.addRecordFormGroup.controls['customer'].value?.fullName"
+            ></app-select>
+          </div>
+          <div class="mb-3">
+            <app-select
+              [label]="'Услуга'"
+              [objParamView]="'name'"
+              [options]="servicesOptions"
+              (selectFilterParam)="selectFilterServices($event)"
+              [selectedOption]="this.addRecordFormGroup.controls['services'].value"
+              (selectedOptionEmmit)="selectService($event)"
+              [filterParam]="this.addRecordFormGroup.controls['services'].value?.name"
+            ></app-select>
+          </div>
+          <div class="mb-3">
+            <label for="recordingTime" class="form-label required">Время записи</label>
+            <input type="datetime-local" class="form-control" id="recordingTime" formControlName="recordingTime">
+          </div>
+          <div class="mb-3">
+            <label for="amountPaid" class="form-label required">Цена</label>
+            <input type="text" class="form-control" id="amountPaid" formControlName="amountPaid">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary" [disabled]="addRecordFormGroup.invalid">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

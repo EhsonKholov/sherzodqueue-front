@@ -15,8 +15,8 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Input() total_pages: number = 0
   @Output() pageChange = new EventEmitter<any>()
 
-  page_size_options: number[] = []
-  page_size = 10
+  page_size_options: number[] = [10, 25, 50, 100]
+  page_size = this.page_size_options[0]
   maxSize = signal<number>(7);
   paginationRange = Math.max(this.maxSize(), 5);
   pages: any[] = [];
@@ -29,9 +29,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.generatePagination()
-    this.page_size_options = [10, 25, 50, 100]
-    this.page_size = this.page_size_options[0]
-    this.changePageSize()
+    //this.changePageSize()
   }
 
   ngOnChanges(): void {

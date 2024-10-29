@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {EmployeeService} from '../../../services/employee.service';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-employee-modal',
@@ -13,8 +14,9 @@ import {EmployeeService} from '../../../services/employee.service';
   templateUrl: './add-edit-employee-modal.component.html',
   styleUrl: './add-edit-employee-modal.component.css'
 })
-export class AddEditEmployeeModalComponent implements OnInit {
+export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
 
+  private destroy$ = new Subject<void>()
   @Input() edit: boolean = false
   @Input() employee: any
   @Output() close = new EventEmitter<any>();
@@ -49,18 +51,38 @@ export class AddEditEmployeeModalComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   addEditEmployee() {
     const body = this.addEmployeeFormGroup.value
-    this.employeeService.addEmployee(body)
-      .subscribe({
-        next: (res: any) => {
-          this.getEmployees.emit()
-          this.toastService.success('Данные сотрудника сохранены!')
-          this.closeModal()
-        }, error: (err: any) => {
-          this.toastService.error('Не удалось сохранить данные сотрудника!')
-        }
-      })
+    if (this.edit) {
+      this.employeeService.editEmployee(body)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: any) => {
+            this.getEmployees.emit()
+            this.toastService.success('Данные сотрудника сохранены!')
+            this.closeModal()
+          }, error: (err: any) => {
+            this.toastService.error('Не удалось сохранить данные сотрудника!')
+          }
+        })
+    } else {
+      this.employeeService.addEmployee(body)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: any) => {
+            this.getEmployees.emit()
+            this.toastService.success('Данные сотрудника сохранены!')
+            this.closeModal()
+          }, error: (err: any) => {
+            this.toastService.error('Не удалось сохранить данные сотрудника!')
+          }
+        })
+    }
   }
 
   closeModal() {

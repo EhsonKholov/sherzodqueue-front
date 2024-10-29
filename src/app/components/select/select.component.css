@@ -1,0 +1,43 @@
+.options {
+  position: absolute;
+  z-index: 10000;
+  background-color: #ffffff;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 0.25rem;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 1px 5px 0px rgba(0, 0, 0, .12);
+  border-radius: 0.25rem;
+  transition: all .3s linear;
+  display: none;
+}
+
+.options .option-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s linear;
+  border-bottom: 1px solid #ccc6;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.options .option-item:hover {
+  background-color: rgba(191, 191, 191, 0.49);
+}
+
+.toggle-options {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  height: 100%;
+  right: 0;
+  top: 0;
+  transition: all 0.2s linear;
+}
+
+.show {
+  display: block !important;
+}
