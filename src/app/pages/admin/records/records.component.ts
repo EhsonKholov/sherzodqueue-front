@@ -150,4 +150,15 @@ export class RecordsComponent implements OnInit, OnDestroy {
         }
       })
   }
+
+  getRecordServicesnames(item: any) {
+    if (item?.services == null) return ''
+    
+    let s = ''
+    for (let i of item.services) {
+      s += i?.name + ', '
+    }
+
+    return s.trim()
+  }
 }

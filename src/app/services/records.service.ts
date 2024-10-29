@@ -18,8 +18,8 @@ export class RecordsService {
     return this.http.post(environment.URI + `api/records`, customer)
   }
 
-  editRecord(customer: any) {
-    return this.http.put(environment.URI + `api/records`, customer)
+  editRecord(id: number, customer: any) {
+    return this.http.put(environment.URI + `api/records/${id}`, customer)
   }
 
   getRecordById(id: number) {

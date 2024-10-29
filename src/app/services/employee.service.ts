@@ -18,8 +18,8 @@ export class EmployeeService {
     return this.http.post(environment.URI + `api/employees`, customer)
   }
 
-  editEmployee(customer: any) {
-    return this.http.put(environment.URI + `api/employees`, customer)
+  editEmployee(id: number, customer: any) {
+    return this.http.put(environment.URI + `api/employees/${id}`, customer)
   }
 
   getEmployeeById(id: number) {

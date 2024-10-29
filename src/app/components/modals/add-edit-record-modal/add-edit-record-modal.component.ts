@@ -37,7 +37,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   selectFilterParamServices: string = ''
 
   addRecordFormGroup = new FormGroup({
-    id: new FormControl(null),
     customer: new FormControl<any>(null, [Validators.required]),
     employee: new FormControl<any>(null, [Validators.required]),
     services: new FormControl<any>(null, [Validators.required]),
@@ -60,7 +59,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
     if (this.edit) {
       this.addRecordFormGroup.setValue({
-        id: this.record.id,
         customer: this.record.customer,
         employee: this.record.employee,
         services: this.record.services,
@@ -114,15 +112,14 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   addEditCustomer() {
     const body = {
-      id: this.addRecordFormGroup.controls['id'].value,
       customerId: (this.addRecordFormGroup.controls['customer'].value)?.id,
       employeeId: (this.addRecordFormGroup.controls['employee'].value)?.id,
-      serviceId: [(this.addRecordFormGroup.controls['services'].value)?.id],
+      servicesId: [(this.addRecordFormGroup.controls['services'].value)?.id],
       recordingTime: this.addRecordFormGroup.controls['recordingTime'].value,
       amountPaid: this.addRecordFormGroup.controls['amountPaid'].value,
     }
     if (this.edit) {
-      this.recordService.editRecord(body)
+      this.recordService.editRecord(this.record.id, body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {

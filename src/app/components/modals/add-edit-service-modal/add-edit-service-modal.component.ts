@@ -50,17 +50,18 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
   addEditCustomer() {
-    const body = this.addServiceFormGroup.value
+    let body: any = this.addServiceFormGroup.value
+    body.duration = this.convertTimeToMinut(body?.duration)
     if (this.edit) {
       this.servicesService.editService(body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
             this.getServices.emit()
-            this.toastService.success('Данные клиента сохранены!')
+            this.toastService.success('Данные успешно сохранены!')
             this.closeModal()
           }, error: (err: any) => {
-            this.toastService.error('Не удалось сохранить данные клиента!')
+            this.toastService.error('Не удалось сохранить данные!')
           }
         })
     } else {
@@ -69,13 +70,19 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (res: any) => {
             this.getServices.emit()
-            this.toastService.success('Данные клиента сохранены!')
+            this.toastService.success('Данные успешно сохранены!')
             this.closeModal()
           }, error: (err: any) => {
-            this.toastService.error('Не удалось сохранить данные клиента!')
+            this.toastService.error('Не удалось сохранить данные!')
           }
         })
     }
+  }
+
+  convertTimeToMinut(time: string) { //'04:00:00' -> 4
+    return time.split (':').reduce (function (seconds, v) {
+      return +v + seconds * 60;
+    }, 0) / 60;
   }
 
   closeModal() {

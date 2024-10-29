@@ -23,7 +23,6 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
   @Output() getCustomers: EventEmitter<any> = new EventEmitter<any>()
 
   addCustomerFormGroup = new FormGroup({
-    id: new FormControl(null),
     fullName: new FormControl('', [Validators.required]),
     address: new FormControl(''),
     phoneNumber: new FormControl('', [Validators.required]),
@@ -38,7 +37,6 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.edit) {
       this.addCustomerFormGroup.setValue({
-        id: this.customer.id,
         address: this.customer.address,
         docNumber: this.customer.docNumber,
         fullName: this.customer.fullName,
@@ -54,7 +52,7 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
   addEditCustomer() {
     const body = this.addCustomerFormGroup.value
     if (this.edit) {
-      this.customerService.editCustomer(body)
+      this.customerService.editCustomer(this.customer.id, body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {

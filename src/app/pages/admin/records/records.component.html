@@ -106,11 +106,7 @@
               <td>{{ item.id }}</td>
               <td>{{ item.customer?.fullName }}</td>
               <td>{{ item.employee?.fullName }}</td>
-              <td>
-                @for (s of item.services; track $index) {
-                  <span>{{ s?.name }},</span>
-                }
-              </td>
+              <td>{{getRecordServicesnames(item)}}</td>
               <td>{{ item.recordingTime | date: 'yyyy.MM.dd HH:MM' }}</td>
               <td>{{ item.amountPaid | currency: '':'' }}</td>
               <td>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</td>

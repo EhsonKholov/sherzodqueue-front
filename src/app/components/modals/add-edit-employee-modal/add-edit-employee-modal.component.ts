@@ -23,7 +23,6 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
   @Output() getEmployees: EventEmitter<any> = new EventEmitter<any>()
 
   addEmployeeFormGroup = new FormGroup({
-    id: new FormControl(null),
     fullName: new FormControl(null, [Validators.required]),
     position: new FormControl(null, [Validators.required]),
     roomNumber: new FormControl(null, [Validators.required]),
@@ -40,7 +39,6 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.edit) {
       this.addEmployeeFormGroup.setValue({
-        id: this.employee.id,
         fullName: this.employee.fullName,
         available: this.employee.available,
         details: this.employee.details,
@@ -59,7 +57,7 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
   addEditEmployee() {
     const body = this.addEmployeeFormGroup.value
     if (this.edit) {
-      this.employeeService.editEmployee(body)
+      this.employeeService.editEmployee(this.employee.id, body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
