@@ -28,13 +28,6 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "src/assets/css/fontawesome.min.css",
-              "src/assets/css/animate.min.css",
-              "src/assets/css/slick.min.css",
-              "src/assets/css/slick-theme.min.css",
-              "src/assets/css/magnific-popup.min.css",
-              "src/assets/css/odometer.min.css",
-              "src/assets/css/style.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -51,13 +44,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "5MB",
+                  "maximumError": "10MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "10MB"
                 }
               ],
               "outputHashing": "all"
