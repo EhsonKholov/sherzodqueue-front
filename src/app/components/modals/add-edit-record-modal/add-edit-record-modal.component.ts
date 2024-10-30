@@ -176,8 +176,4 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   selectService(s: any) {
     this.addRecordFormGroup.controls['services'].setValue(s)
   }
-
-  check() {
-    console.log(this.addRecordFormGroup)
-  }
 }
