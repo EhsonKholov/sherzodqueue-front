@@ -10,6 +10,19 @@ body {
   min-width: 960px;
 }
 
+.site_link {
+  color: #26aba3;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: .2rem;
+  font-style: oblique;
+  text-decoration: underline;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+
 select {
   cursor: pointer;
 }

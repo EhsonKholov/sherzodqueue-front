@@ -1,32 +1,32 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header p-4">
         <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{edit ? 'Изменить' : 'Добавить'}}</h1>
         <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form [formGroup]="addCustomerFormGroup" (submit)="addEditCustomer()">
-        <div class="modal-body">
-          <div class="mb-3">
+        <div class="modal-body row p-4">
+          <div class="mb-3 col-6">
             <label for="address" class="form-label required">№ документа</label>
             <input type="text" class="form-control" id="docNumber" formControlName="docNumber">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="fullName" class="form-label required">ФОИ</label>
             <input type="text" class="form-control" id="fullName" formControlName="fullName">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="address" class="form-label">Адрес</label>
             <input type="text" class="form-control" id="address" formControlName="address">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="address" class="form-label required">Телефон</label>
             <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer p-4">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
           <button type="submit" class="btn btn-primary" [disabled]="addCustomerFormGroup.invalid">Сохранить</button>
         </div>

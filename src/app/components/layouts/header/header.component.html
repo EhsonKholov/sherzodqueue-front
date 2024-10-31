@@ -1,15 +1,18 @@
-<nav class="navbar navbar-expand-xl fixed-top" style="background-color: #ffffff; z-index: 1090;">
+<nav class="navbar navbar-expand-xl fixed-top shadow-sm" style="background-color: #ffffff; z-index: 1090;">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/admin"><img height="24" alr="logo" src="../../../../assets/upload/logo.png" style="display: block"></a>
+    <a class="navbar-brand" routerLink="/admin">
+      <!--<span class="site_link">ДАВРОНОВ</span>-->
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" routerLink="/admin/records" routerLinkActive="active">Заявки</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/admin/customers" routerLinkActive="active">Клиенты</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/admin/records" routerLinkActive="active">Записи</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/admin/records-history" routerLinkActive="active">История записей</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/admin/customers" routerLinkActive="active">Клиенская база</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/admin/employees" routerLinkActive="active">Сотрудники</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/admin/services" routerLinkActive="active">Услуги</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/admin/services" routerLinkActive="active">Виды услуг</a></li>
       </ul>
 
       <!--<div class="ib-profile">

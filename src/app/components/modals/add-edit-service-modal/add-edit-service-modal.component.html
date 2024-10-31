@@ -1,28 +1,28 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header p-4">
         <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{edit ? 'Изменить' : 'Добавить'}}</h1>
         <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form [formGroup]="addServiceFormGroup" (submit)="addEditCustomer()">
-        <div class="modal-body">
-          <div class="mb-3">
+        <div class="modal-body p-4 row">
+          <div class="mb-3 col-6">
             <label for="name" class="form-label required">Наименование</label>
             <input type="text" class="form-control" id="name" formControlName="name">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="duration" class="form-label required">Продолжительность</label>
             <input type="time" class="form-control" id="duration" formControlName="duration">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="price" class="form-label required">Цена</label>
             <input type="text" class="form-control" id="price" formControlName="price">
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer p-4">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
           <button type="submit" class="btn btn-primary" [disabled]="addServiceFormGroup.invalid">Сохранить</button>
         </div>

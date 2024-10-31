@@ -1,32 +1,36 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header p-4">
         <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{ edit ? 'Изменить' : 'Добавить' }}</h1>
         <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
                 aria-label="Close"></button>
       </div>
       <form [formGroup]="addEmployeeFormGroup" (submit)="addEditEmployee()">
-        <div class="modal-body">
-          <div class="mb-3">
+        <div class="modal-body row p-4">
+          <div class="mb-3 col-6">
             <label for="fullName" class="form-label required">ФИО</label>
             <input type="text" class="form-control" id="fullName" formControlName="fullName">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="position" class="form-label required">Должность</label>
             <input type="text" class="form-control" id="position" formControlName="position">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="roomNumber" class="form-label required">Кабинет</label>
             <input type="text" class="form-control" id="roomNumber" formControlName="roomNumber">
           </div>
-          <div class="mb-3">
+          <div class="mb-3 col-6">
             <label for="willBeAvailable" class="form-label required">Будет доступен</label>
             <input type="datetime-local" class="form-control" id="willBeAvailable" formControlName="willBeAvailable" required>
           </div>
-          <div class="mb-3 pt-2">
+          <div class="mb-3 col-12">
+            <label for="details" class="form-label required">Подробнее</label>
+            <textarea type="text" rows="3" class="form-control" id="details" formControlName="details" required></textarea>
+          </div>
+          <div class="mb-3 pt-2 col-6">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="available" formControlName="available" required>
               <label class="form-check-label required" for="available">
@@ -34,12 +38,8 @@
               </label>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="details" class="form-label required">Подробнее</label>
-            <textarea type="text" cols="6" class="form-control" id="details" formControlName="details" required></textarea>
-          </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer p-4">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
           <button type="submit" class="btn btn-primary" [disabled]="addEmployeeFormGroup.invalid">Сохранить</button>
         </div>

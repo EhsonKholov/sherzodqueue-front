@@ -1,18 +1,26 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header p-4">
         <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{ edit ? 'Изменить' : 'Добавить' }}</h1>
         <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
                 aria-label="Close"></button>
       </div>
-      <form [formGroup]="addRecordFormGroup" (submit)="addEditCustomer()">
-        <div class="modal-body">
-          <div class="mb-3">
+      <form [formGroup]="addRecordFormGroup" (submit)="addEditRecord()">
+        <div class="modal-body row p-4">
+          <div class="col-6 mb-3">
+            <label for="fullName" class="form-label required">Имя и Фамилия</label>
+            <input type="text" class="form-control" id="fullName" formControlName="fullName">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="phoneNumber" class="form-label required">Номер телефона</label>
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+          </div>
+          <div class="col-6 mb-3">
             <app-select
-              [label]="'Сотрудник'"
+              [label]="'Лечащий врач'"
               [objParamView]="'fullName'"
               [options]="employeesOptions"
               (selectFilterParam)="selectFilterEmployees($event)"
@@ -21,18 +29,25 @@
               [filterParam]="this.addRecordFormGroup.controls['employee'].value?.fullName"
             ></app-select>
           </div>
-          <div class="mb-3">
-            <app-select
-              [label]="'Клиент'"
-              [objParamView]="'fullName'"
-              [options]="customersOptions"
-              (selectFilterParam)="selectFilterCustomers($event)"
-              [selectedOption]="this.addRecordFormGroup.controls['customer'].value"
-              (selectedOptionEmmit)="selectCustomer($event)"
-              [filterParam]="this.addRecordFormGroup.controls['customer'].value?.fullName"
-            ></app-select>
+          <div class="col-6 mb-3">
+            <label for="recordingTime" class="form-label required">Время записи</label>
+            <input type="datetime-local" class="form-control" id="recordingTime" formControlName="recordingTime">
           </div>
-          <div class="mb-3">
+          <div class="col-12 mb-3">
+            <label for="fullName" class="form-label required">Услуги</label>
+            <ng-multiselect-dropdown
+              name="services"
+              [placeholder]="'Услуги'"
+              [data]="servicesOptions()"
+              [(ngModel)]="selectedServices"
+              [ngModelOptions]="{standalone: true}"
+              [settings]="servicesSettings"
+              (onSelect)="onSelectService($event)"
+              (onDeSelect)="onDeSelectService($event)"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <!--<div class="mb-3">
             <app-select
               [label]="'Услуга'"
               [objParamView]="'name'"
@@ -42,17 +57,13 @@
               (selectedOptionEmmit)="selectService($event)"
               [filterParam]="this.addRecordFormGroup.controls['services'].value?.name"
             ></app-select>
-          </div>
-          <div class="mb-3">
-            <label for="recordingTime" class="form-label required">Время записи</label>
-            <input type="datetime-local" class="form-control" id="recordingTime" formControlName="recordingTime">
-          </div>
-          <div class="mb-3">
-            <label for="amountPaid" class="form-label required">Цена</label>
+          </div>-->
+          <div class="col-6 mb-3">
+            <label for="amountPaid" class="form-label">Предоплата</label>
             <input type="text" class="form-control" id="amountPaid" formControlName="amountPaid">
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer p-4">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
           <button type="submit" class="btn btn-primary" [disabled]="addRecordFormGroup.invalid">Сохранить</button>
         </div>

@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
@@ -83,28 +82,28 @@ export class ServicesComponent implements OnInit, OnDestroy {
     this.getServices()
   }
 
-  closeAddCustomerModal(event: any) {
+  closeAddServiceModal(event: any) {
     this.addServiceModalShow.set(event)
   }
 
-  editCustomer(item: any) {
+  editService(item: any) {
     this.addServiceModalShow.set(true)
     this.isServiceEdit = true
     this.service = item
   }
 
-  addCustomer() {
+  addService() {
     this.addServiceModalShow.set(true)
     this.service = null
     this.isServiceEdit = false
   }
 
-  deleteCustomerInit(item: any) {
+  deleteServiceInit(item: any) {
     this.service = item
     this.deleteServiceModalShow.set(true)
   }
 
-  deleteCustomer() {
+  deleteService() {
     this.servicesService.deleteService(this.service.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
