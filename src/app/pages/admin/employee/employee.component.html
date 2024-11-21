@@ -7,7 +7,219 @@
   />
 }
 
-<div class="ib-filter">
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="row g-4 mb-4">
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 app-shadow">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Сотрудники</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-2">20</h3>
+                  <p class="text-success mb-1">(+29%)</p>
+                </div>
+                <small class="mb-0">Количество сотрудников</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-primary rounded-3">
+                  <div class="ri-group-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Активные</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">16</h3>
+                  <p class="text-success mb-1">(+18%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-danger rounded-3">
+                  <div class="ri-user-add-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">В отпуске</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">4</h3>
+                  <p class="text-danger mb-1">(-14%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-success rounded-3">
+                  <div class="ri-user-follow-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Заявки</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">11</h3>
+                  <p class="text-success mb-1">(+42%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-warning rounded-3">
+                  <div class="ri-user-search-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pt-4 pb-1 mb-5 rounded-4 bg-white app-shadow">
+
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="m-0">Список сотрудников</h3>
+        <div>
+          <button type="button" class="btn btn-light" (click)="addCustomer()">
+            <i class="ri-add-line me-2"></i>
+            <span>Добавить сотрудника</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="px-4 mb-4">
+        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getEmployees()">
+          <div class="row g-3">
+
+            <div class="col-sm-2">
+              <input type="date" class="form-control" formControlName="startDate">
+            </div>
+
+            <div class="col-sm-2">
+              <input type="date" class="form-control" formControlName="endDate">
+            </div>
+
+            <div class="col-sm-2">
+              <input type="text" class="form-control" formControlName="query" placeholder="">
+            </div>
+
+            <div class="col d-flex align-items-center">
+              <button type="submit" class="btn btn-light me-3">
+                <i class="ri-search-line me-2"></i>
+                <span>Поиск</span>
+              </button>
+              <div class="vr h-75 mx-3 align-self-auto"></div>
+              <button type="button" class="btn btn-light">
+                <i class="ri-upload-2-line me-2"></i>
+                <span>Экспорт</span>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <table class="table mb-4">
+        <thead>
+        <tr>
+          <th scope="col" class="px-4 essp-th-spec-color">ФИО</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Кабинет</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Доступен</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Будет доступен</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (item of employees(); track $index) {
+            <tr class="align-middle">
+              <td class="px-4">
+                <div class="essp-table-ico">
+                  <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
+                  <div>
+                    <span>{{ item?.fullName }}</span>
+                    <small>{{ item?.email }}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4">
+                <div class="essp-status-position">
+                  <i class="ri-nurse-line"></i>
+                  <span>{{ item.position }}</span>
+                </div>
+              </td>
+              <td class="px-4">
+                <div class="essp-status-position">
+                  <i class="ri-nurse-line"></i>
+                  <span>{{ item.position }}</span>
+                </div>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.phoneNumber }}</span>
+              </td>
+              <td class="px-4">
+                <span
+                  class="{{item.available ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.available ? 'Доступен' : 'Недоступен' }}</span>
+                <!--<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>-->
+              </td>
+              <td class="px-4">
+                <div class="essp-status-position">
+                  <i class="ri-nurse-line"></i>
+                  <span>{{ item.willBeAvailable | date: 'yyyy.MM.dd HH:MM' }}</span>
+                </div>
+              </td>
+              <td class="px-4">
+                <div class="essp-status-position">
+                  <i class="ri-nurse-line"></i>
+                  <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
+                </div>
+              </td>
+              <td class="px-4">
+                <div class="essp-table-actions">
+                  <!--<i class="ri-eye-line ri-20px" title="Посмотреть"></i>-->
+                  <span (click)="editCustomer(item)"><i class="ri-edit-box-line" title="Изменить"></i></span>
+                  <span (click)="deleteEmployeeInit(item)"><i class="ri-delete-bin-7-line" title="Удалить"></i></span>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
+    </div>
+  </div>
+</div>
+
+<!--<div class="ib-filter">
   <div class="w-100">
     <div class="p-3 bg-white rounded">
       <form [formGroup]="filter" (ngSubmit)="getEmployees()">
@@ -108,7 +320,7 @@
 
   <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
 
-</div>
+</div>-->
 
 
 @if (deleteEmployeeModalShow()) {

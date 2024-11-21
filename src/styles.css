@@ -1,4 +1,5 @@
-@import url(montserrat.scss);
+/*@import url(montserrat.scss);*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 body {
   margin: 0;
@@ -132,3 +133,165 @@ tr:hover > td {
   margin-left: .25rem;
 }
 
+
+/*------------------------------------------------------------------------------------------------*/
+body {
+  background-color: #f7f7f9;
+  font-size: 16px !important;
+  color: #3b4056 !important;
+  font-family: "Inter", sans-serif;
+}
+
+.essp-aside {
+  width: 280px;
+  background-color: #282a42;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.essp-main-menu {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+}
+
+.essp-main-menu > li {
+  cursor: pointer;
+  position: relative;
+}
+
+.essp-main-menu-notification {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.essp-main-menu-notification > span {
+  background-color: rgb(255, 77, 73);
+  height: 24px;
+  min-width: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 0.5em;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.8em;
+  padding: 0 0.3em;
+}
+
+
+.essp-main-menu > li:hover {
+  background-color: rgba(247,247,249,.06);
+}
+
+li:has(>.essp-rout-active) {
+  background-color: #666cff !important;
+}
+
+.essp-main-menu > li > a {
+  color: #d7d8ee;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.essp-main-menu > li > a > i {
+  font-size: 1.5em;
+}
+
+.essp-table-ico {
+  display: flex;
+  align-items: center;
+}
+
+.essp-table-ico > img {
+  margin-right: 0.8em;
+}
+
+.essp-table-ico > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.essp-table-ico > div > span {
+  font-weight: 500;
+  text-transform: none;
+  margin-bottom: -0.2em;
+  color: #3b4056 !important;
+}
+
+.essp-table-ico > div > small {
+  font-size: 0.8em;
+  color: #676b7b;
+}
+
+.essp-status-position {
+  display: flex;
+  align-items: center;
+}
+
+.essp-status-position > i {
+  font-size: 1.2em;
+  margin-right: 0.2em;
+}
+
+.essp-table-actions {
+  display: flex;
+  gap: 1em;
+  font-size: 1.2em;
+}
+
+.essp-table-actions > i {
+  cursor: pointer;
+}
+
+.essp-status-active {
+  background-color: #e8fadd;
+  color: #72e128;
+  border-radius: 50rem;
+  padding: 0.2em 1em;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.essp-status-inactive {
+  background-color: #e8e9ed;
+  color: #6d788d;
+  border-radius: 50rem;
+  padding: 0.2em 1em;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.essp-status-pending {
+  background-color: #fff3dd;
+  color: #fdb528;
+  border-radius: 50rem;
+  padding: 0.2em 1em;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.essp-th-spec-color {
+  color: #3b4056 !important;
+  background-color: #f5f5f7 !important;
+  border-bottom: none;
+  font-weight: 400;
+}
+
+table {
+  --bs-table-color: #676b7b !important;
+}
+
+.app-shadow {
+  box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16) !important;
+}
+
+.app-padding-left {
+  padding-left: 280px !important;
+}

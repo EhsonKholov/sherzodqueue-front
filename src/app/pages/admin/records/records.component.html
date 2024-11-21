@@ -7,7 +7,293 @@
   />
 }
 
-<div class="ib-filter">
+
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="row g-4 mb-4">
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 app-shadow">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Сотрудники</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-2">20</h3>
+                  <p class="text-success mb-1">(+29%)</p>
+                </div>
+                <small class="mb-0">Количество сотрудников</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-primary rounded-3">
+                  <div class="ri-group-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Активные</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">16</h3>
+                  <p class="text-success mb-1">(+18%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-danger rounded-3">
+                  <div class="ri-user-add-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">В отпуске</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">4</h3>
+                  <p class="text-danger mb-1">(-14%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-success rounded-3">
+                  <div class="ri-user-follow-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Заявки</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">11</h3>
+                  <p class="text-success mb-1">(+42%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-warning rounded-3">
+                  <div class="ri-user-search-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="py-4 mb-5 rounded-4 bg-white app-shadow">
+
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="m-0">Список сотрудников</h3>
+        <div>
+          <button type="button" class="btn btn-light">
+            <i class="ri-add-line me-2"></i>
+            <span>Добавить сотрудника</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="px-4 mb-4">
+        <form class="needs-validation" novalidate="">
+          <div class="row g-3">
+
+            <div class="col-sm-2">
+              <input type="text" class="form-control" placeholder="Сотрудник">
+            </div>
+
+            <div class="col-sm-2">
+              <input type="text" class="form-control" placeholder="Номер телефона">
+            </div>
+
+            <div class="col-sm-2">
+              <select class="form-select">
+                <option selected>Должность</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <select class="form-select">
+                <option selected>Статус</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <button type="button" class="btn btn-light me-3">
+                <i class="ri-search-line me-2"></i>
+                <span>Поиск</span>
+              </button>
+              <button type="button" class="btn btn-light">
+                <i class="ri-upload-2-line me-2"></i>
+                <span>Экспортировать</span>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <table class="table mb-4">
+        <thead>
+        <tr>
+          <th scope="col" class="px-4 essp-th-spec-color">Сотрудник</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Номер телефона</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Активность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="align-middle">
+          <td class="px-4">
+            <div class="essp-table-ico">
+              <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
+              <div>
+                <span>Саид Саидов</span>
+                <small>said&#64;gmail.com</small>
+              </div>
+            </div>
+          </td>
+          <td class="px-4">
+            <span class="essp-table-info">+992918405216</span>
+          </td>
+          <td class="px-4">
+            <div class="essp-status-position">
+              <i class="ri-nurse-line"></i>
+              <span>Хирург</span>
+            </div>
+          </td>
+          <td class="px-4">
+            <span class="essp-status-active">Активен</span>
+          </td>
+          <td class="px-4">
+            <div class="essp-table-actions">
+              <i class="ri-eye-line ri-20px" title="Посмотреть"></i>
+              <i class="ri-edit-box-line" title="Изменить"></i>
+              <i class="ri-delete-bin-7-line" title="Удалить"></i>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="align-middle">
+          <td class="px-4">
+            <div class="essp-table-ico">
+              <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
+              <div>
+                <span>Мирзо Холов</span>
+                <small>mirzo&#64;gmail.com</small>
+              </div>
+            </div>
+          </td>
+          <td class="px-4">
+            <span class="essp-table-info">+992922905115</span>
+          </td>
+          <td class="px-4">
+            <div class="essp-status-position">
+              <i class="ri-nurse-line"></i>
+              <span>Сотрудник</span>
+            </div>
+          </td>
+          <td class="px-4">
+            <span class="essp-status-inactive">В отпуске</span>
+          </td>
+          <td class="px-4">
+            <div class="essp-table-actions">
+              <i class="ri-eye-line ri-20px" title="Посмотреть"></i>
+              <i class="ri-edit-box-line" title="Изменить"></i>
+              <i class="ri-delete-bin-7-line" title="Удалить"></i>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="align-middle">
+          <td class="px-4">
+            <div class="essp-table-ico">
+              <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
+              <div>
+                <span>Алишер Дилшодов</span>
+                <small>mirzo&#64;gmail.com</small>
+              </div>
+            </div>
+          </td>
+          <td class="px-4">
+            <span class="essp-table-info">+992936220909</span>
+          </td>
+          <td class="px-4">
+            <div class="essp-status-position">
+              <i class="ri-nurse-line"></i>
+              <span>Сотрудник</span>
+            </div>
+          </td>
+          <td class="px-4">
+            <span class="essp-status-pending">Не работает</span>
+          </td>
+          <td class="px-4">
+            <div class="essp-table-actions">
+              <i class="ri-eye-line ri-20px" title="Посмотреть"></i>
+              <i class="ri-edit-box-line" title="Изменить"></i>
+              <i class="ri-delete-bin-7-line" title="Удалить"></i>
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <nav aria-label="Page navigation example" class="px-4 d-flex justify-content-between align-items-center">
+        <div>
+          <span>Показано 10 записей из 20</span>
+        </div>
+        <ul class="pagination m-0">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="ib-filter">
   <div class="w-100">
     <div class="p-3 bg-white rounded">
       <form [formGroup]="filter" (ngSubmit)="getRecords()">
@@ -46,12 +332,12 @@
       </form>
     </div>
   </div>
-</div>
+</div>-->
 
 
-<div class="ib-content ib-content-filter">
+<div class="ib-content">
 
-  <div class="p-3 bg-white rounded mb-3 mt-3 shadow-sm">
+  <!--<div class="p-3 bg-white rounded mb-4 shadow-sm rounded-4 app-shadow">
     <div class="row justify-content-between">
       <div class="col d-flex align-items-center">
         <h3 class="me-2 mb-0" style="color: #525F7B">Записи</h3>
@@ -67,7 +353,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <div class="p-3 bg-white rounded mb-3 shadow-sm">
     <div class="table-responsive">

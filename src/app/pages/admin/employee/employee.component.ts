@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {EmployeeService} from '../../../services/employee.service';
@@ -26,7 +26,7 @@ import {Subject, takeUntil} from 'rxjs';
   styleUrl: './employee.component.css',
   animations: [slideLeftMargin]
 })
-export class EmployeeComponent implements OnInit, OnDestroy {
+export class EmployeeComponent implements AfterViewInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
   employees: WritableSignal<any[]> = signal([])
@@ -49,8 +49,11 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   constructor(private employeeService: EmployeeService, private toastService: ToastService) {
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.getEmployees()
+  }
+
+  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

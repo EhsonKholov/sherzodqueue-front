@@ -49,7 +49,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getRecords()
+    //this.getRecords()
   }
 
   ngOnDestroy(): void {
@@ -153,7 +153,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
   getRecordServicesnames(item: any) {
     if (item?.services == null) return ''
-    
+
     let s = ''
     for (let i of item.services) {
       s += i?.name + ', '

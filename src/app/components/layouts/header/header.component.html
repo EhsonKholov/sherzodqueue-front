@@ -1,7 +1,85 @@
+<aside class="essp-aside pt-1">
+
+  <ul class="essp-main-menu p-2 m-0">
+    <li class="px-2 py-1 rounded mb-1">
+      <a routerLink="/admin/dashboard" routerLinkActive="essp-rout-active">
+        <i class="ri-dashboard-line me-2"></i>
+        <span>Панель управления</span>
+        <div class="essp-main-menu-notification px-2"><span>10</span></div>
+      </a>
+    </li>
+    <li class="px-2 py-1 rounded mb-1">
+      <a routerLink="/admin/application" routerLinkActive="essp-rout-active">
+        <i class="ri-file-list-line me-2"></i>
+        <span>Список заявок</span>
+        <div class="essp-main-menu-notification px-2"><span>15</span></div>
+      </a>
+    </li>
+    <li class="px-2 py-1 rounded">
+      <a routerLink="/admin/records" routerLinkActive="essp-rout-active">
+        <i class="menu-icon tf-icons ri-calendar-line me-2"></i>
+        <span>Записи</span>
+        <div class="essp-main-menu-notification px-2"><span>32</span></div>
+      </a>
+    </li>
+  </ul>
+
+  <hr class="my-1">
+
+  <ul class="essp-main-menu p-2 m-0">
+    <li class="px-2 py-1 rounded mb-1">
+      <a routerLink="/admin/employees" routerLinkActive="essp-rout-active">
+        <i class="ri-group-line me-2"></i>
+        <span>Сотрудники</span>
+      </a>
+    </li>
+    <li class="px-2 py-1 rounded">
+      <a routerLink="/admin/services" routerLinkActive="essp-rout-active">
+        <i class="ri-list-check me-2"></i>
+        <span>Услуги</span>
+      </a>
+    </li>
+  </ul>
+
+  <hr class="my-1">
+
+  <ul class="essp-main-menu p-2 m-0">
+    <li class="px-2 py-1 rounded mb-1">
+      <a routerLink="/sms" routerLinkActive="essp-rout-active">
+        <i class="ri-discuss-line me-2"></i>
+        <span>СМС-рассылка</span>
+      </a>
+    </li>
+    <li class="px-2 py-1 rounded">
+      <a routerLink="/settings" routerLinkActive="essp-rout-active">
+        <i class="ri-equalizer-line me-2"></i>
+        <span>Настройки</span>
+      </a>
+    </li>
+  </ul>
+
+</aside>
+
+<div class="pt-3 app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="rounded-4 bg-white p-4 d-flex justify-content-between align-items-center app-shadow">
+      <div><input type="text" class="form-control border-0" placeholder="Поиск"></div>
+      <div class="essp-table-ico">
+        <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
+        <div>
+          <span>Даврон Саидов</span>
+          <small>Администратор</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
 <nav class="navbar navbar-expand-xl fixed-top shadow-sm" style="background-color: #ffffff; z-index: 1090;">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/admin">
-      <!--<span class="site_link">ДАВРОНОВ</span>-->
+      &lt;!&ndash;<span class="site_link">ДАВРОНОВ</span>&ndash;&gt;
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,7 +93,7 @@
         <li class="nav-item"><a class="nav-link" routerLink="/admin/services" routerLinkActive="active">Виды услуг</a></li>
       </ul>
 
-      <!--<div class="ib-profile">
+      &lt;!&ndash;<div class="ib-profile">
         <div>
           <span class="nav-link text-light" href="#">{{ user?.firstName + ' ' + user?.lastName + ' (' + user.position  + ')' }}</span>
         </div>
@@ -23,10 +101,11 @@
           <span class="col" href="#" routerLink="/profile">Профиль</span>
           <span class="col ms-2" href="#" (click)="logout()">Выход</span>
         </div>
-      </div>-->
+      </div>&ndash;&gt;
     </div>
   </div>
 </nav>
+-->
 
 
 
