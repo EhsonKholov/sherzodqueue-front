@@ -29,4 +29,8 @@ export class ServicesService {
   deleteService(id: number) {
     return this.http.delete(environment.URI + `api/services/${id}`)
   }
+
+  getActivesServices() {
+    return this.http.get('api/services/active')
+  }
 }

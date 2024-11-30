@@ -292,3 +292,35 @@ textarea.form-control {
   color: var(--bs-white);
 }
 
+.loader {
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  cursor: wait !important;
+}
+
+.loader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150%;
+  height: 100%;
+  background: repeating-linear-gradient(60deg,
+        transparent,
+        transparent 0.75rem,
+        #e4e4e4 0.75rem,
+        #e4e4e4 1.5rem
+    );
+  animation: load 500ms infinite linear;
+}
+
+/* Loading button animation */
+@keyframes load {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-1.75rem);
+  }
+}

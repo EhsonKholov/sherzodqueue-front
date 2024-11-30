@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnDestroy, OnInit, signal, WritableSignal} fro
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {EmployeeService} from '../../../services/employee.service';
-import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
 import {DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {
@@ -15,7 +14,6 @@ import {Subject, takeUntil} from 'rxjs';
   selector: 'app-employee',
   standalone: true,
   imports: [
-    AddCustomerModalComponent,
     DatePipe,
     FormsModule,
     PaginationComponent,
@@ -26,7 +24,7 @@ import {Subject, takeUntil} from 'rxjs';
   styleUrl: './employee.component.css',
   animations: [slideLeftMargin]
 })
-export class EmployeeComponent implements AfterViewInit, OnDestroy {
+export class EmployeeComponent implements OnDestroy {
 
   private destroy$ = new Subject<void>()
   employees: WritableSignal<any[]> = signal([])
@@ -37,7 +35,6 @@ export class EmployeeComponent implements AfterViewInit, OnDestroy {
   totalElements: number = 0
   addEmployeeModalShow: WritableSignal<boolean> = signal(false)
   deleteEmployeeModalShow: WritableSignal<boolean> = signal(false)
-  isEmplEdit = false
   employee: any
 
   filter = new FormGroup({
@@ -49,11 +46,31 @@ export class EmployeeComponent implements AfterViewInit, OnDestroy {
   constructor(private employeeService: EmployeeService, private toastService: ToastService) {
   }
 
-  ngAfterViewInit(): void {
-    this.getEmployees()
-  }
-
   ngOnInit(): void {
+    this.getEmployees()
+
+    /*
+    {
+        "name": "Shohin update",
+        "surname": "sherov",
+        "lastname": "u",
+        "phoneNumber": "99212345687",
+        "address": "string",
+        "docNo": null,
+        "taxId": null,
+        "position": "superMAN",
+        "interestRate": 0,
+        "enabled": true,
+        "available": true,
+        "willBeAvailable": null,
+        "details": null,
+        "id": 2,
+        "dateCreated": "2024-11-21T00:49:25.605537",
+        "dateUpdated": "2024-11-21T00:50:04.49135",
+        "addedBy": "admin",
+        "modifyBy": "admin"
+      },
+    */
   }
 
   ngOnDestroy(): void {
@@ -91,16 +108,14 @@ export class EmployeeComponent implements AfterViewInit, OnDestroy {
     this.addEmployeeModalShow.set(event)
   }
 
-  editCustomer(item: any) {
+  editEmployee(item: any) {
     this.addEmployeeModalShow.set(true)
-    this.isEmplEdit = true
     this.employee = item
   }
 
-  addCustomer() {
+  addEmployee() {
     this.addEmployeeModalShow.set(true)
     this.employee = null
-    this.isEmplEdit = false
   }
 
   deleteEmployeeInit(item: any) {

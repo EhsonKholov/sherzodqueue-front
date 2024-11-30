@@ -8,6 +8,7 @@ import {EmployeeService} from '../../../services/employee.service';
 import {CustomersService} from '../../../services/customers.service';
 import {ServicesService} from '../../../services/services.service';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {ChairsService} from '../../../services/chairs.service';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -24,61 +25,107 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
-  @Input() edit: boolean = false
   @Input() record: any
   @Output() close = new EventEmitter<any>();
   @Output() getRecords: EventEmitter<any> = new EventEmitter<any>()
 
-  employeesOptions: WritableSignal<any[]> = signal([])
-  selectFilterParamEmployee: string = ''
-
-  servicesOptions: WritableSignal<any[]> = signal([]);
+  services: WritableSignal<any[]> = signal([]);
   selectedServices: any[] = []
-
-  showServicesFilter: WritableSignal<boolean> = signal(false)
-
-  servicesSettings = {
+  servicesSelectSettings = {
     idField: 'id',
     textField: 'name',
-    allowSearchFilter: this.showServicesFilter(),
     enableCheckAll: false,
     limitSelection: -1,
+    allowSearchFilter: true,
+    searchPlaceholderText: 'Поиск',
   };
 
-  addRecordFormGroup = new FormGroup({
-    //customer: new FormControl<any>(null, [Validators.required]),
-    employee: new FormControl<any>(null, [Validators.required]),
-    services: new FormControl<any>(null, [Validators.required]),
-    recordingTime: new FormControl(null, [Validators.required]),
-    amountPaid: new FormControl(0),
-    fullName: new FormControl<string>('', [Validators.required]),
-    phoneNumber: new FormControl(null, [Validators.required]),
-  })
+  employees: WritableSignal<any[]> = signal([])
+  selectedEmployees: any[] = []
+  employeesSelectSettings = {
+    idField: 'id',
+    textField: 'name',
+    enableCheckAll: false,
+    singleSelection: true,
+    allowSearchFilter: true,
+    searchPlaceholderText: 'Поиск',
+    allowRemoteDataSearch: true
+  };
+
+  chairs: WritableSignal<any[]> = signal([])
+  selectedChairs: any[] = []
+  chairsSelectSettings = {
+    idField: 'id',
+    textField: 'name',
+    enableCheckAll: false,
+    singleSelection: true,
+    allowSearchFilter: true,
+    searchPlaceholderText: 'Поиск',
+    allowRemoteDataSearch: true
+  };
+
+  addRecordFormGroup: any
 
   constructor(
     private recordService: RecordsService,
     private toastService: ToastService,
     private employeeService: EmployeeService,
     private customerService: CustomersService,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
+    private chairsService: ChairsService,
   ) {}
+
+  /*
+  {
+    "customerId": 0,
+    "employeeId": 0,
+    "servicesId": [
+      0
+    ],
+    "recordingTime": "2024-11-29T11:51:57.989Z",
+    "amountPaid": 0,
+    "totalPrice": 0,
+    "chairId": 0
+  }
+  */
 
   ngOnInit(): void {
     this.getEmployees()
     this.getServices()
+    this.getChairs()
 
-    if (this.edit) {
-      this.addRecordFormGroup.setValue({
-        //customer: this.record.customer,
-        employee: this.record.employee,
-        services: this.record.services,
-        recordingTime: this.record.recordingTime,
-        amountPaid: this.record.amountPaid,
-        fullName: this.record?.customer?.fullName,
-        phoneNumber: this.record?.customer?.phoneNumber,
+    if (this.record == null) {
+      this.addRecordFormGroup = new FormGroup({
+        surname: new FormControl(null, [Validators.required]),
+        name: new FormControl(null, [Validators.required]),
+        lastname: new FormControl(null),
+        phoneNumber: new FormControl(null, [Validators.required]),
+        employee: new FormControl(null, [Validators.required]),
+        services: new FormControl(null, [Validators.required]),
+        recordingTime: new FormControl(null, [Validators.required]),
+        amountPaid: new FormControl(null, [Validators.required]),
+        totalPrice: new FormControl(null, [Validators.required]),
+        chair: new FormControl(null, [Validators.required]),
       })
-      this.selectedServices = this.record.services
+    } else {
+      this.addRecordFormGroup = new FormGroup({
+        id: new FormControl(this.record?.id, [Validators.required]),
+        surname: new FormControl(this.record?.customer?.surname, [Validators.required]),
+        name: new FormControl(this.record?.customer?.name, [Validators.required]),
+        lastname: new FormControl(this.record?.customer?.lastname),
+        phoneNumber: new FormControl(this.record?.customer?.phoneNumber, [Validators.required]),
+        employee: new FormControl(this.record?.employee, [Validators.required]),
+        services: new FormControl(this.record?.services, [Validators.required]),
+        recordingTime: new FormControl(this.record?.recordingTime, [Validators.required]),
+        amountPaid: new FormControl(this.record?.amountPaid, [Validators.required]),
+        totalPrice: new FormControl(this.record?.totalPrice, [Validators.required]),
+        chair: new FormControl(this.record?.chair?.id, [Validators.required]),
+      })
     }
+
+    this.selectedServices = this.record?.services
+    this.selectedEmployees = [this.record?.employee]
+    this.selectedChairs = [this.record?.chair]
   }
 
   ngOnDestroy(): void {
@@ -92,22 +139,33 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   getServices() {
     this.completeRequests()
-    this.servicesService.getServices(null, 1, 10)
+    this.servicesService.getActivesServices()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.servicesOptions.set(res?.data?.items)
+          this.services.set(res?.data)
+        }
+      })
+  }
+
+  getChairs() {
+    this.completeRequests()
+    this.chairsService.getChairs(null, 1, 100)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          this.chairs.set(res?.data?.items)
         }
       })
   }
 
   getEmployees() {
     this.completeRequests()
-    this.employeeService.getEmployees(this.selectFilterParamEmployee, 1, 10)
+    this.employeeService.getActivesEmployees()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.employeesOptions.set(res?.data?.items)
+          this.employees.set(res?.data)
         }
       })
   }
@@ -138,15 +196,15 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
             amountPaid: this.addRecordFormGroup.controls['amountPaid'].value,
           }
 
-          if (this.edit) {
+          if (!!this.record) {
             this.recordService.editRecord(this.record.id, record)
               .pipe(takeUntil(this.destroy$))
               .subscribe({
-                next: (res: any) => {
+                next: () => {
                   this.getRecords.emit()
                   this.toastService.success('Клиент успешно записан!')
                   this.closeModal()
-                }, error: (err: any) => {
+                }, error: () => {
                   this.toastService.error('Не удалось сохранить запись клиента!')
                 }
               })
@@ -154,17 +212,17 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
             this.recordService.addRecord(record)
               .pipe(takeUntil(this.destroy$))
               .subscribe({
-                next: (res: any) => {
+                next: () => {
                   this.getRecords.emit()
                   this.toastService.success('Данные клиента сохранены!')
                   this.closeModal()
-                }, error: (err: any) => {
+                }, error: () => {
                   this.toastService.error('Не удалось сохранить данные клиента!')
                 }
               })
           }
 
-        }, error: err => {
+        }, error: () => {
           this.toastService.error('Не удалось созранить запись!')
         }
       })
@@ -174,25 +232,34 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.close.emit(false)
   }
 
-  selectFilterEmployees(s: any) {
-    this.selectFilterParamEmployee = s
-    this.addRecordFormGroup.controls['employee'].setValue(s)
-    this.getEmployees()
-  }
-
-  selectEmployee(s: any) {
-    this.addRecordFormGroup.controls['employee'].setValue(s)
-  }
-
   //----------------------Services----------------------------------
   onSelectService(item: any) {
-    this.addRecordFormGroup.controls['services'].setValue(this.selectedServices)
+    this.addRecordFormGroup.controls?.services?.setValue(this.selectedServices)
   }
 
   onDeSelectService(item: any) {
-    this.addRecordFormGroup.controls['services'].setValue(this.selectedServices)
+    this.addRecordFormGroup.controls?.services?.setValue(this.selectedServices)
   }
-
   //----------------------------------------------------------------
 
+  //----------------------Employees----------------------------------
+  onSelectEmployees(item: any) {
+    this.addRecordFormGroup.controls?.employee?.setValue(item)
+  }
+
+  onDeSelectEmployees(item: any) {
+    this.addRecordFormGroup.controls?.employee?.setValue(item)
+  }
+  //----------------------------------------------------------------
+
+  // ----------------------Chairs----------------------------------
+  onSelectChairs(item: any) {
+    this.addRecordFormGroup.controls?.chair?.setValue(item)
+  }
+
+  onDeSelectChairs(item: any) {
+    this.addRecordFormGroup.controls?.chair?.setValue(item)
+  }
+  //----------------------------------------------------------------
+  protected readonly console = console;
 }

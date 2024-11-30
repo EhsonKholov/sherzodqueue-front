@@ -295,3 +295,42 @@ table {
 .app-padding-left {
   padding-left: 280px !important;
 }
+
+.app-background {
+  background-color: #f7f7f9 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+span:has(i.bi) {
+  padding: 0.1rem 0.25rem !important;
+  transition: all 100ms linear;
+}
+
+ng-multiselect-dropdown .selected-item-container .selected-item {
+  max-width: 100% !important;
+  margin-bottom: 0.25rem !important;
+  background-color: #04b70a !important;
+}
+
+ng-multiselect-dropdown .selected-item-container .selected-item a {
+  position: relative !important;
+  font-weight: 600 !important;
+  color: #ff0018 !important;
+  width: 20px !important;
+  text-align: center !important;
+}
+
+ng-multiselect-dropdown .selected-item-container .selected-item a:hover {
+
+}
+
+/*ng-multiselect-dropdown .selected-item-container .selected-item a:before {
+  content: '×';
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}*/

@@ -45,6 +45,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   constructor(private customerService: CustomersService, private toastService: ToastService) {
   }
 
+
   ngOnInit(): void {
     this.getCustomers()
   }

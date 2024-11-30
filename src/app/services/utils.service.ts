@@ -17,4 +17,10 @@ export class UtilsService {
   cloneObject(obj: any) {
     return JSON.parse(JSON.stringify(obj));
   }
+
+  convertTimeToMinutes(time: string) { //'04:00:00' -> 4
+    return Math.floor(time.split (':').reduce (function (seconds, v) {
+      return +v + seconds * 60;
+    }, 0) / 60);
+  }
 }

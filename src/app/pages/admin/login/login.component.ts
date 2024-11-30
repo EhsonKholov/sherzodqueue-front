@@ -43,7 +43,7 @@ export class LoginComponent {
           return true
         }, error: (error: any) => {
           this.loading = false
-          this.toastService.error("Неправильный логин или пароль!")
+          this.toastService.error("Неправильный логин или пароль!", 5)
         }
       })
   }

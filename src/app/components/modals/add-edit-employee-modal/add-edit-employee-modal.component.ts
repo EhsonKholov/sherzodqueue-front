@@ -17,19 +17,11 @@ import {Subject, takeUntil} from 'rxjs';
 export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
-  @Input() edit: boolean = false
   @Input() employee: any
   @Output() close = new EventEmitter<any>();
   @Output() getEmployees: EventEmitter<any> = new EventEmitter<any>()
 
-  addEmployeeFormGroup = new FormGroup({
-    fullName: new FormControl(null, [Validators.required]),
-    position: new FormControl(null, [Validators.required]),
-    roomNumber: new FormControl(null, [Validators.required]),
-    available: new FormControl(false, [Validators.required]),
-    willBeAvailable: new FormControl(null, [Validators.required]),
-    details: new FormControl(null, [Validators.required]),
-  })
+  addEmployeeFormGroup: any
 
   constructor(
     private employeeService: EmployeeService,
@@ -37,14 +29,39 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.edit) {
-      this.addEmployeeFormGroup.setValue({
-        fullName: this.employee.fullName,
-        available: this.employee.available,
-        details: this.employee.details,
-        position: this.employee.position,
-        roomNumber: this.employee.roomNumber,
-        willBeAvailable: this.employee.willBeAvailable
+    console.log(this.employee)
+    if (this.employee == null) {
+      this.addEmployeeFormGroup = new FormGroup({
+        name: new FormControl(null, [Validators.required]),
+        surname: new FormControl(null, [Validators.required]),
+        lastname: new FormControl(null),
+        phoneNumber: new FormControl(null, [Validators.required]),
+        address: new FormControl(null, [Validators.required]),
+        docNo: new FormControl(null, [Validators.required]),
+        taxId: new FormControl(null, [Validators.required]),
+        position: new FormControl(null, [Validators.required]),
+        interestRate: new FormControl(0, [Validators.required]),
+        enabled: new FormControl(true),
+        available: new FormControl(true),
+        willBeAvailable: new FormControl(null, [Validators.required]),
+        details: new FormControl(null, [Validators.required]),
+      })
+    } else {
+      this.addEmployeeFormGroup = new FormGroup({
+        id: new FormControl(this.employee.id, [Validators.required]),
+        name: new FormControl(this.employee.name, [Validators.required]),
+        surname: new FormControl(this.employee.surname, [Validators.required]),
+        lastname: new FormControl(this.employee.lastname),
+        phoneNumber: new FormControl(this.employee.phoneNumber, [Validators.required]),
+        address: new FormControl(this.employee.address, [Validators.required]),
+        docNo: new FormControl(this.employee.docNo, [Validators.required]),
+        taxId: new FormControl(this.employee.taxId, [Validators.required]),
+        position: new FormControl(this.employee.position, [Validators.required]),
+        interestRate: new FormControl(this.employee.interestRate, [Validators.required]),
+        enabled: new FormControl(this.employee.enabled),
+        available: new FormControl(this.employee.available),
+        willBeAvailable: new FormControl(this.employee.willBeAvailable, [Validators.required]),
+        details: new FormControl(this.employee.details, [Validators.required]),
       })
     }
   }
@@ -56,7 +73,7 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
 
   addEditEmployee() {
     const body = this.addEmployeeFormGroup.value
-    if (this.edit) {
+    if (!!this.employee) {
       this.employeeService.editEmployee(this.employee.id, body)
         .pipe(takeUntil(this.destroy$))
         .subscribe({

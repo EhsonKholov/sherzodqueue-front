@@ -2,5 +2,6 @@ export interface Toast {
   id?: string
   flag?: string
   message: string
-  crated?: any
+  crated?: any,
+  duration: number
 }

@@ -4,22 +4,18 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header p-4">
-        <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{!!service ? 'Изменить услугу' : 'Добавить новую услугу'}}</h1>
+        @if (!!this.serviceCategory) {
+          <h1 class="modal-title fs-5" id="addCustomerModalLabel">Изменить данные категории</h1>
+        } @else {
+          <h1 class="modal-title fs-5">Добавить новую категорию</h1>
+        }
         <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form [formGroup]="addServiceFormGroup" (submit)="addEditService()">
+      <form [formGroup]="addServiceFormGroup" (submit)="addEditServiceCategory()">
         <div class="modal-body p-4 row">
           <div class="mb-3 col-6">
             <label for="name" class="form-label required">Наименование</label>
             <input type="text" class="form-control" id="name" formControlName="name" required>
-          </div>
-          <div class="mb-3 col-6">
-            <label for="duration" class="form-label required">Продолжительность</label>
-            <input type="time" step="1" class="form-control" id="duration" formControlName="duration" required>
-          </div>
-          <div class="mb-3 col-6">
-            <label for="price" class="form-label required">Цена</label>
-            <input type="text" class="form-control" id="price" formControlName="price" required>
           </div>
           <div class="mb-3 col-6">
             <label for="enabled" class="form-label required">Активность</label>
@@ -29,20 +25,6 @@
                 <label class="form-check-label" for="enabled">{{ addServiceFormGroup.controls.enabled.value ? 'Активна' : 'Неактивна' }}</label>
               </div>
             </div>
-          </div>
-          <div class="mb-3 col-6">
-            <label class="form-label required">Категории</label>
-            <ng-multiselect-dropdown
-              name="services"
-              [placeholder]="'Выбрать категорию'"
-              [data]="categories()"
-              [(ngModel)]="selectedCategories"
-              [ngModelOptions]="{standalone: true}"
-              [settings]="categorySelectSettings"
-              (onSelect)="onSelectCategories($event)"
-              (onDeSelect)="onDeSelectCategories($event)"
-            >
-            </ng-multiselect-dropdown>
           </div>
         </div>
         <div class="modal-footer p-4">

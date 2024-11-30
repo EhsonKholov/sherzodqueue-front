@@ -29,14 +29,12 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
   services: WritableSignal<any[]> = signal([])
-  show_filter: WritableSignal<boolean> = signal(true)
   page_num: number = 1
   page_size: number = 10
   total_pages: number = 0
   totalElements: number = 0
   addServiceModalShow: WritableSignal<boolean> = signal(false)
   deleteServiceModalShow: WritableSignal<boolean> = signal(false)
-  isServiceEdit = false
   service: any
 
   filter = new FormGroup({
@@ -66,14 +64,10 @@ export class ServicesComponent implements OnInit, OnDestroy {
           this.page_size = res?.data?.size
           this.totalElements = res?.data?.totalCount
           this.total_pages = res?.data?.totalPages
-        }, error: (error: any) => {
+        }, error: () => {
           this.toastService.error('ошибка получения данных!')
         }
       })
-  }
-
-  clearFilter() {
-    this.filter.reset()
   }
 
   onPageChange(event: { page_number: number; page_size: number }): void {
@@ -88,14 +82,12 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   editService(item: any) {
     this.addServiceModalShow.set(true)
-    this.isServiceEdit = true
     this.service = item
   }
 
   addService() {
     this.addServiceModalShow.set(true)
     this.service = null
-    this.isServiceEdit = false
   }
 
   deleteServiceInit(item: any) {
@@ -107,12 +99,12 @@ export class ServicesComponent implements OnInit, OnDestroy {
     this.servicesService.deleteService(this.service.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: any) => {
-          this.toastService.success('Клиент удален!')
+        next: () => {
+          this.toastService.success('Услуга успешно удалена!')
           this.deleteServiceModalShow.set(false)
           this.getServices()
-        }, error: (error: any) => {
-          this.toastService.success('Ошибка удаления клиента!')
+        }, error: () => {
+          this.toastService.success('Ошибка удаления услуги!')
         }
       })
   }

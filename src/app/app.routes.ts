@@ -6,18 +6,23 @@ import {RecordsComponent} from './pages/admin/records/records.component';
 import {ServicesComponent} from './pages/admin/services/services.component';
 import {RecordsHistoryComponent} from './pages/admin/records-history/records-history.component';
 import {authGuard} from './services/guard/auth.guard';
+import {ServiceCategoryComponent} from './pages/admin/service-category/service-category.component';
+import {ChairsComponent} from './pages/admin/chairs/chairs.component';
 
 export const routes: Routes = [
   {path: '', title: 'Главная', redirectTo: '/admin/records', /*component: HomeComponent,*/pathMatch: 'full'},
   {
     path: 'admin', loadComponent: () => import('./pages/admin/admin/admin.component').then(m => m.AdminComponent),
+    canActivate: [authGuard],
     children: [
       {path: '', redirectTo: '/admin/records', pathMatch: 'full'},
       {path: 'records', title: 'Записи', component: RecordsComponent},
       {path: 'records-history', title: 'История записей', component: RecordsHistoryComponent},
       {path: 'customers', title: 'Клиенты', component: CustomersComponent},
       {path: 'employees', title: 'Сотрудники', component: EmployeeComponent},
-      {path: 'services', title: 'Записи', component: ServicesComponent},
+      {path: 'services', title: 'Услуги', component: ServicesComponent},
+      {path: 'services/category', title: 'Категории услуг', component: ServiceCategoryComponent},
+      {path: 'chairs', title: 'Кресла', component: ChairsComponent},
     ]
   },
   {
@@ -25,5 +30,5 @@ export const routes: Routes = [
     title: 'Логин',
     loadComponent: () => import('./pages/admin/login/login.component').then(m => m.LoginComponent)
   },
-  {path: '**', title: 'Not Found', component: NotFoundComponent},
+  {path: '**', title: 'Not Found', canActivate: [authGuard], component: NotFoundComponent},
 ];

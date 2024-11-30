@@ -29,4 +29,8 @@ export class EmployeeService {
   deleteEmployee(id: number) {
     return this.http.delete(environment.URI + `api/employees/${id}`)
   }
+
+  getActivesEmployees() {
+    return this.http.get('api/employees/active')
+  }
 }

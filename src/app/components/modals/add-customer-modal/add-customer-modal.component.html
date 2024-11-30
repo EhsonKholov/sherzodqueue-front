@@ -4,26 +4,83 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header p-4">
-        <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{edit ? 'Изменить' : 'Добавить'}}</h1>
-        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5"
+            id="addCustomerModalLabel">{{ edit ? 'Изменить данные клиента' : 'Добавить нового клиента' }}</h1>
+        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
+                aria-label="Close"></button>
       </div>
+
       <form [formGroup]="addCustomerFormGroup" (submit)="addEditCustomer()">
         <div class="modal-body row p-4">
           <div class="mb-3 col-6">
-            <label for="address" class="form-label required">№ документа</label>
-            <input type="text" class="form-control" id="docNumber" formControlName="docNumber">
+            <label for="surname" class="form-label required">Фамилия</label>
+            <input type="text" class="form-control" id="surname" formControlName="surname" required>
           </div>
           <div class="mb-3 col-6">
-            <label for="fullName" class="form-label required">ФОИ</label>
-            <input type="text" class="form-control" id="fullName" formControlName="fullName">
+            <label for="name" class="form-label required">Имя</label>
+            <input type="text" class="form-control" id="name" formControlName="name" required>
           </div>
           <div class="mb-3 col-6">
-            <label for="address" class="form-label">Адрес</label>
-            <input type="text" class="form-control" id="address" formControlName="address">
+            <label for="lastname" class="form-label">Отчество</label>
+            <input type="text" class="form-control" id="lastname" formControlName="lastname">
+          </div>
+          <div class="mb-3 col-6">
+            <label for="email" class="form-label">Эл. почта</label>
+            <input type="text" class="form-control" id="email" formControlName="email">
           </div>
           <div class="mb-3 col-6">
             <label for="address" class="form-label required">Телефон</label>
-            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" required>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="address" class="form-label">№ документа</label>
+            <input type="text" class="form-control" id="docNumber" formControlName="docNumber">
+          </div>
+          <div class="mb-3 col-6">
+            <label for="address" class="form-label required">Активность клиента</label>
+            <div class="form-control">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="enabled" formControlName="enabled">
+                <label class="form-check-label" for="enabled">{{ addCustomerFormGroup.controls.enabled.value ? 'Активен' : 'Неактивен' }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="birhday" class="form-label required">Год рождения</label>
+            <input type="date" class="form-control" id="birhday" formControlName="birhday" required>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="birhday" class="form-label required">Пол</label>
+            <div class="form-control">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender" [value]="'M'" formControlName="gender" required>
+                <label class="form-check-label" for="gender">Мужчина</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender2" [value]="'F'" formControlName="gender" required>
+                <label class="form-check-label" for="gender2">Женщина</label>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="address" class="form-label required">Адрес</label>
+            <input type="text" class="form-control" id="address" formControlName="address" required>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="city" class="form-label required">Город</label>
+            <input type="text" class="form-control" id="city" formControlName="city" required>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="street" class="form-label">Улица</label>
+            <input type="text" class="form-control" id="street" formControlName="street">
+          </div>
+          <div class="mb-3 col-6">
+            <label for="homeNumber" class="form-label">Описание</label>
+            <textarea type="text" class="form-control" id="details" name="details" formControlName="details"></textarea>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="homeNumber" class="form-label">Номер квартиры</label>
+            <input type="text" class="form-control" id="homeNumber" formControlName="homeNumber">
           </div>
         </div>
         <div class="modal-footer p-4">

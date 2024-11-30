@@ -14,28 +14,29 @@ export class ToastService {
     this.runCheckToasts()
   }
 
-  default(message: string) {
-    this.createToast(message)
+  default(message: string, duration: number = this.inactivityTime) {
+    this.createToast(message, undefined, duration)
   }
 
-  success(message: string) {
-    this.createToast(message, 'success')
+  success(message: string, duration: number = this.inactivityTime) {
+    this.createToast(message, 'success', duration)
   }
 
-  warning(message: string) {
-    this.createToast(message, 'warning')
+  warning(message: string, duration: number = this.inactivityTime) {
+    this.createToast(message, 'warning', duration)
   }
 
-  error(message: string) {
-    this.createToast(message, 'error')
+  error(message: string, duration: number = this.inactivityTime) {
+    this.createToast(message, 'error', duration)
   }
 
-  createToast(message: string, flag?: 'success' | 'error' | 'warning'): void {
-    let toast: Toast = {
+  createToast(message: string, flag?: 'success' | 'error' | 'warning', duration: number = this.inactivityTime): void {
+    const toast: Toast = {
       id: this.utils.generateUUID(),
       message: message,
       flag: flag,
-      crated: Date.now()
+      crated: Date.now(),
+      duration: duration
     }
 
     this.toasts.update(values => [...values, toast])
@@ -54,7 +55,7 @@ export class ToastService {
   filterToast() {
     this.toasts.set(this.toasts().filter(t => {
       const timeDifferenceByNowAndCreatedToast = Math.ceil((Date.now() - t.crated) / 1000);
-      const timeLeft = this.inactivityTime - timeDifferenceByNowAndCreatedToast;
+      const timeLeft = t.duration - timeDifferenceByNowAndCreatedToast;
       return timeLeft > 0;
     }))
   }

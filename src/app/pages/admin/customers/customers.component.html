@@ -7,104 +7,224 @@
   />
 }
 
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="row g-4 mb-4">
 
-<div class="ib-filter">
-  <div class="w-100">
-    <div class="p-3 bg-white rounded">
-      <form [formGroup]="filter" (ngSubmit)="getCustomers()">
-        <div class="mb-2">
-          <label class="form-label mb-1">От:</label>
-          <input type="date" class="form-control" formControlName="startDate">
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4 app-shadow">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Клиенты</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-2">20</h3>
+                  <p class="text-success mb-1">(+29%)</p>
+                </div>
+                <small class="mb-0">Количество клиентов</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-primary rounded-3">
+                  <div class="ri-group-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="mb-2">
-          <label class="form-label mb-1">До:</label>
-          <input type="date" class="form-control" formControlName="endDate">
-        </div>
-        <div class="mb-2">
-          <label class="form-label mb-1">Query</label>
-          <input type="text" class="form-control" formControlName="query">
-        </div>
-        <div class="pt-4">
-          <button type="submit" class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center"
-                  [disabled]="filter.invalid || filter.pristine">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-                 viewBox="0 0 16 16">
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-            </svg>
-            <span class="ms-2">Поиск</span>
-          </button>
-          <button type="button" class="btn btn-light w-100 d-flex align-items-center justify-content-center"
-                  (click)="clearFilter()" [disabled]="filter.pristine">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
-                 viewBox="0 0 16 16">
-              <path
-                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-            </svg>
-            <span class="ms-1">Очистить</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-<div class="ib-content ib-content-filter">
-
-  <div class="p-3 bg-white rounded mb-3 mt-3 shadow-sm">
-    <div class="row justify-content-between">
-      <div class="col d-flex align-items-center">
-        <h3 class="me-2 mb-0" style="color: #525F7B">Список клиентов</h3>
-        <div class="px-2 py-1 bg-light text-dark rounded fw-bold">{{ totalElements || '0' }}</div>
       </div>
-      <div class="col d-flex justify-content-end align-items-center">
-        <button (click)="addCustomer()" class="btn btn-light d-flex align-items-center me-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
-            <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"/>
-            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
-          </svg>
-          <span class="ms-2">Добавить клиента</span>
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <div class="p-3 bg-white rounded mb-3 shadow-sm">
-    <div class="table-responsive">
-      <table class="table">
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Активные</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">16</h3>
+                  <p class="text-success mb-1">(+18%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-danger rounded-3">
+                  <div class="ri-user-add-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">В отпуске</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">4</h3>
+                  <p class="text-danger mb-1">(-14%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-success rounded-3">
+                  <div class="ri-user-follow-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between">
+              <div class="me-1">
+                <p class="text-heading mb-1">Заявки</p>
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-1 me-1">11</h3>
+                  <p class="text-success mb-1">(+42%)</p>
+                </div>
+                <small class="mb-0">Текст</small>
+              </div>
+              <div class="avatar">
+                <div class="avatar-initial bg-label-warning rounded-3">
+                  <div class="ri-user-search-line ri-26px h2 text-secondary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pt-4 pb-1 mb-5 rounded-4 bg-white app-shadow">
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="m-0">Список клиентов</h3>
+        <div>
+          <button type="button" class="btn btn-light" (click)="addCustomer()">
+            <i class="ri-add-line me-2"></i>
+            <span>Добавить клиента</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="px-4 mb-4">
+        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getCustomers()">
+          <div class="row g-3">
+
+            <div class="col-sm-2">
+              <input type="date" class="form-control" formControlName="startDate">
+            </div>
+
+            <div class="col-sm-2">
+              <input type="date" class="form-control" formControlName="endDate">
+            </div>
+
+            <div class="col-sm-2">
+              <input type="text" class="form-control" formControlName="query" placeholder="">
+            </div>
+
+            <div class="col d-flex align-items-center">
+              <button type="submit" class="btn btn-light me-3">
+                <i class="ri-search-line me-2"></i>
+                <span>Поиск</span>
+              </button>
+              <div class="vr h-75 mx-3 align-self-auto"></div>
+              <button type="button" class="btn btn-light">
+                <i class="ri-upload-2-line me-2"></i>
+                <span>Экспорт</span>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <table class="table mb-4">
         <thead>
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">№ документа</th>
-          <th scope="col">Создан</th>
-          <th scope="col">ФИО</th>
-          <th scope="col">Телефон</th>
-          <th scope="col">Адрес</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
+          <th scope="col" class="px-4 essp-th-spec-color">Клиент</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Email</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Документ</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Адрес</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Город</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Улица</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Квартира</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Год рождения</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Пол</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Описание</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
         </tr>
         </thead>
         <tbody>
           @for (item of customers(); track $index) {
-            <tr style="cursor: pointer">
-              <td>{{ item.id }}</td>
-              <td>{{ item.docNumber }}</td>
-              <td>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</td>
-              <td>{{ item.fullName }}</td>
-              <td>{{ item.phoneNumber }}</td>
-              <td>{{ item.address }}</td>
-              <td><span (click)="editCustomer(item)"><i class="bi bi-pencil-square text-warning"></i></span></td>
-              <td><span (click)="deleteCustomerInit(item)"><i class="bi bi-trash text-danger"></i></span></td>
+            <tr class="align-middle">
+              <td class="px-4">
+                <div class="essp-table-ico">
+                  <!--<img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">-->
+                  <div>
+                    <span>{{ item?.surname }} {{ item?.name }} {{ item?.lastname }}</span>
+                    <!--<small>{{ item?.email }}</small>-->
+                  </div>
+                </div>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.phoneNumber }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.email }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.docNumber }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.address }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.city }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.street }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.homeNumber }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.birhday }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.gender == 'M' ? 'Мужчина':'Женщина' }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.details }}</span>
+              </td>
+              <td class="px-4">
+                <div class="essp-status-position">
+                  <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
+                </div>
+              </td>
+              <td class="px-4">
+                <div class="essp-table-actions">
+                  <span class="cursor-pointer" (click)="editCustomer(item)"><i
+                    class="bi bi-pencil-square text-warning"></i></span>
+                  <span class="cursor-pointer" (click)="deleteCustomerInit(item)"><i
+                    class="bi bi-trash text-danger"></i></span>
+                </div>
+              </td>
             </tr>
           }
         </tbody>
       </table>
+
+      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)" />
     </div>
   </div>
-
-  <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
-
 </div>
 
 

@@ -2,7 +2,6 @@
   <app-add-edit-employee-modal
     (close)="closeAddEmployeeModal($event)"
     (getEmployees)="getEmployees()"
-    [edit]="isEmplEdit"
     [employee]="employee"
   />
 }
@@ -106,7 +105,7 @@
       <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
         <h3 class="m-0">Список сотрудников</h3>
         <div>
-          <button type="button" class="btn btn-light" (click)="addCustomer()">
+          <button type="button" class="btn btn-light" (click)="addEmployee()">
             <i class="ri-add-line me-2"></i>
             <span>Добавить сотрудника</span>
           </button>
@@ -145,182 +144,100 @@
         </form>
       </div>
 
-      <table class="table mb-4">
-        <thead>
-        <tr>
-          <th scope="col" class="px-4 essp-th-spec-color">ФИО</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Кабинет</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Доступен</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Будет доступен</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-          @for (item of employees(); track $index) {
-            <tr class="align-middle">
-              <td class="px-4">
-                <div class="essp-table-ico">
-                  <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
-                  <div>
-                    <span>{{ item?.fullName }}</span>
-                    <small>{{ item?.email }}</small>
+      <div class="overflow-auto">
+        <table class="table mb-4">
+          <thead>
+          <tr>
+            <th scope="col" class="px-4 essp-th-spec-color">Сотрудник</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Процент</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Документ</th>
+            <th scope="col" class="px-4 essp-th-spec-color">ИНН</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Статус</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Доступность</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Будет доступен</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Адрес</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Описание</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of employees(); track $index) {
+              <tr class="align-middle">
+                <td class="px-4">
+                  <div class="essp-table-ico">
+                    <!--<img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">-->
+                    <div>
+                      <span>{{ item?.surname }} {{ item?.name }} {{ item?.lastname }}</span>
+                      <small>{{ item?.email }}</small>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="px-4">
-                <div class="essp-status-position">
-                  <i class="ri-nurse-line"></i>
-                  <span>{{ item.position }}</span>
-                </div>
-              </td>
-              <td class="px-4">
-                <div class="essp-status-position">
-                  <i class="ri-nurse-line"></i>
-                  <span>{{ item.position }}</span>
-                </div>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.phoneNumber }}</span>
-              </td>
-              <td class="px-4">
+                </td>
+                <td class="px-4">
+                  <div class="essp-status-position">
+                    <i class="ri-nurse-line"></i>
+                    <span>{{ item.position }}</span>
+                  </div>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.phoneNumber }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.interestRate }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.docNo }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.taxId }}</span>
+                </td>
+                <td class="px-4">
+                <span
+                  class="{{item.available ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активен' : 'Неактивен' }}</span>
+                  <!--<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>-->
+                </td>
+                <td class="px-4">
                 <span
                   class="{{item.available ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.available ? 'Доступен' : 'Недоступен' }}</span>
-                <!--<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>-->
-              </td>
-              <td class="px-4">
-                <div class="essp-status-position">
-                  <i class="ri-nurse-line"></i>
-                  <span>{{ item.willBeAvailable | date: 'yyyy.MM.dd HH:MM' }}</span>
-                </div>
-              </td>
-              <td class="px-4">
-                <div class="essp-status-position">
-                  <i class="ri-nurse-line"></i>
-                  <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
-                </div>
-              </td>
-              <td class="px-4">
-                <div class="essp-table-actions">
-                  <!--<i class="ri-eye-line ri-20px" title="Посмотреть"></i>-->
-                  <span (click)="editCustomer(item)"><i class="ri-edit-box-line" title="Изменить"></i></span>
-                  <span (click)="deleteEmployeeInit(item)"><i class="ri-delete-bin-7-line" title="Удалить"></i></span>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+                  <!--<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>-->
+                </td>
+                <td class="px-4">
+                  <div class="essp-status-position">
+                    <i class="ri-nurse-line"></i>
+                    <span>{{ (item.willBeAvailable | date: 'yyyy.MM.dd HH:MM') || '-' }}</span>
+                  </div>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.address }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.details }}</span>
+                </td>
+                <td class="px-4">
+                  <div class="essp-status-position">
+                    <i class="ri-nurse-line"></i>
+                    <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
+                  </div>
+                </td>
+                <td class="px-4">
+                  <div class="essp-table-actions">
+                    <span class="cursor-pointer" (click)="editEmployee(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
+                    <span class="cursor-pointer" (click)="deleteEmployeeInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
       <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
     </div>
   </div>
 </div>
 
-<!--<div class="ib-filter">
-  <div class="w-100">
-    <div class="p-3 bg-white rounded">
-      <form [formGroup]="filter" (ngSubmit)="getEmployees()">
-        <div class="mb-2">
-          <label class="form-label mb-1">От:</label>
-          <input type="date" class="form-control" formControlName="startDate">
-        </div>
-        <div class="mb-2">
-          <label class="form-label mb-1">До:</label>
-          <input type="date" class="form-control" formControlName="endDate">
-        </div>
-        <div class="mb-2">
-          <label class="form-label mb-1">Query</label>
-          <input type="text" class="form-control" formControlName="query">
-        </div>
-        <div class="pt-4">
-          <button type="submit" class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center"
-                  [disabled]="filter.invalid || filter.pristine">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-                 viewBox="0 0 16 16">
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-            </svg>
-            <span class="ms-2">Поиск</span>
-          </button>
-          <button type="button" class="btn btn-light w-100 d-flex align-items-center justify-content-center"
-                  (click)="clearFilter()" [disabled]="filter.pristine">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
-                 viewBox="0 0 16 16">
-              <path
-                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-            </svg>
-            <span class="ms-1">Очистить</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-<div class="ib-content ib-content-filter">
-
-  <div class="p-3 bg-white rounded mb-3 mt-3 shadow-sm">
-    <div class="row justify-content-between">
-      <div class="col d-flex align-items-center">
-        <h3 class="me-2 mb-0" style="color: #525F7B">Список сотрудников</h3>
-        <div class="px-2 py-1 bg-light text-dark rounded fw-bold">{{ totalElements || '0' }}</div>
-      </div>
-      <div class="col d-flex justify-content-end align-items-center">
-        <button (click)="addCustomer()" class="btn btn-light d-flex align-items-center me-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
-            <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"/>
-            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
-          </svg>
-          <span class="ms-2">Добавить сотрудника</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="p-3 bg-white rounded mb-3 shadow-sm">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">ФИО</th>
-          <th scope="col">Должность</th>
-          <th scope="col">Кабинет</th>
-          <th scope="col">Доступен</th>
-          <th scope="col">Будет доступен</th>
-          <th scope="col">Телефон</th>
-          <th scope="col">Создан</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-          @for (item of employees(); track $index) {
-            <tr style="cursor: pointer">
-              <td>{{ item.id }}</td>
-              <td>{{ item.fullName }}</td>
-              <td>{{ item.position }}</td>
-              <td>{{ item.roomNumber }}</td>
-              <td>{{ item.available }}</td>
-              <td>{{ item.willBeAvailable | date: 'yyyy.MM.dd HH:MM' }}</td>
-              <td>{{ item.phoneNumber }}</td>
-              <td>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</td>
-              <td><span (click)="editCustomer(item)"><i class="bi bi-pencil-square text-warning"></i></span></td>
-              <td><span (click)="deleteEmployeeInit(item)"><i class="bi bi-trash text-danger"></i></span></td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
-
-</div>-->
 
 
 @if (deleteEmployeeModalShow()) {

@@ -5,7 +5,9 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {ToastService} from '../../../services/toast.service';
 import {RecordsService} from '../../../services/records.service';
-import {AddEditRecordModalComponent} from '../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
+import {
+  AddEditRecordModalComponent
+} from '../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {Subject, takeUntil} from 'rxjs';
 
@@ -49,7 +51,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.getRecords()
+    this.getRecords()
   }
 
   ngOnDestroy(): void {
@@ -59,35 +61,81 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
   /*
   {
-        "id": 1,
+        "recordingTime": "2024-11-27T14:40:00.356",
+        "endTime": "2024-11-27T14:50:00.356",
+        "amountPaid": 0,
+        "totalPrice": 1234,
+        "status": 0,
         "customer": {
-          "id": 5,
-          "fullName": "Ivan 1",
-          "address": "Test11",
-          "phoneNumber": "1111111",
-          "docNumber": "11111111",
-          "dateCreated": "0001-01-01T00:00:00"
+          "name": "Test",
+          "surname": "Test",
+          "lastname": null,
+          "phoneNumber": "+992917505601",
+          "enabled": true,
+          "address": "Test",
+          "city": "Test",
+          "street": null,
+          "homeNumber": null,
+          "birhday": "2024-10-28",
+          "gender": "M",
+          "details": null,
+          "docNumber": null,
+          "email": null,
+          "id": 9,
+          "dateCreated": "2024-11-26T09:40:35.762694",
+          "dateUpdated": null,
+          "addedBy": "admin",
+          "modifyBy": null
         },
         "employee": {
-          "id": 5,
-          "fullName": "Доктор Срендж",
-          "position": "хирурги тенч",
-          "roomNumber": "1",
-          "available": false,
-          "willBeAvailable": "2025-01-05T00:00:00",
+          "name": "Shohin update",
+          "surname": "sherov",
+          "lastname": "u",
+          "phoneNumber": "99212345687",
+          "address": "string",
+          "docNo": null,
+          "taxId": null,
+          "position": "superMAN",
+          "interestRate": 0,
+          "enabled": true,
+          "available": true,
+          "willBeAvailable": null,
           "details": null,
-          "dateCreated": "0001-01-01T00:00:00"
-        },
-        "service": {
           "id": 2,
-          "name": "Удаление зуба",
-          "duration": "01:20:00",
-          "price": 50
+          "dateCreated": "2024-11-21T00:49:25.605537",
+          "dateUpdated": "2024-11-21T00:50:04.49135",
+          "addedBy": "admin",
+          "modifyBy": "admin"
         },
-          "recordingTime": "2024-12-21T00:00:00",
-        "amountPaid": 20,
-        "dateCreated": "0001-01-01T00:00:00"
-      }
+        "chair": {
+          "name": "кресло 3 -UPDATE",
+          "enabled": true,
+          "id": 4,
+          "dateCreated": "2024-11-21T00:20:21.544557",
+          "dateUpdated": "2024-11-21T00:20:50.444787",
+          "addedBy": "admin",
+          "modifyBy": "admin"
+        },
+        "services": [
+          {
+            "name": "Консультация",
+            "duration": "00:10:00",
+            "price": 10.2,
+            "enabled": false,
+            "category": null,
+            "id": 1,
+            "dateCreated": "2024-11-20T11:43:00.545251",
+            "dateUpdated": "2024-11-27T12:43:00.117909",
+            "addedBy": "seed datat",
+            "modifyBy": "admin"
+          }
+        ],
+        "id": 5,
+        "dateCreated": "2024-11-27T23:48:54.682388",
+        "dateUpdated": null,
+        "addedBy": "admin",
+        "modifyBy": null
+      },
   */
 
   getRecords() {

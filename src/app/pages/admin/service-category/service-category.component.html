@@ -1,8 +1,8 @@
-@if (addServiceModalShow()) {
-  <app-add-edit-service-modal
-    (close)="closeAddServiceModal($event)"
-    (getServices)="getServices()"
-    [service]="service"
+@if (addServiceCategoryModalShow()) {
+  <app-add-edit-service-category-modal
+    (close)="closeAddServiceCategoryModal($event)"
+    (getServicesCategories)="getServicesCategories()"
+    [serviceCategory]="serviceCategory"
   />
 }
 
@@ -11,17 +11,17 @@
     <div class="pt-4 pb-1 mb-5 rounded-4 bg-white app-shadow">
 
       <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
-        <h3 class="m-0">Список услуг</h3>
+        <h3 class="m-0">Список категорий услуг</h3>
         <div>
-          <button type="button" class="btn btn-light" (click)="addService()">
+          <button type="button" class="btn btn-light" (click)="addServiceCategory()">
             <i class="ri-add-line me-2"></i>
-            <span>Добавить услугу</span>
+            <span>Добавить категорию</span>
           </button>
         </div>
       </div>
 
       <div class="px-4 mb-4">
-        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getServices()">
+        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getServicesCategories()">
           <div class="row g-3">
             <div class="col-sm-2">
               <input type="text" class="form-control" formControlName="query" placeholder="">
@@ -47,13 +47,16 @@
         <thead>
         <tr>
           <th scope="col" class="px-4 essp-th-spec-color">Наименование</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Продолжительность</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Цена</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Активность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Создано</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Обновлен</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Обновлено</th>
           <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
         </tr>
         </thead>
         <tbody>
-          @for (item of services(); track $index) {
+          @for (item of servicesCategories(); track $index) {
             <tr class="align-middle">
               <td class="px-4">
                 <div class="essp-status-position">
@@ -61,15 +64,25 @@
                 </div>
               </td>
               <td class="px-4">
-                <span class="essp-table-info">{{ item.duration }}</span>
+                <span class="{{item.enabled ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активна' : 'Неактивна' }}</span>
               </td>
               <td class="px-4">
-                <span class="essp-table-info">{{ item.price | currency: '':'' }}</span>
+                <span class="essp-table-info">{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
               </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.addedBy }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.dateUpdated | date: 'yyyy.MM.dd HH:MM' }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.modifyBy }}</span>
+              </td>
+
               <td class="px-4">
                 <div class="essp-table-actions">
                   <span class="cursor-pointer" (click)="editService(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
-                  <span class="cursor-pointer" (click)="deleteServiceInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
+                  <span class="cursor-pointer" (click)="deleteServiceCategoryInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
                 </div>
               </td>
             </tr>
@@ -90,18 +103,18 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="deleteCustomerConfirmLabel">Удаление услуги</h1>
+          <h1 class="modal-title fs-5" id="deleteCustomerConfirmLabel">Удаление категории услуг</h1>
           <button type="button" class="btn-close" (click)="deleteServiceModalShow.set(false)" data-bs-dismiss="modal"
                   aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="text-danger fs-5">Удалить услугу?</div>
+          <div class="text-danger fs-5">Удалить категорию услуг?</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="deleteServiceModalShow.set(false)"
                   data-bs-dismiss="modal">Отмена
           </button>
-          <button type="button" (click)="deleteService()" class="btn btn-danger">Удалить</button>
+          <button type="button" (click)="deleteServiceCategory()" class="btn btn-danger">Удалить</button>
         </div>
       </div>
     </div>
