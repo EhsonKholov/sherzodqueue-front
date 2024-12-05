@@ -33,7 +33,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           return authService.handle401Error(modifiedReq, next)
         }
 
-        console.log('1111111111')
         return throwError(error);
       }),
 

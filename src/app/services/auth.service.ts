@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {catchError, switchMap, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
+import {environment} from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
 
 
   login(auth: { username: string, password: string }) {
-    return this.http.post('api/auth/login', {username: auth.username, password: auth.password})
+    return this.http.post(environment.URI + 'api/auth/login', {username: auth.username, password: auth.password})
   }
 
   getEmployee() {
@@ -40,7 +41,7 @@ export class AuthService {
 
   handle401Error(req: HttpRequest<any>, next: HttpHandlerFn) {
     return this.http
-      .post('/api/auth/refresh-token', {refreshToken: this.getRefreshToken()})
+      .post(environment.URI + 'api/auth/refresh-token', {refreshToken: this.getRefreshToken()})
       .subscribe({
         next: (tokens: any) => {
           this.storeTokens(tokens);

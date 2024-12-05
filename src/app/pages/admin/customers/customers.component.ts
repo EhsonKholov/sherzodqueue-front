@@ -66,7 +66,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
           this.totalElements = res?.data?.totalCount
           this.total_pages = res?.data?.totalPages
         }, error: (error: any) => {
-          this.toastService.error('ошибка получения данных!')
+          if (error.status != 401) return
+          this.toastService.error('Ошибка получения данных!')
         }
       })
   }

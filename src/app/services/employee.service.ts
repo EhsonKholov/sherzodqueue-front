@@ -31,6 +31,6 @@ export class EmployeeService {
   }
 
   getActivesEmployees() {
-    return this.http.get('api/employees/active')
+    return this.http.get(environment.URI + 'api/employees/active')
   }
 }

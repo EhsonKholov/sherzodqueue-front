@@ -66,8 +66,9 @@ export class ServiceCategoryComponent implements OnInit, OnDestroy {
           this.page_size = res?.data?.size
           this.totalElements = res?.data?.totalCount
           this.total_pages = res?.data?.totalPages
-        }, error: () => {
-          this.toastService.error('ошибка получения данных!')
+        }, error: (error: any) => {
+          if (error.status != 401) return
+          this.toastService.error('Ошибка получения данных!')
         }
       })
   }

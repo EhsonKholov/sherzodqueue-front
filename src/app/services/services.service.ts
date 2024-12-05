@@ -31,6 +31,10 @@ export class ServicesService {
   }
 
   getActivesServices() {
-    return this.http.get('api/services/active')
+    return this.http.get(environment.URI + 'api/services/active')
+  }
+
+  getCategoriesWithServices() {
+    return this.http.get(environment.URI + 'api/service-category/with-service')
   }
 }

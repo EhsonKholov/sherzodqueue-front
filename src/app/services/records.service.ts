@@ -30,4 +30,7 @@ export class RecordsService {
     return this.http.delete(environment.URI + `api/records/${id}`)
   }
 
+  getAvailableTimes(date: Date, employeeId: number, chairId: number) {
+    return this.http.get(environment.URI + `api/records/get-available-times?date=${date}&employeeId=${employeeId}&chairId=${chairId}`)
+  }
 }

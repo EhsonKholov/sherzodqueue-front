@@ -1,1 +1,121 @@
-<p>chairs works!</p>
+@if (addChairModalShow()) {
+  <app-add-edit-chair-modal
+    (close)="closeAddChairModal($event)"
+    (getChair)="getChairs()"
+    [chair]="chair"
+  />
+}
+
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="pt-4 pb-1 mb-5 rounded-4 bg-white app-shadow">
+
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="m-0">Список кресел</h3>
+        <div>
+          <button type="button" class="btn btn-light" (click)="addChair()">
+            <i class="ri-add-line me-2"></i>
+            <span>Добавить кресло</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="px-4 mb-4">
+        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getChairs()">
+          <div class="row g-3">
+            <div class="col-sm-2">
+              <input type="text" class="form-control" formControlName="query" placeholder="">
+            </div>
+
+            <div class="col d-flex align-items-center">
+              <button type="submit" class="btn btn-light me-3">
+                <i class="ri-search-line me-2"></i>
+                <span>Поиск</span>
+              </button>
+              <div class="vr h-75 mx-3 align-self-auto"></div>
+              <button type="button" class="btn btn-light">
+                <i class="ri-upload-2-line me-2"></i>
+                <span>Экспорт</span>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <table class="table mb-4">
+        <thead>
+        <tr>
+          <th scope="col" class="px-4 essp-th-spec-color">Наименование</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Доступность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Создано</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Обновлен</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Обновлено</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (item of chairs(); track $index) {
+            <tr class="align-middle">
+              <td class="px-4">
+                <div class="essp-status-position">
+                  <span>{{ item.name }}</span>
+                </div>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.enabled }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.dateCreated | date: 'dd.MM.yyyy HH:MM' }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.addedBy }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.dateUpdated | date: 'dd.MM.yyyy HH:MM' }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item.modifyBy }}</span>
+              </td>
+              <td class="px-4">
+                <div class="essp-table-actions">
+                  <span class="cursor-pointer" (click)="editChair(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
+                  <span class="cursor-pointer" (click)="deleteChairInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
+    </div>
+  </div>
+</div>
+
+
+@if (deleteChairModalShow()) {
+  <!-- Modal -->
+  <div class="modal fade show d-block" style="background: rgba(0,0,0,.7)" id="deleteChairConfirm"
+       data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteChairConfirmLabel">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteChairConfirmLabel">Удаление кресло</h1>
+          <button type="button" class="btn-close" (click)="deleteChairModalShow.set(false)" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-danger fs-5">Удалить кресло?</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="deleteChairModalShow.set(false)"
+                  data-bs-dismiss="modal">Отмена
+          </button>
+          <button type="button" (click)="deleteService()" class="btn btn-danger">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

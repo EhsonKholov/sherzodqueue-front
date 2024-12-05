@@ -144,85 +144,87 @@
         </form>
       </div>
 
-      <table class="table mb-4">
-        <thead>
-        <tr>
-          <th scope="col" class="px-4 essp-th-spec-color">Клиент</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Email</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Документ</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Адрес</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Город</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Улица</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Квартира</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Год рождения</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Пол</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Описание</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-          @for (item of customers(); track $index) {
-            <tr class="align-middle">
-              <td class="px-4">
-                <div class="essp-table-ico">
-                  <!--<img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">-->
-                  <div>
-                    <span>{{ item?.surname }} {{ item?.name }} {{ item?.lastname }}</span>
-                    <!--<small>{{ item?.email }}</small>-->
+      <div class="overflow-auto">
+        <table class="table mb-4">
+          <thead>
+          <tr>
+            <th scope="col" class="px-4 essp-th-spec-color">Клиент</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Email</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Документ</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Адрес</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Город</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Улица</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Квартира</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Год рождения</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Пол</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Описание</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of customers(); track $index) {
+              <tr class="align-middle">
+                <td class="px-4">
+                  <div class="essp-table-ico">
+                    <!--<img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">-->
+                    <div>
+                      <span>{{ item?.surname }} {{ item?.name }} {{ item?.lastname }}</span>
+                      <!--<small>{{ item?.email }}</small>-->
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.phoneNumber }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.email }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.docNumber }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.address }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.city }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.street }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.homeNumber }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.birhday }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.gender == 'M' ? 'Мужчина':'Женщина' }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.details }}</span>
-              </td>
-              <td class="px-4">
-                <div class="essp-status-position">
-                  <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
-                </div>
-              </td>
-              <td class="px-4">
-                <div class="essp-table-actions">
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.phoneNumber }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.email }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.docNumber }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.address }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.city }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.street }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.homeNumber }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.birhday }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.gender == 'M' ? 'Мужчина' : 'Женщина' }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.details }}</span>
+                </td>
+                <td class="px-4">
+                  <div class="essp-status-position">
+                    <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
+                  </div>
+                </td>
+                <td class="px-4">
+                  <div class="essp-table-actions">
                   <span class="cursor-pointer" (click)="editCustomer(item)"><i
                     class="bi bi-pencil-square text-warning"></i></span>
-                  <span class="cursor-pointer" (click)="deleteCustomerInit(item)"><i
-                    class="bi bi-trash text-danger"></i></span>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+                    <span class="cursor-pointer" (click)="deleteCustomerInit(item)"><i
+                      class="bi bi-trash text-danger"></i></span>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
-      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)" />
+      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"/>
     </div>
   </div>
 </div>
