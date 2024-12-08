@@ -1,0 +1,70 @@
+
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="py-4 mb-5 rounded-4 bg-white app-shadow">
+
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="m-0">Зарплата сотрудников</h3>
+      </div>
+
+      <div class="px-4 mb-4">
+        <form class="needs-validation">
+          <div class="row g-3">
+            <div class="col-sm-2">
+              <input type="month" class="form-control" placeholder="">
+            </div>
+            <div class="col-sm-1 d-flex justify-content-center align-items-center">—</div>
+            <div class="col-sm-2">
+              <input type="month" class="form-control" placeholder="">
+            </div>
+
+            <div class="col d-flex align-items-center">
+              <button type="submit" class="btn btn-light me-3">
+                <i class="ri-search-line me-2"></i>
+                <span>Поиск</span>
+              </button>
+              <div class="vr h-75 mx-3 align-self-auto"></div>
+              <button type="button" class="btn btn-light">
+                <i class="ri-upload-2-line me-2"></i>
+                <span>Экспорт</span>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="overflow-auto">
+        <table class="table mb-4">
+          <thead>
+          <tr>
+            <th scope="col" class="px-4 essp-th-spec-color">Сотрудник</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Процент</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Зарплата</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of [1,2,3,4,5,6,7,8,9,0]; track $index) {
+              <tr class="align-middle">
+                <td class="px-4">
+                  <span class="essp-table-info">Человек Паук</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">Детский врач</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ Math.floor(Math.random() * (40 - 10 + 1) + 10) }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ Math.floor(Math.random() * (40 - 10 + 1) + 10) * 200 | currency: '':'' }}</span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

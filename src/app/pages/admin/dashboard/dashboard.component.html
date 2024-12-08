@@ -1,0 +1,57 @@
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+    <div class="row g-4 mb-4">
+
+      <div class="col-12 mb-6">
+        <div class="rounded-4">
+          <div class="row">
+            <div class="col-8">
+              <p-card header="Записи" [styleClass]="'rounded-4 app-shadow'">
+                <p class="m-0">
+                  <apx-chart
+                    [series]="dailyRecordsChartOptions.series"
+                    [chart]="dailyRecordsChartOptions.chart"
+                    [xaxis]="dailyRecordsChartOptions.xaxis"
+                    [title]="dailyRecordsChartOptions.title"
+                    [legend]="dailyRecordsChartOptions.legend"
+                    [colors]="dailyRecordsChartOptions.colors"
+                  ></apx-chart>
+                </p>
+              </p-card>
+            </div>
+            <div class="col-4">
+              <p-card header="Все записи" [styleClass]="'rounded-4 app-shadow'">
+                <p class="m-0">
+                  <apx-chart
+                    [series]="dailyRecordsColumnChartOptions.series"
+                    [chart]="dailyRecordsColumnChartOptions.chart"
+                    [xaxis]="dailyRecordsColumnChartOptions.xaxis"
+                    [title]="dailyRecordsColumnChartOptions.title"
+                    [legend]="dailyRecordsColumnChartOptions.legend"
+                  ></apx-chart>
+                </p>
+              </p-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mb-6">
+        <div class="rounded-4">
+          <p-card header="Годовой доход" [styleClass]="'rounded-4 app-shadow'">
+            <p class="m-0">
+              <apx-chart
+                [series]="annualBudgetChartOptions.series"
+                [chart]="annualBudgetChartOptions.chart"
+                [xaxis]="annualBudgetChartOptions.xaxis"
+                [title]="annualBudgetChartOptions.title"
+              ></apx-chart>
+            </p>
+          </p-card>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

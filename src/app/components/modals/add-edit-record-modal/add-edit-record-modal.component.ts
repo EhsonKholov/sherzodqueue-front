@@ -246,8 +246,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       recordingTime: this.addRecordFormGroup.controls.recordingDay.value + 'T' + this.addRecordFormGroup.controls.recordingTime.value,
     }
 
-    console.log('record', record)
-
     if (!!this.record) {
       this.recordService.editRecord(this.record.id, record)
         .pipe(takeUntil(this.destroy$))
