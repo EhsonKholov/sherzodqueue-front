@@ -8,97 +8,6 @@
 
 <div class="app-padding-left">
   <div class="container-fluid px-3 mb-4">
-    <div class="row g-4 mb-4">
-
-      <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 rounded-4 app-shadow">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between">
-              <div class="me-1">
-                <p class="text-heading mb-1">Сотрудники</p>
-                <div class="d-flex align-items-center">
-                  <h3 class="mb-1 me-2">20</h3>
-                  <p class="text-success mb-1">(+29%)</p>
-                </div>
-                <small class="mb-0">Количество сотрудников</small>
-              </div>
-              <div class="avatar">
-                <div class="avatar-initial bg-label-primary rounded-3">
-                  <div class="ri-group-line ri-26px h2 text-secondary"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between">
-              <div class="me-1">
-                <p class="text-heading mb-1">Активные</p>
-                <div class="d-flex align-items-center">
-                  <h3 class="mb-1 me-1">16</h3>
-                  <p class="text-success mb-1">(+18%)</p>
-                </div>
-                <small class="mb-0">Текст</small>
-              </div>
-              <div class="avatar">
-                <div class="avatar-initial bg-label-danger rounded-3">
-                  <div class="ri-user-add-line ri-26px h2 text-secondary"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between">
-              <div class="me-1">
-                <p class="text-heading mb-1">В отпуске</p>
-                <div class="d-flex align-items-center">
-                  <h3 class="mb-1 me-1">4</h3>
-                  <p class="text-danger mb-1">(-14%)</p>
-                </div>
-                <small class="mb-0">Текст</small>
-              </div>
-              <div class="avatar">
-                <div class="avatar-initial bg-label-success rounded-3">
-                  <div class="ri-user-follow-line ri-26px h2 text-secondary"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 rounded-4" style="box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16)">
-          <div class="card-body p-4">
-            <div class="d-flex justify-content-between">
-              <div class="me-1">
-                <p class="text-heading mb-1">Заявки</p>
-                <div class="d-flex align-items-center">
-                  <h3 class="mb-1 me-1">11</h3>
-                  <p class="text-success mb-1">(+42%)</p>
-                </div>
-                <small class="mb-0">Текст</small>
-              </div>
-              <div class="avatar">
-                <div class="avatar-initial bg-label-warning rounded-3">
-                  <div class="ri-user-search-line ri-26px h2 text-secondary"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
 
     <div class="pt-4 pb-1 mb-5 rounded-4 bg-white app-shadow">
 
@@ -151,16 +60,8 @@
             <th scope="col" class="px-4 essp-th-spec-color">Сотрудник</th>
             <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
             <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Процент</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Документ</th>
-            <th scope="col" class="px-4 essp-th-spec-color">ИНН</th>
             <th scope="col" class="px-4 essp-th-spec-color">Статус</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Доступность</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Будет доступен</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Адрес</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Описание</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+            <th scope="col" class="px-4 essp-th-spec-color"></th>
           </tr>
           </thead>
           <tbody>
@@ -184,7 +85,7 @@
                 <td class="px-4">
                   <span class="essp-table-info">{{ item.phoneNumber }}</span>
                 </td>
-                <td class="px-4">
+                <!--<td class="px-4">
                   <span class="essp-table-info">{{ item.interestRate }}</span>
                 </td>
                 <td class="px-4">
@@ -195,13 +96,8 @@
                 </td>
                 <td class="px-4">
                 <span
-                  class="{{item.available ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активен' : 'Неактивен' }}</span>
-                  <!--<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>-->
-                </td>
-                <td class="px-4">
-                <span
                   class="{{item.available ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.available ? 'Доступен' : 'Недоступен' }}</span>
-                  <!--<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>-->
+                  &lt;!&ndash;<span class="essp-status-essp-status-pending>{{ item.available ? 'Доступен' : 'Недоступен' }}</span>&ndash;&gt;
                 </td>
                 <td class="px-4">
                   <div class="essp-status-position">
@@ -220,9 +116,13 @@
                     <i class="ri-nurse-line"></i>
                     <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
                   </div>
+                </td>-->
+                <td class="px-4">
+                  <span class="{{item.available ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активен' : 'Неактивен' }}</span>
                 </td>
                 <td class="px-4">
-                  <div class="essp-table-actions">
+                  <div class="essp-table-actions justify-content-end">
+                    <span class="cursor-pointer" title="Подробнее" (click)="detailEmployee(item)"><i class="bi bi-eye-fill"></i></span>
                     <span class="cursor-pointer" (click)="editEmployee(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
                     <span class="cursor-pointer" (click)="deleteEmployeeInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
                   </div>
@@ -264,3 +164,77 @@
     </div>
   </div>
 }
+
+
+<p-dialog class="right-full-p-modal" header="Подробная информация" [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [draggable]="false" [dismissableMask]="true" [modal]="true" [(visible)]="additionalInformationModalShow" [position]="'right'" [style]="{ width: '40%' }">
+  <div class="p-4 pt-2 border-top">
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Фамилия</label>
+      <div class="text-dark">{{ employee?.surname || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Имя</label>
+      <div class="text-dark">{{ employee?.name || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Отчество</label>
+      <div class="text-dark">{{ employee?.lastname || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Телефон</label>
+      <div class="text-dark">{{ employee?.phoneNumber || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Должность</label>
+      <div class="text-dark">{{ employee?.position || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Процент</label>
+      <div class="text-dark">{{ employee?.interestRate || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Документ</label>
+      <div class="text-dark">{{ employee?.docNo || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">ИНН</label>
+      <div class="text-dark">{{ employee?.taxId || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Статус</label>
+      <div class="text-dark">
+        <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.enabled ? 'Активен' : 'Неактивен' }}</span>
+      </div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Доступность</label>
+      <div class="text-dark">
+        <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.available ? 'Доступен' : 'Недоступен' }}</span>
+      </div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Будет доступен</label>
+      <div class="text-dark">{{ employee?.willBeAvailable | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">ИНН</label>
+      <div class="text-dark">{{ employee?.taxId || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Адрес</label>
+      <div class="text-dark">{{ employee?.address || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Пол</label>
+      <div class="text-dark">{{ employee?.gender == 'M' ? 'Мужской' : 'Женский' || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Создан</label>
+      <div class="text-dark">{{ employee?.dateCreated | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+    </div>
+    <div class="form-group mb-2">
+      <label class="text-muted fw-light">Описание</label>
+      <div class="text-dark">{{ employee?.details || '—' }}</div>
+    </div>
+  </div>
+</p-dialog>

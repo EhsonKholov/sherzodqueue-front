@@ -47,9 +47,11 @@
         <thead>
         <tr>
           <th scope="col" class="px-4 essp-th-spec-color">Наименование</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Категория</th>
           <th scope="col" class="px-4 essp-th-spec-color">Продолжительность</th>
           <th scope="col" class="px-4 essp-th-spec-color">Цена</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Активность</th>
+          <th scope="col" class="px-4 essp-th-spec-color"></th>
         </tr>
         </thead>
         <tbody>
@@ -61,13 +63,19 @@
                 </div>
               </td>
               <td class="px-4">
+                <span class="essp-table-info">{{ item.category.name }}</span>
+              </td>
+              <td class="px-4">
                 <span class="essp-table-info">{{ item.duration }}</span>
               </td>
               <td class="px-4">
-                <span class="essp-table-info">{{ item.price | currency: '':'' }}</span>
+                <span class="essp-table-info">{{ item.price | currency: '':'' }} TJS</span>
               </td>
               <td class="px-4">
-                <div class="essp-table-actions">
+                <span class="{{item.enabled ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активна' : 'Неактивна' }}</span>
+              </td>
+              <td class="px-4">
+                <div class="essp-table-actions justify-content-end">
                   <span class="cursor-pointer" (click)="editService(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
                   <span class="cursor-pointer" (click)="deleteServiceInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
                 </div>

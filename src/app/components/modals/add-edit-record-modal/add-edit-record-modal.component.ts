@@ -188,12 +188,12 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       })
   }
 
-  filterCustomers(query: any = '') {
-    this.customerService.getCustomers(query, 1, 10)
+  filterCustomers(obj: any = '') {
+    this.customerService.getByPhone(obj.query)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.filteredCustomers.set(res?.data?.items)
+          this.filteredCustomers.set(res?.data)
         }
       })
   }

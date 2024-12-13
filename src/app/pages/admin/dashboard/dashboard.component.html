@@ -6,31 +6,63 @@
         <div class="rounded-4">
           <div class="row">
             <div class="col-8">
-              <p-card header="Записи" [styleClass]="'rounded-4 app-shadow'">
-                <p class="m-0">
-                  <apx-chart
-                    [series]="dailyRecordsChartOptions.series"
-                    [chart]="dailyRecordsChartOptions.chart"
-                    [xaxis]="dailyRecordsChartOptions.xaxis"
-                    [title]="dailyRecordsChartOptions.title"
-                    [legend]="dailyRecordsChartOptions.legend"
-                    [colors]="dailyRecordsChartOptions.colors"
-                  ></apx-chart>
-                </p>
-              </p-card>
+              @defer (when (annualBudget().length > 0)) {
+                <p-card header="Записи" [styleClass]="'rounded-4 app-shadow'">
+                  <p class="m-0">
+                    <apx-chart
+                      [series]="dailyRecordsChartOptions.series"
+                      [chart]="dailyRecordsChartOptions.chart"
+                      [xaxis]="dailyRecordsChartOptions.xaxis"
+                      [title]="dailyRecordsChartOptions.title"
+                      [legend]="dailyRecordsChartOptions.legend"
+                      [colors]="dailyRecordsChartOptions.colors"
+                    ></apx-chart>
+                  </p>
+                </p-card>
+              } @placeholder (minimum 100ms) {
+                <div class="records-skeleton bg-white rounded-4 p-4 app-shadow d-flex align-items-end overflow-hidden justify-content-between" style="height: 430px">
+                  <div class="skeleton mr-2" style="height: 25px !important"></div>
+                  <div class="skeleton mr-2" style="height: 50px !important"></div>
+                  <div class="skeleton mr-2" style="height: 75px !important"></div>
+                  <div class="skeleton mr-2" style="height: 100px !important"></div>
+                  <div class="skeleton mr-2" style="height: 125px !important"></div>
+                  <div class="skeleton mr-2" style="height: 150px !important"></div>
+                  <div class="skeleton mr-2" style="height: 175px !important"></div>
+                  <div class="skeleton mr-2" style="height: 200px !important"></div>
+                  <div class="skeleton mr-2" style="height: 225px !important"></div>
+                  <div class="skeleton mr-2" style="height: 250px !important"></div>
+                  <div class="skeleton mr-2" style="height: 275px !important"></div>
+                  <div class="skeleton mr-2" style="height: 300px !important"></div>
+                  <div class="skeleton mr-2" style="height: 325px !important"></div>
+                  <div class="skeleton mr-2" style="height: 350px !important"></div>
+                  <div class="skeleton mr-2" style="height: 375px !important"></div>
+                </div>
+              }
             </div>
             <div class="col-4">
-              <p-card header="Все записи" [styleClass]="'rounded-4 app-shadow'">
-                <p class="m-0">
-                  <apx-chart
-                    [series]="dailyRecordsColumnChartOptions.series"
-                    [chart]="dailyRecordsColumnChartOptions.chart"
-                    [xaxis]="dailyRecordsColumnChartOptions.xaxis"
-                    [title]="dailyRecordsColumnChartOptions.title"
-                    [legend]="dailyRecordsColumnChartOptions.legend"
-                  ></apx-chart>
-                </p>
-              </p-card>
+              @defer (when (annualBudget().length > 0)) {
+                <p-card header="Все записи" [styleClass]="'rounded-4 app-shadow'">
+                  <p class="m-0">
+                    <apx-chart
+                      [series]="dailyRecordsColumnChartOptions.series"
+                      [chart]="dailyRecordsColumnChartOptions.chart"
+                      [xaxis]="dailyRecordsColumnChartOptions.xaxis"
+                      [title]="dailyRecordsColumnChartOptions.title"
+                      [legend]="dailyRecordsColumnChartOptions.legend"
+                    ></apx-chart>
+                  </p>
+                </p-card>
+              } @placeholder (minimum 100ms) {
+                <div class="records-skeleton bg-white rounded-4 p-4 app-shadow d-flex align-items-end overflow-hidden justify-content-between" style="height: 430px">
+                  <div class="skeleton mr-2" style="height: 50px !important"></div>
+                  <div class="skeleton mr-2" style="height: 100px !important"></div>
+                  <div class="skeleton mr-2" style="height: 150px !important"></div>
+                  <div class="skeleton mr-2" style="height: 200px !important"></div>
+                  <div class="skeleton mr-2" style="height: 250px !important"></div>
+                  <div class="skeleton mr-2" style="height: 300px !important"></div>
+                  <div class="skeleton mr-2" style="height: 350px !important"></div>
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -38,16 +70,39 @@
 
       <div class="col-12 mb-6">
         <div class="rounded-4">
-          <p-card header="Годовой доход" [styleClass]="'rounded-4 app-shadow'">
-            <p class="m-0">
-              <apx-chart
-                [series]="annualBudgetChartOptions.series"
-                [chart]="annualBudgetChartOptions.chart"
-                [xaxis]="annualBudgetChartOptions.xaxis"
-                [title]="annualBudgetChartOptions.title"
-              ></apx-chart>
-            </p>
-          </p-card>
+          @defer (when (dailyRecords().length > 0)) {
+            <p-card header="Годовой доход" [styleClass]="'rounded-4 app-shadow'">
+              <p class="m-0">
+                <apx-chart
+                  [series]="annualBudgetChartOptions.series"
+                  [chart]="annualBudgetChartOptions.chart"
+                  [xaxis]="annualBudgetChartOptions.xaxis"
+                  [title]="annualBudgetChartOptions.title"
+                ></apx-chart>
+              </p>
+            </p-card>
+          } @placeholder (minimum 100ms) {
+            <div class="records-skeleton bg-white rounded-4 p-4 app-shadow d-flex align-items-end overflow-hidden justify-content-between" style="height: 500px">
+              <div class="skeleton mr-2" style="height: 25px !important"></div>
+              <div class="skeleton mr-2" style="height: 50px !important"></div>
+              <div class="skeleton mr-2" style="height: 75px !important"></div>
+              <div class="skeleton mr-2" style="height: 100px !important"></div>
+              <div class="skeleton mr-2" style="height: 125px !important"></div>
+              <div class="skeleton mr-2" style="height: 150px !important"></div>
+              <div class="skeleton mr-2" style="height: 175px !important"></div>
+              <div class="skeleton mr-2" style="height: 200px !important"></div>
+              <div class="skeleton mr-2" style="height: 225px !important"></div>
+              <div class="skeleton mr-2" style="height: 250px !important"></div>
+              <div class="skeleton mr-2" style="height: 275px !important"></div>
+              <div class="skeleton mr-2" style="height: 300px !important"></div>
+              <div class="skeleton mr-2" style="height: 325px !important"></div>
+              <div class="skeleton mr-2" style="height: 350px !important"></div>
+              <div class="skeleton mr-2" style="height: 375px !important"></div>
+              <div class="skeleton mr-2" style="height: 400px !important"></div>
+              <div class="skeleton mr-2" style="height: 425px !important"></div>
+              <div class="skeleton mr-2" style="height: 450px !important"></div>
+            </div>
+          }
         </div>
       </div>
 

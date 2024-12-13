@@ -9,6 +9,7 @@ import {
 } from '../../../components/modals/add-edit-employee-modal/add-edit-employee-modal.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {Subject, takeUntil} from 'rxjs';
+import {DialogModule} from 'primeng/dialog';
 
 @Component({
   selector: 'app-employee',
@@ -18,7 +19,8 @@ import {Subject, takeUntil} from 'rxjs';
     FormsModule,
     PaginationComponent,
     ReactiveFormsModule,
-    AddEditEmployeeModalComponent
+    AddEditEmployeeModalComponent,
+    DialogModule
   ],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css',
@@ -42,6 +44,8 @@ export class EmployeeComponent implements OnDestroy {
     endDate: new FormControl<Date | null>(null),
     query: new FormControl<string | null>(null),
   })
+
+  additionalInformationModalShow = signal<boolean>(false);
 
   constructor(private employeeService: EmployeeService, private toastService: ToastService) {
   }
@@ -138,4 +142,8 @@ export class EmployeeComponent implements OnDestroy {
       })
   }
 
+  detailEmployee(item: any) {
+    this.employee = item
+    this.additionalInformationModalShow.set(true)
+  }
 }

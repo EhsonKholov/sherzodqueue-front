@@ -7,6 +7,8 @@ import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
 import {ToastService} from '../../../services/toast.service';
 import {Subject, takeUntil} from 'rxjs';
+import {DialogModule} from 'primeng/dialog';
+import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 
 @Component({
   selector: 'app-customers',
@@ -16,7 +18,9 @@ import {Subject, takeUntil} from 'rxjs';
     FormsModule,
     PaginationComponent,
     ReactiveFormsModule,
-    AddCustomerModalComponent
+    AddCustomerModalComponent,
+    DialogModule,
+    SecondsToDatePipe
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css',
@@ -26,7 +30,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
   customers: WritableSignal<any[]> = signal([])
-  show_filter: WritableSignal<boolean> = signal(true)
   page_num: number = 1
   page_size: number = 10
   total_pages: number = 0
@@ -34,13 +37,15 @@ export class CustomersComponent implements OnInit, OnDestroy {
   addCustomerModalShow: WritableSignal<boolean> = signal(false)
   deleteCustomerModalShow: WritableSignal<boolean> = signal(false)
   isCustEdit = false
-  customer: any
+  customer: any = {}
 
   filter = new FormGroup({
     startDate: new FormControl<Date | null>(null),
     endDate: new FormControl<Date | null>(null),
     query: new FormControl<string | null>(null),
   })
+
+  additionalInformationModalShow = signal<boolean>(false);
 
   constructor(private customerService: CustomersService, private toastService: ToastService) {
   }
@@ -115,5 +120,10 @@ export class CustomersComponent implements OnInit, OnDestroy {
           this.toastService.success('Ошибка удаления клиента!')
         }
       })
+  }
+
+  detailCustomer(item: any) {
+    this.customer = item
+    this.additionalInformationModalShow.set(true)
   }
 }

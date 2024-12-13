@@ -17,12 +17,12 @@
                 id="phoneNumber"
                 [inputStyleClass]="'form-control'"
                 [panelStyleClass]="'bg-white shadow mt-2 rounded pt-1'"
-                [forceSelection]="true"
                 formControlName="customerPhoneNumber"
                 (onSelect)="onSelectCustomer($event)"
                 [suggestions]="filteredCustomers()"
                 (completeMethod)="filterCustomers($event)"
-                optionLabel="phoneNumber"></p-autoComplete>
+                optionLabel="phoneNumber"
+              ></p-autoComplete>
             </span>
           </div>
           <!--<div class="col-6 mb-3">
@@ -60,7 +60,7 @@
             <ng-multiselect-dropdown
               class="ng-multiselect-dropdown-full-width"
               name="services"
-              [placeholder]="''"
+              [placeholder]="'Выберите врача'"
               [data]="employees()"
               [(ngModel)]="selectedEmployees"
               [ngModelOptions]="{standalone: true}"
@@ -74,7 +74,7 @@
             <label class="form-label required">Кресло</label>
             <ng-multiselect-dropdown
               name="services"
-              [placeholder]="''"
+              [placeholder]="'Выберите кресло'"
               [data]="chairs()"
               [(ngModel)]="selectedChairs"
               [ngModelOptions]="{standalone: true}"

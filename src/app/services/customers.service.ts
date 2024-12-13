@@ -29,4 +29,8 @@ export class CustomersService {
   deleteCustomer(id: number) {
     return this.http.delete(environment.URI + `api/customers/${id}`)
   }
+
+  getByPhone(phone: string) {
+    return this.http.get(environment.URI + `api/customers/get-by-phone?phone=${phone}`)
+  }
 }

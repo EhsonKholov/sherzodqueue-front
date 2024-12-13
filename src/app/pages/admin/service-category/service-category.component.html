@@ -47,12 +47,12 @@
         <thead>
         <tr>
           <th scope="col" class="px-4 essp-th-spec-color">Наименование</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Активность</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Создан</th>
           <th scope="col" class="px-4 essp-th-spec-color">Создано</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Обновлен</th>
           <th scope="col" class="px-4 essp-th-spec-color">Обновлено</th>
-          <th scope="col" class="px-4 essp-th-spec-color">Действия</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Активность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Дата добавления</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Дата изменения</th>
+          <th scope="col" class="px-4 essp-th-spec-color"></th>
         </tr>
         </thead>
         <tbody>
@@ -64,23 +64,22 @@
                 </div>
               </td>
               <td class="px-4">
-                <span class="{{item.enabled ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активна' : 'Неактивна' }}</span>
-              </td>
-              <td class="px-4">
-                <span class="essp-table-info">{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
-              </td>
-              <td class="px-4">
                 <span class="essp-table-info">{{ item.addedBy }}</span>
               </td>
               <td class="px-4">
-                <span class="essp-table-info">{{ item.dateUpdated | date: 'yyyy.MM.dd HH:MM' }}</span>
+                <span class="essp-table-info">{{ item.modifyBy || '—' }}</span>
               </td>
               <td class="px-4">
-                <span class="essp-table-info">{{ item.modifyBy }}</span>
+                <span class="{{item.enabled ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активна' : 'Неактивна' }}</span>
               </td>
-
               <td class="px-4">
-                <div class="essp-table-actions">
+                <span class="essp-table-info">{{ item.dateCreated | secondsToDate }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ (item.dateUpdated | secondsToDate) || (item.dateCreated | secondsToDate) }}</span>
+              </td>
+              <td class="px-4">
+                <div class="essp-table-actions justify-content-end">
                   <span class="cursor-pointer" (click)="editService(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
                   <span class="cursor-pointer" (click)="deleteServiceCategoryInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
                 </div>

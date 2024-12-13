@@ -4,6 +4,7 @@ import {ChartComponent} from 'ng-apexcharts';
 import {ReportsService} from '../../../services/reports.service';
 import {Subject, takeUntil} from 'rxjs';
 import {UtilsService} from '../../../services/utils.service';
+import {SkeletonModule} from 'primeng/skeleton';
 
 export type ChartOptions = {
   series?: ApexAxisChartSeries;
@@ -20,6 +21,7 @@ export type ChartOptions = {
   imports: [
     CardModule,
     ChartComponent,
+    SkeletonModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -140,7 +142,10 @@ export class DashboardComponent implements OnInit {
         categories: categories
       },
       legend: {
-        show: false,
+        show: true,
+        position: 'top',
+        horizontalAlign: "right",
+        offsetX: 40
       }
     }
 

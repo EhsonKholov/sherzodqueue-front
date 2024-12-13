@@ -1,4 +1,3 @@
-
 <div class="app-padding-left">
   <div class="container-fluid px-3 mb-4">
     <div class="py-4 mb-5 rounded-4 bg-white app-shadow">
@@ -8,14 +7,14 @@
       </div>
 
       <div class="px-4 mb-4">
-        <form class="needs-validation">
+        <form [formGroup]="filter" (submit)="getEmployeesSalaries()" class="needs-validation">
           <div class="row g-3">
             <div class="col-sm-2">
-              <input type="month" class="form-control" placeholder="">
+              <p-calendar formControlName="dateFrom" [maxDate]="toDay" [showButtonBar]="true" [inputStyleClass]="'form-control'" view="month" dateFormat="mm.yy" [readonlyInput]="true"/>
             </div>
             <div class="col-sm-1 d-flex justify-content-center align-items-center">—</div>
             <div class="col-sm-2">
-              <input type="month" class="form-control" placeholder="">
+              <p-calendar formControlName="dateTo" [maxDate]="toDay" [showButtonBar]="true" [inputStyleClass]="'form-control'" view="month" dateFormat="mm.yy" [readonlyInput]="true"/>
             </div>
 
             <div class="col d-flex align-items-center">
@@ -29,7 +28,6 @@
                 <span>Экспорт</span>
               </button>
             </div>
-
           </div>
         </form>
       </div>
@@ -41,28 +39,54 @@
             <th scope="col" class="px-4 essp-th-spec-color">Сотрудник</th>
             <th scope="col" class="px-4 essp-th-spec-color">Должность</th>
             <th scope="col" class="px-4 essp-th-spec-color">Процент</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Кол. записей</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Общая сумма</th>
             <th scope="col" class="px-4 essp-th-spec-color">Зарплата</th>
           </tr>
           </thead>
           <tbody>
-            @for (item of [1,2,3,4,5,6,7,8,9,0]; track $index) {
+            @for (item of employeesSalaries(); track $index) {
               <tr class="align-middle">
                 <td class="px-4">
-                  <span class="essp-table-info">Человек Паук</span>
+                  <span class="essp-table-info">{{ item?.employee?.surname }} {{ item?.employee?.name }} {{ item?.employee?.lastname }}</span>
                 </td>
                 <td class="px-4">
-                  <span class="essp-table-info">Детский врач</span>
+                  <span class="essp-table-info">{{ item?.employee?.position }}</span>
                 </td>
                 <td class="px-4">
-                  <span class="essp-table-info">{{ Math.floor(Math.random() * (40 - 10 + 1) + 10) }}</span>
+                  <span class="essp-table-info">{{ item?.employee?.interestRate | currency: '':'' }}</span>
                 </td>
                 <td class="px-4">
-                  <span class="essp-table-info">{{ Math.floor(Math.random() * (40 - 10 + 1) + 10) * 200 | currency: '':'' }}</span>
+                  <span class="essp-table-info">{{ item?.recordsCount }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info fw-bold">{{ item?.totalAmount | currency: '':'' }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info fw-bold">{{ item?.salary | currency: '':'' }}</span>
                 </td>
               </tr>
             }
           </tbody>
         </table>
+
+        <div class="row m-0">
+          <div class="col-12 d-flex hstack fst-normal">
+            <div class="mx-2">
+              <span class="text-muted">Количество записей:</span> <span class="ms-1 fw-bold"> {{ getTotalRecordsCount() }} </span>
+            </div>
+            <div class="vr"></div>
+            <div class="mx-2">
+              <span class="text-muted">Общая сумма:</span> <span
+              class="ms-1 fw-bold"> {{ getTotalAmount() | currency: '':'' }} </span>
+            </div>
+            <div class="vr"></div>
+            <div class="mx-2">
+              <span class="text-muted">Общая сумма зарплаты:</span> <span
+              class="ms-1 fw-bold"> {{ getTotalAmountSalary() | currency: '':'' }} </span>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

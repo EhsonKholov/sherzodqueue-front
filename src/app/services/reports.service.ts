@@ -17,4 +17,8 @@ export class ReportsService {
     return this.http.get(environment.URI + 'api/reports/daily-records')
   }
 
+  getEmployeesSalaries(body: any) {
+    return this.http.post(environment.URI + 'api/reports/employee-salary', body)
+  }
+
 }

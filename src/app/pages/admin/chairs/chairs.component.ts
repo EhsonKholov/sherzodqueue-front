@@ -12,6 +12,7 @@ import {ChairsService} from '../../../services/chairs.service';
 import {
   AddEditChairModalComponent
 } from '../../../components/modals/add-edit-chair-modal/add-edit-chair-modal.component';
+import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 
 @Component({
   selector: 'app-chairs',
@@ -23,7 +24,8 @@ import {
     PaginatorModule,
     ReactiveFormsModule,
     DatePipe,
-    AddEditChairModalComponent
+    AddEditChairModalComponent,
+    SecondsToDatePipe
   ],
   templateUrl: './chairs.component.html',
   styleUrl: './chairs.component.css'

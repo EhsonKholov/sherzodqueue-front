@@ -12,6 +12,7 @@ import {ServiceCategoryService} from '../../../services/service-category.service
 import {
   AddEditServiceCategoryModalComponent
 } from '../../../components/modals/add-edit-service-category-modal/add-edit-service-category-modal.component';
+import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 
 @Component({
   selector: 'app-service-category',
@@ -22,7 +23,8 @@ import {
     PaginationComponent,
     ReactiveFormsModule,
     DatePipe,
-    AddEditServiceCategoryModalComponent
+    AddEditServiceCategoryModalComponent,
+    SecondsToDatePipe
   ],
   templateUrl: './service-category.component.html',
   styleUrl: './service-category.component.css'

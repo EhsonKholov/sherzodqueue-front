@@ -189,7 +189,7 @@ body {
 
 
 .essp-main-menu > li:hover {
-  background-color: rgba(247,247,249,.06);
+  background-color: rgba(247, 247, 249, .06);
 }
 
 li:has(>.essp-rout-active) {
@@ -292,7 +292,7 @@ table {
 }
 
 .app-shadow {
-  box-shadow: 0 .25rem .875rem 0 rgba(38,43,67,.16) !important;
+  box-shadow: 0 .25rem .875rem 0 rgba(38, 43, 67, .16) !important;
 }
 
 .app-padding-left {
@@ -399,7 +399,7 @@ p-multiselect.p-multiselect {
 }
 
 .p-multiSelect-customize .p-multiselect-header .p-multiselect-filter-container input {
-  min-height: calc(1.5em + .5rem + calc(var(--bs-border-width)* 2));
+  min-height: calc(1.5em + .5rem + calc(var(--bs-border-width) * 2));
   padding: .25rem .5rem;
   font-size: .875rem;
   border-radius: var(--bs-border-radius-sm);
@@ -407,5 +407,110 @@ p-multiselect.p-multiselect {
 
 /*-------------------------------------------------------------------------------*/
 
+.right-full-p-modal .p-element {
+  max-height: 100% !important;
+  height: 100% !important;
+  margin-right: 0 !important;
+}
+
+/*-------------------------------------------------------------------------------*/
+
+.records-skeleton p-skeleton {
+  display: flex;
+  align-items: flex-end;
+}
+
+.records-skeleton p-skeleton:nth-child(1) .p-skeleton {
+  height: 25px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(2) .p-skeleton {
+  height: 50px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(3) .p-skeleton {
+  height: 75px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(4) .p-skeleton {
+  height: 100px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(5) .p-skeleton {
+  height: 125px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(6) .p-skeleton {
+  height: 150px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(7) .p-skeleton {
+  height: 175px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(8) .p-skeleton {
+  height: 200px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(9) .p-skeleton {
+  height: 225px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(10) .p-skeleton {
+  height: 250px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(11) .p-skeleton {
+  height: 275px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(12) .p-skeleton {
+  height: 300px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(13) .p-skeleton {
+  height: 325px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(14) .p-skeleton {
+  height: 350px !important;
+}
+
+.records-skeleton p-skeleton:nth-child(15) .p-skeleton {
+  height: 375px !important;
+}
+
+/*-------------------------------------------------------------------------------*/
+
+.skeleton {
+  background-color: #e5e7eb;
+  border-radius: 6px;
+  width: 2rem;
+  height: 5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton::after {
+  content: "";
+  animation: skeleton-animation 1.2s infinite;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+  right: 0;
+  top: 0;
+  transform: translate(-100%);
+  z-index: 1;
+}
+
+@keyframes skeleton-animation {
+  from {
+    transform: translate(-100%);
+  }
+  to {
+    transform: translate(100%);
+  }
+}
 
 
