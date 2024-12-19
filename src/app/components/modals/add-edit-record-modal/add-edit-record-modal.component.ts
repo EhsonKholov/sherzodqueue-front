@@ -2,8 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, Writa
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {RecordsService} from '../../../services/records.service';
-import {firstValueFrom, lastValueFrom, map, Subject, takeUntil} from 'rxjs';
-import {SelectComponent} from '../../select/select.component';
+import {Subject, takeUntil} from 'rxjs';
 import {EmployeeService} from '../../../services/employee.service';
 import {CustomersService} from '../../../services/customers.service';
 import {ServicesService} from '../../../services/services.service';
@@ -13,6 +12,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
+import moment from 'moment';
 import {DatePipe} from '@angular/common';
 
 @Component({
@@ -21,7 +21,6 @@ import {DatePipe} from '@angular/common';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    SelectComponent,
     NgMultiSelectDropDownModule,
     MultiSelectModule,
     AutoCompleteModule,
@@ -95,22 +94,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  /*
-  {
-    "customerPhoneNumber": "string",
-    "customerName": "string",
-    "customerSurname": "string",
-    "customerLastname": "string",
-    "employeeId": 0,
-    "servicesId": [
-      0
-    ],
-    "recordingTime": "2024-12-05T02:52:21.843Z",
-    "amountPaid": 0,
-    "totalPrice": 0,
-    "chairId": 0
-  }
-  */
 
   ngOnInit(): void {
     this.getEmployees()
@@ -132,20 +115,25 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         chair: new FormControl(null, [Validators.required]),
       })
     } else {
+      let recordingDay = moment(this.record?.recordingTime).format('YYYY-MM-DD')
+      let recordingTime = moment(this.record?.recordingTime).format('HH:MM:SS')
+
       this.addRecordFormGroup = new FormGroup({
         id: new FormControl(this.record?.id, [Validators.required]),
-        customerSurname: new FormControl(null, [Validators.required]),
-        customerName: new FormControl(null, [Validators.required]),
-        customerLastname: new FormControl(null),
-        customerPhoneNumber: new FormControl(null, [Validators.required]),
+        customerSurname: new FormControl(this.record?.employee?.surname, [Validators.required]),
+        customerName: new FormControl(this.record?.employee?.name, [Validators.required]),
+        customerLastname: new FormControl(this.record?.employee?.lastname),
+        customerPhoneNumber: new FormControl(this.record?.employee?.phoneNumber, [Validators.required]),
         employee: new FormControl(this.record?.employee, [Validators.required]),
         services: new FormControl(this.record?.services, [Validators.required]),
-        recordingDay: new FormControl(this.record?.recordingTime, [Validators.required]),
-        recordingTime: new FormControl(this.record?.recordingTime, [Validators.required]),
+        recordingDay: new FormControl(recordingDay, [Validators.required]),
+        recordingTime: new FormControl(recordingTime, [Validators.required]),
         amountPaid: new FormControl(this.record?.amountPaid, [Validators.required]),
         totalPrice: new FormControl(this.record?.totalPrice, [Validators.required]),
         chair: new FormControl(this.record?.chair?.id, [Validators.required]),
       })
+
+      this.getAvailableTimes()
     }
 
     this.selectedServices = this.record?.services
@@ -168,22 +156,27 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
     if (this.addRecordFormGroup.controls?.services?.invalid || this.addRecordFormGroup.controls?.employee?.invalid
       || this.addRecordFormGroup.controls?.chair?.invalid || this.addRecordFormGroup.controls?.recordingDay?.invalid) {
-      //this.addRecordFormGroup.controls?.recordingTime?.disable(true)
 
       return false
     }
 
-    //this.addRecordFormGroup.controls?.recordingTime?.disable(false)
-
     const date = this.addRecordFormGroup.controls?.recordingDay?.value
     const employeeId = this.addRecordFormGroup.controls?.employee?.value?.id
     const chairId = this.addRecordFormGroup.controls?.chair?.value?.id
+
+
     this.recordService.getAvailableTimes(date, employeeId, chairId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          console.log(res?.data)
           this.availableTimes.set(res?.data)
+          if (!!this.record) {
+            let recordingTime = moment(this.record?.recordingTime).format('HH:MM:SS')
+            let idx = this.availableTimes().findIndex(r => r == recordingTime)
+            if (idx == -1) {
+              this.availableTimes().push(recordingTime)
+            }
+          }
         }
       })
   }

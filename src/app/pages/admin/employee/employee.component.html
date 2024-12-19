@@ -168,71 +168,71 @@
 
 <p-dialog class="right-full-p-modal" header="Подробная информация" [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [draggable]="false" [dismissableMask]="true" [modal]="true" [(visible)]="additionalInformationModalShow" [position]="'right'" [style]="{ width: '40%' }">
   <div class="p-4 pt-2 border-top">
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Фамилия</label>
       <div class="text-dark">{{ employee?.surname || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Имя</label>
       <div class="text-dark">{{ employee?.name || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Отчество</label>
       <div class="text-dark">{{ employee?.lastname || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Телефон</label>
       <div class="text-dark">{{ employee?.phoneNumber || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Должность</label>
       <div class="text-dark">{{ employee?.position || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Процент</label>
       <div class="text-dark">{{ employee?.interestRate || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Документ</label>
       <div class="text-dark">{{ employee?.docNo || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">ИНН</label>
       <div class="text-dark">{{ employee?.taxId || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Статус</label>
       <div class="text-dark">
         <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.enabled ? 'Активен' : 'Неактивен' }}</span>
       </div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Доступность</label>
       <div class="text-dark">
         <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.available ? 'Доступен' : 'Недоступен' }}</span>
       </div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Будет доступен</label>
       <div class="text-dark">{{ employee?.willBeAvailable | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">ИНН</label>
       <div class="text-dark">{{ employee?.taxId || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Адрес</label>
       <div class="text-dark">{{ employee?.address || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Пол</label>
       <div class="text-dark">{{ employee?.gender == 'M' ? 'Мужской' : 'Женский' || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Создан</label>
       <div class="text-dark">{{ employee?.dateCreated | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
     </div>
-    <div class="form-group mb-2">
+    <div class="form-group mb-3">
       <label class="text-muted fw-light">Описание</label>
       <div class="text-dark">{{ employee?.details || '—' }}</div>
     </div>

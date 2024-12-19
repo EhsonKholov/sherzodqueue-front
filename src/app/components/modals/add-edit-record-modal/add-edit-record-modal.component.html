@@ -41,20 +41,6 @@
             <label for="lastname" class="form-label">Отчество</label>
             <input type="text" class="form-control" id="lastname" formControlName="customerLastname">
           </div>
-          <!--<div class="col-6 mb-3">
-            <label class="form-label required">Услуги</label>
-            <ng-multiselect-dropdown
-              name="services"
-              [placeholder]="'Услуги'"
-              [data]="categoryWithService()"
-              [(ngModel)]="selectedServices"
-              [ngModelOptions]="{standalone: true}"
-              [settings]="servicesSelectSettings"
-              (onSelect)="onSelectService($event)"
-              (onDeSelect)="onDeSelectService($event)"
-            >
-            </ng-multiselect-dropdown>
-          </div>-->
           <div class="col-6 mb-3">
             <label class="form-label required">Лечащий врач</label>
             <ng-multiselect-dropdown
@@ -102,8 +88,9 @@
             />
           </div>
           <div class="col-6 mb-3">
-            <label for="recordingDay" class="form-label required">День приема</label>
-            <input type="date" (change)="getAvailableTimes()" class="form-control" id="recordingDay" formControlName="recordingDay" min="{{today | date: 'yyyy-MM-dd'}}">
+            <label for="recordingDay" class="form-label required w-100">День приема</label>
+            <input type="date" (change)="getAvailableTimes()" class="form-control" id="recordingDay" formControlName="recordingDay"
+                   [min]="!!record ? '' : (today | date: 'yyyy-MM-dd')" value="{{this.record?.recordingTime | date: 'DD-MM-YYYY'}}">
           </div>
           <div class="col-6 mb-3">
             <label for="recordingTime" class="form-label required">Время записи</label>

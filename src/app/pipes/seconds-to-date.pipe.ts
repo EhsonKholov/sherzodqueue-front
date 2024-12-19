@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import moment from 'moment';
 
 @Pipe({
   name: 'secondsToDate',
@@ -10,12 +11,24 @@ export class SecondsToDatePipe implements PipeTransform {
     //if (isNaN(seconds)) { return 'Неверные данные' }
     if (!seconds) { return '' }
 
-    seconds = new Date(seconds)
-    let date: any, options: any
-    try {
-      seconds = seconds.getTime()
+    let date: any = new Date(seconds),
+        options: any
 
-      date = new Date(seconds)
+    let today = new Date()
+
+    let start = Math.floor(today.getTime() / (3600 * 24 * 1000));
+    let end = Math.floor(date.getTime() / (3600 * 24 * 1000));
+    let daysDiff = end - start;
+
+    if (daysDiff == 0) {
+      return 'Сегодня'
+    } else if (daysDiff == 1) {
+      return 'Завтра'
+    } else if (daysDiff == -1) {
+      return 'Вчера'
+    }
+
+    try {
       const hour = date.getHours()
       const minute = date.getMinutes()
       const second = date.getSeconds()

@@ -513,4 +513,6 @@ p-multiselect.p-multiselect {
   }
 }
 
-
+.p-calendar {
+  width: 100% !important;
+}
