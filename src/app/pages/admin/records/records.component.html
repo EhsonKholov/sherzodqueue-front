@@ -190,7 +190,17 @@
                   <span class="essp-table-info">{{ item.endTime | date: 'yyyy.MM.dd HH:MM' }}</span>
                 </td>-->
                 <td class="px-4">
-                  <span class="essp-table-info">{{ item?.status }}</span>
+                  @if (item?.status == 0) {
+                    <span class="badge rounded-pill bg-label-secondary">Создан</span>  <!--Created-->
+                  } @else if (item?.status == 1) {
+                    <span class="badge rounded-pill bg-label-info">Принят</span>  <!--In Line-->
+                  } @else if (item?.status == 2) {
+                    <span class="badge rounded-pill bg-label-warning">В процессе</span>  <!--In Progress-->
+                  } @else if (item?.status == 3) {
+                    <span class="essp-table-info essp-status-active">Выполнен</span>  <!--Completed-->
+                  } @else if (item?.status == 4) {
+                    <span class="badge rounded-pill bg-label-danger">Отменен</span>  <!--Canceled-->
+                  }
                 </td>
                 <td class="px-4">
                   <span class="essp-table-info">{{ item.amountPaid | currency: '':'' }}</span>

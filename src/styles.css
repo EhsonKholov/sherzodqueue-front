@@ -516,3 +516,34 @@ p-multiselect.p-multiselect {
 .p-calendar {
   width: 100% !important;
 }
+
+.bg-label-danger {
+  background-color: #ffe3e2 !important;
+  color: #ff4d49 !important;
+}
+
+.bg-label-secondary {
+  background-color: #e8e9ed !important;
+  color: #6d788d !important;
+}
+
+.bg-label-success {
+  background-color: #e8fadd !important;
+  color: #72e128 !important;
+}
+
+.bg-label-primary {
+  background-color: #e7e7ff !important;
+  color: #666cff !important;
+}
+
+.bg-label-info {
+  background-color: #dcf6fe !important;
+  color: #26c6f9 !important;
+}
+
+.bg-label-warning {
+  background-color: #fff3dd !important;
+  color: #fdb528 !important;
+}
+

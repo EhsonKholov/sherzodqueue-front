@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header p-4">
         <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{ !!this.record ? 'Изменить' : 'Добавить' }}</h1>
@@ -10,9 +10,11 @@
       </div>
       <form [formGroup]="addRecordFormGroup" (submit)="addEditRecord()">
         <div class="modal-body row p-4">
-          <div class="col-6 mb-3">
-            <label for="phoneNumber" class="form-label required">Номер телефона</label>
-            <span class="p-fluid d-block">
+          <div class="col-7">
+            <div class="row m-0">
+              <div class="col-6 mb-3">
+                <label for="phoneNumber" class="form-label required">Номер телефона</label>
+                <span class="p-fluid d-block">
               <p-autoComplete
                 id="phoneNumber"
                 [inputStyleClass]="'form-control'"
@@ -24,89 +26,96 @@
                 optionLabel="phoneNumber"
               ></p-autoComplete>
             </span>
+              </div>
+              <!--<div class="col-6 mb-3">
+                <label for="phoneNumber" class="form-label required">Номер телефона</label>
+                <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+              </div>-->
+              <div class="mb-3 col-6">
+                <label for="surname" class="form-label required">Фамилия</label>
+                <input type="text" class="form-control" id="surname" formControlName="customerSurname" required>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="name" class="form-label required">Имя</label>
+                <input type="text" class="form-control" id="name" formControlName="customerName" required>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="lastname" class="form-label">Отчество</label>
+                <input type="text" class="form-control" id="lastname" formControlName="customerLastname">
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label required">Лечащий врач</label>
+                <ng-multiselect-dropdown
+                  class="ng-multiselect-dropdown-full-width"
+                  name="services"
+                  [placeholder]="'Выберите врача'"
+                  [data]="employees()"
+                  [(ngModel)]="selectedEmployees"
+                  [ngModelOptions]="{standalone: true}"
+                  [settings]="employeesSelectSettings"
+                  (onSelect)="onSelectEmployees($event)"
+                  (onDeSelect)="onDeSelectEmployees($event)"
+                >
+                </ng-multiselect-dropdown>
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label required">Услуги</label>
+                <p-multiSelect
+                  class="p-multiSelect-customize"
+                  [options]="categoryWithService()"
+                  [styleClass]="'d-flex w-100'"
+                  [panelStyleClass]="'ps-0'"
+                  formControlName="services"
+                  placeholder=""
+                  optionLabel="name"
+                  display="chip"
+                  [group]="true"
+                  [optionGroupChildren]="'services'"
+                  [optionGroupLabel]="'name'"
+                />
+              </div>
+              <div class="col-6 mb-3">
+                <label for="recordingDay" class="form-label required w-100">День приема</label>
+                <input type="date" (change)="getAvailableTimes()" class="form-control" id="recordingDay" formControlName="recordingDay"
+                       [min]="!!record ? '' : (today | date: 'yyyy-MM-dd')" value="{{this.record?.recordingTime | date: 'DD-MM-YYYY'}}">
+              </div>
+              <div class="col-6 mb-3">
+                <label for="recordingTime" class="form-label">Время записи</label>
+                <select class="form-select" id="recordingTime" formControlName="recordingTime">
+                  @for (item of availableTimes(); track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label">Кресло</label>
+                <ng-multiselect-dropdown
+                  name="services"
+                  [placeholder]="'Выберите кресло'"
+                  [data]="chairs()"
+                  [(ngModel)]="selectedChairs"
+                  [ngModelOptions]="{standalone: true}"
+                  [settings]="chairsSelectSettings"
+                  (onSelect)="onSelectChairs($event)"
+                  (onDeSelect)="onDeSelectChairs($event)"
+                >
+                </ng-multiselect-dropdown>
+              </div>
+              <div class="col-6 mb-3">
+                <label for="amountPaid" class="form-label">Предоплата</label>
+                <input type="number" class="form-control" id="amountPaid" formControlName="amountPaid">
+              </div>
+              <div class="col-6 mb-3">
+                <label for="totalPrice" class="form-label">Общая сумма</label>
+                <input type="number" class="form-control" id="totalPrice" formControlName="totalPrice">
+              </div>
+            </div>
           </div>
-          <!--<div class="col-6 mb-3">
-            <label for="phoneNumber" class="form-label required">Номер телефона</label>
-            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
-          </div>-->
-          <div class="mb-3 col-6">
-            <label for="surname" class="form-label required">Фамилия</label>
-            <input type="text" class="form-control" id="surname" formControlName="customerSurname" required>
+          <div class="col-1 text-center">
+            <div class="vr h-100"></div>
           </div>
-          <div class="mb-3 col-6">
-            <label for="name" class="form-label required">Имя</label>
-            <input type="text" class="form-control" id="name" formControlName="customerName" required>
-          </div>
-          <div class="mb-3 col-6">
-            <label for="lastname" class="form-label">Отчество</label>
-            <input type="text" class="form-control" id="lastname" formControlName="customerLastname">
-          </div>
-          <div class="col-6 mb-3">
-            <label class="form-label required">Лечащий врач</label>
-            <ng-multiselect-dropdown
-              class="ng-multiselect-dropdown-full-width"
-              name="services"
-              [placeholder]="'Выберите врача'"
-              [data]="employees()"
-              [(ngModel)]="selectedEmployees"
-              [ngModelOptions]="{standalone: true}"
-              [settings]="employeesSelectSettings"
-              (onSelect)="onSelectEmployees($event)"
-              (onDeSelect)="onDeSelectEmployees($event)"
-            >
-            </ng-multiselect-dropdown>
-          </div>
-          <div class="col-6 mb-3">
-            <label class="form-label required">Кресло</label>
-            <ng-multiselect-dropdown
-              name="services"
-              [placeholder]="'Выберите кресло'"
-              [data]="chairs()"
-              [(ngModel)]="selectedChairs"
-              [ngModelOptions]="{standalone: true}"
-              [settings]="chairsSelectSettings"
-              (onSelect)="onSelectChairs($event)"
-              (onDeSelect)="onDeSelectChairs($event)"
-            >
-            </ng-multiselect-dropdown>
-          </div>
-          <div class="col-6 mb-3">
-            <label class="form-label required">Услуги</label>
-            <p-multiSelect
-              class="p-multiSelect-customize"
-              [options]="categoryWithService()"
-              [styleClass]="'d-flex w-100'"
-              [panelStyleClass]="'ps-0'"
-              formControlName="services"
-              placeholder=""
-              optionLabel="name"
-              display="chip"
-              [group]="true"
-              [optionGroupChildren]="'services'"
-              [optionGroupLabel]="'name'"
-              (onChange)="getAvailableTimes()"
-            />
-          </div>
-          <div class="col-6 mb-3">
-            <label for="recordingDay" class="form-label required w-100">День приема</label>
-            <input type="date" (change)="getAvailableTimes()" class="form-control" id="recordingDay" formControlName="recordingDay"
-                   [min]="!!record ? '' : (today | date: 'yyyy-MM-dd')" value="{{this.record?.recordingTime | date: 'DD-MM-YYYY'}}">
-          </div>
-          <div class="col-6 mb-3">
-            <label for="recordingTime" class="form-label required">Время записи</label>
-            <select class="form-select" id="recordingTime" formControlName="recordingTime">
-              @for (item of availableTimes(); track $index) {
-                <option [value]="item">{{item}}</option>
-              }
-            </select>
-          </div>
-          <div class="col-6 mb-3">
-            <label for="amountPaid" class="form-label">Предоплата</label>
-            <input type="number" class="form-control" id="amountPaid" formControlName="amountPaid">
-          </div>
-          <div class="col-6 mb-3">
-            <label for="totalPrice" class="form-label">Общая сумма</label>
-            <input type="number" class="form-control" id="totalPrice" formControlName="totalPrice">
+          <div class="col-4 text-center">
+            <app-tooth-dental-formula />
           </div>
         </div>
         <div class="modal-footer p-4">

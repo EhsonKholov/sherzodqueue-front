@@ -14,6 +14,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import moment from 'moment';
 import {DatePipe} from '@angular/common';
+import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dental-formula.component';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -27,6 +28,7 @@ import {DatePipe} from '@angular/common';
     CalendarModule,
     DropdownModule,
     DatePipe,
+    ToothDentalFormulaComponent,
   ],
   templateUrl: './add-edit-record-modal.component.html',
   styleUrl: './add-edit-record-modal.component.css'
@@ -108,11 +110,11 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerPhoneNumber: new FormControl(null, [Validators.required]),
         employee: new FormControl(null, [Validators.required]),
         services: new FormControl(null, [Validators.required]),
-        recordingDay: new FormControl(null, [Validators.required]),
-        recordingTime: new FormControl(null, [Validators.required]),
-        amountPaid: new FormControl(0, [Validators.required]),
-        totalPrice: new FormControl(0, [Validators.required]),
-        chair: new FormControl(null, [Validators.required]),
+        recordingDay: new FormControl(null),
+        recordingTime: new FormControl(null),
+        amountPaid: new FormControl(0),
+        totalPrice: new FormControl(0),
+        chair: new FormControl(null),
       })
     } else {
       let recordingDay = moment(this.record?.recordingTime).format('YYYY-MM-DD')
@@ -126,11 +128,11 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerPhoneNumber: new FormControl(this.record?.employee?.phoneNumber, [Validators.required]),
         employee: new FormControl(this.record?.employee, [Validators.required]),
         services: new FormControl(this.record?.services, [Validators.required]),
-        recordingDay: new FormControl(recordingDay, [Validators.required]),
-        recordingTime: new FormControl(recordingTime, [Validators.required]),
-        amountPaid: new FormControl(this.record?.amountPaid, [Validators.required]),
-        totalPrice: new FormControl(this.record?.totalPrice, [Validators.required]),
-        chair: new FormControl(this.record?.chair?.id, [Validators.required]),
+        recordingDay: new FormControl(recordingDay),
+        recordingTime: new FormControl(recordingTime),
+        amountPaid: new FormControl(this.record?.amountPaid),
+        totalPrice: new FormControl(this.record?.totalPrice),
+        chair: new FormControl(this.record?.chair?.id),
       })
 
       this.getAvailableTimes()
@@ -297,12 +299,10 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   // ----------------------Chairs----------------------------------
   onSelectChairs(item: any) {
     this.addRecordFormGroup.controls?.chair?.setValue(item)
-    this.getAvailableTimes()
   }
 
   onDeSelectChairs(item: any) {
     this.addRecordFormGroup.controls?.chair?.setValue(item)
-    this.getAvailableTimes()
   }
 
   //----------------------------------------------------------------
