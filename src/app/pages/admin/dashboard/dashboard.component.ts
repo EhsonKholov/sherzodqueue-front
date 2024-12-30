@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.dailyRecords.set(res?.data)
+          this.dailyRecords.set(res)
           this.fillDailyRecords()
         }
       })
@@ -192,7 +192,7 @@ export class DashboardComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.annualBudget.set(res?.data)
+          this.annualBudget.set(res)
           this.fillAnnualBudget()
         }
       })

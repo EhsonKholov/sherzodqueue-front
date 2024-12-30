@@ -160,6 +160,53 @@ body {
   padding: 0;
 }
 
+.app-brand {
+  height: 64px;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  line-height: 1;
+  min-height: 1px;
+  align-items: center;
+  padding-right: 1rem;
+  padding-left: 1.375rem;
+  width: 100%;
+  transition: padding .3s ease-in-out;
+}
+
+.app-brand-link {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: flex-end;
+}
+
+.app-brand-text {
+  user-select: none;
+  -moz-user-select: none;
+  -mc-user-select: none;
+  -webkit-user-select: none;
+  letter-spacing: 2px;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.app-brand-logo {
+  user-select: none;
+  -moz-user-select: none;
+  -mc-user-select: none;
+  -webkit-user-select: none;
+  color: #ffffff !important;
+  font-size: 35px;
+  font-weight: 700;
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  min-height: 1px;
+}
+
 .essp-main-menu > li {
   cursor: pointer;
   position: relative;
@@ -545,5 +592,17 @@ p-multiselect.p-multiselect {
 .bg-label-warning {
   background-color: #fff3dd !important;
   color: #fdb528 !important;
+}
+
+.custom-dropdown .p-dropdown-label {
+  padding: 0.25rem !important;
+}
+
+.custom-dropdown .p-dropdown-items {
+  padding: 0 !important;
+}
+
+.custom-dropdown .p-dropdown-items .p-dropdown-item {
+  padding: 0.5rem 0.75rem !important;
 }
 

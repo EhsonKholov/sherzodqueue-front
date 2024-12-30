@@ -190,17 +190,22 @@
                   <span class="essp-table-info">{{ item.endTime | date: 'yyyy.MM.dd HH:MM' }}</span>
                 </td>-->
                 <td class="px-4">
-                  @if (item?.status == 0) {
-                    <span class="badge rounded-pill bg-label-secondary">Создан</span>  <!--Created-->
+                  <p-dropdown
+                    styleClass="custom-dropdown"
+                    [options]="statuses()"
+                    optionLabel="text" />
+
+                  <!--@if (item?.status == 0) {
+                    <span class="badge rounded-pill bg-label-secondary">Создан</span>  &lt;!&ndash;Created&ndash;&gt;
                   } @else if (item?.status == 1) {
-                    <span class="badge rounded-pill bg-label-info">Принят</span>  <!--In Line-->
+                    <span class="badge rounded-pill bg-label-info">Принят</span>  &lt;!&ndash;In Line&ndash;&gt;
                   } @else if (item?.status == 2) {
-                    <span class="badge rounded-pill bg-label-warning">В процессе</span>  <!--In Progress-->
+                    <span class="badge rounded-pill bg-label-warning">В процессе</span>  &lt;!&ndash;In Progress&ndash;&gt;
                   } @else if (item?.status == 3) {
-                    <span class="essp-table-info essp-status-active">Выполнен</span>  <!--Completed-->
+                    <span class="essp-table-info essp-status-active">Выполнен</span>  &lt;!&ndash;Completed&ndash;&gt;
                   } @else if (item?.status == 4) {
-                    <span class="badge rounded-pill bg-label-danger">Отменен</span>  <!--Canceled-->
-                  }
+                    <span class="badge rounded-pill bg-label-danger">Отменен</span>  &lt;!&ndash;Canceled&ndash;&gt;
+                  }-->
                 </td>
                 <td class="px-4">
                   <span class="essp-table-info">{{ item.amountPaid | currency: '':'' }}</span>

@@ -11,6 +11,7 @@ import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {Subject, takeUntil} from 'rxjs';
 import {DialogModule} from 'primeng/dialog';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
+import {DropdownModule} from 'primeng/dropdown';
 
 @Component({
   selector: 'app-records',
@@ -22,7 +23,8 @@ import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
     AddEditRecordModalComponent,
     CurrencyPipe,
     DialogModule,
-    SecondsToDatePipe
+    SecondsToDatePipe,
+    DropdownModule
   ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css',
@@ -61,6 +63,13 @@ export class RecordsComponent implements OnInit, OnDestroy {
   }
 
   additionalInformationModalShow: WritableSignal<boolean> = signal(false);
+  statuses = signal<any[]>([
+    {code: 0, text: 'Ожидается'},
+    {code: 1, text: 'Принят'},
+    {code: 2, text: 'В процессе'},
+    {code: 3, text: 'Завершен'},
+    {code: 4, text: 'Отменен'},
+  ]);
 
   getRecords() {
     this.recordService.getRecord(this.filter.controls['query'].value, this.page_num, this.page_size)
