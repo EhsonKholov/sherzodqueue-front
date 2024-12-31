@@ -45,10 +45,22 @@ export class RecordsComponent implements OnInit, OnDestroy {
   record: any
 
   filter = new FormGroup({
-    startDate: new FormControl<Date | null>(null),
-    endDate: new FormControl<Date | null>(null),
-    query: new FormControl<string | null>(null),
+    fromDate: new FormControl(),
+    toDate: new FormControl(),
+    customerId: new FormControl(),
+    employeeId: new FormControl(),
+    chairId: new FormControl(),
+    status: new FormControl(),
   })
+
+  additionalInformationModalShow: WritableSignal<boolean> = signal(false);
+  statuses = signal<any[]>([
+    {code: 0, text: 'Ожидается'},
+    {code: 1, text: 'Принят'},
+    {code: 2, text: 'В процессе'},
+    {code: 3, text: 'Завершен'},
+    {code: 4, text: 'Отменен'},
+  ]);
 
   constructor(private recordService: RecordsService, private toastService: ToastService) {
   }
@@ -62,25 +74,29 @@ export class RecordsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  additionalInformationModalShow: WritableSignal<boolean> = signal(false);
-  statuses = signal<any[]>([
-    {code: 0, text: 'Ожидается'},
-    {code: 1, text: 'Принят'},
-    {code: 2, text: 'В процессе'},
-    {code: 3, text: 'Завершен'},
-    {code: 4, text: 'Отменен'},
-  ]);
-
   getRecords() {
-    this.recordService.getRecord(this.filter.controls['query'].value, this.page_num, this.page_size)
+    let body = {
+      "page": this.page_num,
+      "pageSize": this.page_size,
+      "filters": {
+        fromDate: this.filter.controls.fromDate.value,
+        toDate: this.filter.controls.toDate.value,
+        customerId: this.filter.controls.customerId.value,
+        employeeId: this.filter.controls.employeeId.value,
+        chairId: this.filter.controls.chairId.value,
+        status: this.filter.controls.status?.value?.code,
+      },
+    }
+
+    this.recordService.getRecord(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.records.set(res?.data?.items)
-          this.page_num = res?.data?.page
-          this.page_size = res?.data?.size
-          this.totalElements = res?.data?.totalCount
-          this.total_pages = res?.data?.totalPages
+          this.records.set(res?.items)
+          this.page_num = res?.page
+          this.page_size = res?.pageSize
+          this.totalElements = res?.totalCount
+          this.total_pages = res?.totalPages
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')
@@ -103,6 +119,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
   }
 
   editRecord(item: any) {
+    console.log('editRecord', item)
     this.addRecordModalShow.set(true)
     this.isRecordEdit = true
     this.record = item

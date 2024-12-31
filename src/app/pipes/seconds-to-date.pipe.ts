@@ -21,11 +21,11 @@ export class SecondsToDatePipe implements PipeTransform {
     let daysDiff = end - start;
 
     if (daysDiff == 0) {
-      return 'Сегодня'
+      return `Сегодня в ${moment(date).format('hh:mm')}`
     } else if (daysDiff == 1) {
-      return 'Завтра'
+      return `Завтра в ${moment(date).format('hh:mm')}`
     } else if (daysDiff == -1) {
-      return 'Вчера'
+      return `Вчера в ${moment(date).format('hh:mm')}`
     }
 
     try {

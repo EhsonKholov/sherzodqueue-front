@@ -96,8 +96,35 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  /*
+   {
+      "customerPhoneNumber": "string",
+      "customerName": "string",
+      "customerSurname": "string",
+      "customerLastname": "string",
+      "employeeId": 0,
+      "recordingTime": "2024-12-31T04:48:32.962Z",
+      "amountPaid": 0,
+      "totalPrice": 0,
+      "techniqueAmount": 0,
+      "employeeAmount": 0,
+      "chairId": 0,
+      "details": [
+        {
+          "recordId": 0,
+          "toothId": 0,
+          "details": "string",
+          "servicesId": [
+            0
+          ]
+        }
+      ]
+    }
+  */
 
   ngOnInit(): void {
+    console.log(this.record)
+
     this.getEmployees()
     this.getServices()
     this.getChairs()
@@ -115,6 +142,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         amountPaid: new FormControl(0),
         totalPrice: new FormControl(0),
         chair: new FormControl(null),
+        tooth: new FormControl(null, [Validators.required]),
       })
     } else {
       let recordingDay = moment(this.record?.recordingTime).format('YYYY-MM-DD')

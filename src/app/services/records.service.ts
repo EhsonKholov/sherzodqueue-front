@@ -9,9 +9,8 @@ export class RecordsService {
 
   constructor(private http: HttpClient) {}
 
-  getRecord(Query: any, Page: number, PerPage: number) {
-    let s = !!Query ? `Query=${Query}&` : '';
-    return this.http.get(environment.URI + `api/records?${s}Page=${Page}&PerPage=${PerPage}`);
+  getRecord(body: any) {
+    return this.http.post(environment.URI + 'api/record/search', body);
   }
 
   addRecord(customer: any) {

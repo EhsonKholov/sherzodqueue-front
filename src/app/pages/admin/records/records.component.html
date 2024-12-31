@@ -118,8 +118,21 @@
           <div class="row g-3">
 
             <div class="col-sm-2">
-              <input type="text" class="form-control" placeholder="Поиск" formControlName="query">
+              <input type="datetime-local" class="form-control" placeholder="Дата начала" formControlName="fromDate">
             </div>
+            <div class="col-sm-2">
+              <input type="datetime-local" class="form-control" placeholder="Дата конца" formControlName="toDate">
+            </div>
+            <div class="col-sm-2">
+              <p-dropdown
+                styleClass="custom-dropdown w-100"
+                formControlName="status"
+                [options]="statuses()"
+                [checkmark]="true"
+                [showClear]="true"
+                optionLabel="text" />
+            </div>
+
 
             <div class="col d-flex align-items-center">
               <button type="submit" class="btn btn-light me-3">
@@ -136,7 +149,7 @@
         </form>
       </div>
 
-      <div class="overflow-auto">
+      <div class="overflow-auto" style="min-height: 400px;">
         <table class="table mb-4">
           <thead>
           <tr>
@@ -193,6 +206,7 @@
                   <p-dropdown
                     styleClass="custom-dropdown"
                     [options]="statuses()"
+                    [checkmark]="true"
                     optionLabel="text" />
 
                   <!--@if (item?.status == 0) {
@@ -222,7 +236,7 @@
                   <div class="essp-table-actions">
                     <span class="cursor-pointer" title="Подробнее" (click)="detailRecord(item)"><i class="bi bi-eye-fill"></i></span>
                     <span class="cursor-pointer" (click)="editRecord(item)"><i class="bi bi-pencil-square text-warning"></i></span>
-                    <span class="cursor-pointer" (click)="editRecord(item)"><i class="bi bi-trash text-danger"></i></span>
+                    <span class="cursor-pointer" (click)="deleteRecordInit(item)"><i class="bi bi-trash text-danger"></i></span>
                   </div>
                 </td>
               </tr>
