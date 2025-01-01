@@ -125,9 +125,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.record)
 
-    this.getEmployees()
+    /*this.getEmployees()
     this.getServices()
-    this.getChairs()
+    this.getChairs()*/
 
     if (this.record == null) {
       this.addRecordFormGroup = new FormGroup({

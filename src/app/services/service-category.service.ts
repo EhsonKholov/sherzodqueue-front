@@ -10,9 +10,12 @@ export class ServiceCategoryService {
   constructor(private http: HttpClient) {
   }
 
-  getServicesCategory(Query: any, Page: number, PerPage: number) {
-    let s = !!Query ? `Query=${Query}&` : '';
-    return this.http.get(environment.URI + `api/service-category?${s}Page=${Page}&PerPage=${PerPage}`);
+  getServicesCategory(body: any) {
+    return this.http.post(environment.URI + 'api/service-category/search', body);
+  }
+
+  getServicesCategoryList(body: any) {
+    return this.http.get(environment.URI + 'api/service-category/list', body);
   }
 
   addServiceCategory(service: any) {

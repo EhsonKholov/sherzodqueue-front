@@ -82,7 +82,8 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
   }
 
   getServicesCategories() {
-    this.serviceCategoryService.getServicesCategory(null, 1, 1000)
+    let body = {}
+    this.serviceCategoryService.getServicesCategoryList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {

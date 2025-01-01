@@ -18,11 +18,8 @@ import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
   selector: 'app-service-category',
   standalone: true,
   imports: [
-    AddEditServiceModalComponent,
-    CurrencyPipe,
     PaginationComponent,
     ReactiveFormsModule,
-    DatePipe,
     AddEditServiceCategoryModalComponent,
     SecondsToDatePipe
   ],
@@ -41,10 +38,22 @@ export class ServiceCategoryComponent implements OnInit, OnDestroy {
   deleteServiceModalShow: WritableSignal<boolean> = signal(false)
   serviceCategory: any
 
+  /*
+  {
+    "page": 1,
+    "pageSize": 10,
+    "filters": {
+      "name": "string",
+      "isTechnician": true,
+      "enabled": true
+    }
+  }
+  */
+
   filter = new FormGroup({
-    startDate: new FormControl<Date | null>(null),
-    endDate: new FormControl<Date | null>(null),
-    query: new FormControl<string | null>(null),
+    name: new FormControl(''),
+    isTechnician: new FormControl(false),
+    enabled: new FormControl(true),
   })
 
   constructor(private serviceCategoryService: ServiceCategoryService, private toastService: ToastService) {}
@@ -59,15 +68,20 @@ export class ServiceCategoryComponent implements OnInit, OnDestroy {
   }
 
   getServicesCategories() {
-    this.serviceCategoryService.getServicesCategory(this.filter.controls['query'].value, this.page_num, this.page_size)
+    let body = {
+      page: this.page_num,
+      pageSize: this.page_size,
+      filters: this.filter.value
+    }
+    this.serviceCategoryService.getServicesCategory(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.servicesCategories.set(res?.data?.items)
-          this.page_num = res?.data?.page
-          this.page_size = res?.data?.size
-          this.totalElements = res?.data?.totalCount
-          this.total_pages = res?.data?.totalPages
+          this.servicesCategories.set(res?.items)
+          this.page_num = res?.page
+          this.page_size = res?.size
+          this.totalElements = res?.totalCount
+          this.total_pages = res?.totalPages
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')

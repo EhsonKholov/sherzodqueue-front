@@ -1,8 +1,12 @@
-<div class="tooth-wrapper position-relative">
-  <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="49mm" height="91mm" version="1.0"
-       style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-       viewBox="0 0 490000 910000"
-       xmlns:xlink="http://www.w3.org/1999/xlink">
+<div class="text-center">
+  Выберите зуб на картинке
+</div>
+<div class="d-flex justify-content-center align-items-center h-100">
+  <div class="tooth-wrapper position-relative">
+    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="49mm" height="91mm" version="1.0"
+         style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+         viewBox="0 0 490000 910000"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
 		<defs>
 		<style>
 			.fil2 {
@@ -25,16 +29,25 @@
 		</style>
 		</defs>
 
-    <g>
+      <g>
       @for (item of tooth; track item.code) {
-        <g data-title="{{item.code}}" pTooltip="{{item.code}}" tooltipPosition="top" tooltipEvent="hover">
+        <g class="tooth" (mouseout)="setHoverTooth(item)" (mouseleave)="removeHoverTooth()"
+           [class.active]="selectedTooth?.code == item?.code" (click)="selectTooth(item)"
+           data-title="{{item.code}}" pTooltip="{{item.code}}" tooltipPosition="top" tooltipEvent="hover">
           <path class="fil0" [attr.d]="getPathFromObj(item, 0)"/>
           <path class="fil1" [attr.d]="getPathFromObj(item, 1)"/>
         </g>
       }
 		</g>
 	</svg>
-  <div class="tooth-number disabled" data-next-step="2" data-title="Закрыть" pTooltip="Закрыть" tooltipPosition="top">
-    &times;
+    <div class="tooth-number disabled text-center" data-next-step="2" data-title="Закрыть">
+      @if (hoverTooth) {
+        <span class="tooth-code">{{ hoverTooth?.code }}</span>
+      }
+      @if (!!selectedTooth && hoverTooth == null) {
+        <span (click)="clearTooth()" class="cancel-btn">&times;</span>
+        <span class="tooth-code">{{ selectedTooth?.code }}</span>
+      }
+    </div>
   </div>
 </div>
