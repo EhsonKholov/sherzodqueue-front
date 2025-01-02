@@ -216,7 +216,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.filteredCustomers.set(res?.data)
+          this.filteredCustomers.set(res)
         }
       })
   }
@@ -227,7 +227,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.categoryWithService.set(res?.data)
+          this.categoryWithService.set(res)
         }
       })
   }
@@ -238,7 +238,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.chairs.set(res?.data?.items)
+          this.chairs.set(res?.items)
         }
       })
   }
@@ -249,7 +249,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.employees.set(res?.data)
+          this.employees.set(res)
         }
       })
   }

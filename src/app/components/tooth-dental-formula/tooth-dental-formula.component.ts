@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import $ from 'jquery';
 import {TooltipModule} from 'primeng/tooltip';
 
@@ -13,7 +13,7 @@ import {TooltipModule} from 'primeng/tooltip';
 })
 export class ToothDentalFormulaComponent implements OnInit {
 
-  selectedTooth: any
+  selectedTooth: WritableSignal<any[]> = signal([])
   hoverTooth: any
   tooth = [
     {
@@ -289,10 +289,12 @@ export class ToothDentalFormulaComponent implements OnInit {
   }
 
   selectTooth(item: any) {
-    if (this.selectedTooth == item) {
-      this.selectedTooth = null
+    if (this.selectedTooth().includes(item)) {
+      let idx = this.selectedTooth().indexOf(item)
+      if(idx > -1)
+        this.selectedTooth().splice(idx, 1)
     } else {
-      this.selectedTooth = item
+      this.selectedTooth().push(item)
     }
   }
 
@@ -305,6 +307,6 @@ export class ToothDentalFormulaComponent implements OnInit {
   }
 
   clearTooth() {
-    this.selectedTooth = null
+    this.selectedTooth.set([])
   }
 }
