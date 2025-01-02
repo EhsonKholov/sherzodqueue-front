@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {
-    AddEditServiceModalComponent
+  AddEditServiceModalComponent
 } from "../../../components/modals/add-edit-service-modal/add-edit-service-modal.component";
 import {CurrencyPipe, DatePipe} from "@angular/common";
 import {PaginationComponent} from "../../../components/pagination/pagination.component";
@@ -13,6 +13,8 @@ import {
   AddEditServiceCategoryModalComponent
 } from '../../../components/modals/add-edit-service-category-modal/add-edit-service-category-modal.component';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
+import {DropdownModule} from 'primeng/dropdown';
+import {FloatLabelModule} from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-service-category',
@@ -21,7 +23,9 @@ import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
     PaginationComponent,
     ReactiveFormsModule,
     AddEditServiceCategoryModalComponent,
-    SecondsToDatePipe
+    SecondsToDatePipe,
+    DropdownModule,
+    FloatLabelModule
   ],
   templateUrl: './service-category.component.html',
   styleUrl: './service-category.component.css'
@@ -40,23 +44,33 @@ export class ServiceCategoryComponent implements OnInit, OnDestroy {
 
   /*
   {
-    "page": 1,
-    "pageSize": 10,
-    "filters": {
-      "name": "string",
-      "isTechnician": true,
-      "enabled": true
-    }
+    "name": "string",
+    "isTechnician": true,
+    "enabled": true,
+    "includeDependencies": false
   }
   */
 
+  enabledArr: WritableSignal<any[]> = signal([
+    {value: null, label: 'Все'},
+    {value: true, label: 'Активные'},
+    {value: false, label: 'Не активные'},
+  ])
+
+  technicianArr: WritableSignal<any[]> = signal([
+    {value: null, label: 'Все'},
+    {value: true, label: 'Для техника'},
+    {value: false, label: 'Для доктора'},
+  ])
+
   filter = new FormGroup({
-    name: new FormControl(''),
-    isTechnician: new FormControl(false),
-    enabled: new FormControl(true),
+    name: new FormControl(),
+    isTechnician: new FormControl<any>(null),
+    enabled: new FormControl<any>(null),
   })
 
-  constructor(private serviceCategoryService: ServiceCategoryService, private toastService: ToastService) {}
+  constructor(private serviceCategoryService: ServiceCategoryService, private toastService: ToastService) {
+  }
 
   ngOnInit(): void {
     this.getServicesCategories()
@@ -68,10 +82,21 @@ export class ServiceCategoryComponent implements OnInit, OnDestroy {
   }
 
   getServicesCategories() {
+    let filters: any = {}
+    if (this.filter.controls?.name?.value != null) {
+      filters.name = this.filter.controls?.name?.value
+    }
+    if (this.filter.controls?.isTechnician?.value != null) {
+      filters.isTechnician = this.filter.controls?.isTechnician?.value?.value
+    }
+    if (this.filter.controls?.enabled?.value != null) {
+      filters.enabled = this.filter.controls?.enabled?.value?.value
+    }
+
     let body = {
-      page: this.page_num,
-      pageSize: this.page_size,
-      filters: this.filter.value
+      'page': this.page_num,
+      'pageSize': this.page_size,
+      'filters': filters
     }
     this.serviceCategoryService.getServicesCategory(body)
       .pipe(takeUntil(this.destroy$))
@@ -79,7 +104,7 @@ export class ServiceCategoryComponent implements OnInit, OnDestroy {
         next: (res: any) => {
           this.servicesCategories.set(res?.items)
           this.page_num = res?.page
-          this.page_size = res?.size
+          this.page_size = res?.pageSize
           this.totalElements = res?.totalCount
           this.total_pages = res?.totalPages
         }, error: (error: any) => {

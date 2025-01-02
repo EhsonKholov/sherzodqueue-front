@@ -34,7 +34,7 @@ export class ServicesService {
     return this.http.get(environment.URI + 'api/services/active')
   }
 
-  getCategoriesWithServices() {
-    return this.http.get(environment.URI + 'api/service-category/with-service')
+  getCategoriesWithServices(body: any) {
+    return this.http.post(environment.URI + 'api/service-category/list', body)
   }
 }

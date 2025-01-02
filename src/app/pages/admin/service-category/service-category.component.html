@@ -27,10 +27,29 @@
               <input type="text" class="form-control" formControlName="name" placeholder="Наименование">
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" formControlName="isTechnician">
+              <p-floatLabel>
+                <p-dropdown
+                  styleClass="custom-dropdown w-100"
+                  formControlName="isTechnician"
+                  [options]="technicianArr()"
+                  [ariaLabel]="'Test'"
+                  [checkmark]="true"
+                  inputId="technic"
+                  optionLabel="label" />
+                <label for="technic">Техник</label>
+              </p-floatLabel>
             </div>
             <div class="col-sm-2">
-              <input type="text" class="form-control" formControlName="name" placeholder="Наименование">
+              <p-floatLabel>
+                <p-dropdown
+                  styleClass="custom-dropdown w-100"
+                  formControlName="enabled"
+                  [options]="enabledArr()"
+                  [checkmark]="true"
+                  inputId="active"
+                  optionLabel="label" />
+                <label for="active">Активность</label>
+              </p-floatLabel>
             </div>
 
             <div class="col d-flex align-items-center">

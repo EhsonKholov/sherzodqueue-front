@@ -125,9 +125,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.record)
 
-    /*this.getEmployees()
+    this.getEmployees()
     this.getServices()
-    this.getChairs()*/
+    this.getChairs()
 
     if (this.record == null) {
       this.addRecordFormGroup = new FormGroup({
@@ -223,11 +223,18 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   getServices() {
     this.completeRequests()
-    this.servicesService.getCategoriesWithServices()
+    let body = {
+      //"name": "string",
+      //isTechnician: true,
+      enabled: true,
+      includeDependencies: true
+    }
+
+    this.servicesService.getCategoriesWithServices(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.categoryWithService.set(res)
+          this.categoryWithService.set(res?.items)
         }
       })
   }
