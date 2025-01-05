@@ -606,3 +606,43 @@ p-multiselect.p-multiselect {
   padding: 0.5rem 0.75rem !important;
 }
 
+
+/*---------info block--------*/
+.ib-info-block-l {
+  float: left !important;
+  width: calc(100% - 20px) !important;
+}
+
+.ib-info-block-r {
+  float: right !important;
+  width: 20px !important;
+  position: relative !important;
+  display: inline-block !important;
+}
+
+.info-btn {
+  cursor: pointer !important;
+}
+
+.info-btn img {
+  height: 20px !important;
+}
+
+.info-content {
+  display: none !important;
+  position: absolute !important;
+  background-color: rgb(30,40,50) !important;
+  width: 500px !important;
+  z-index: 1 !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+  color: white !important;
+  transition: all .2s linear;
+}
+
+.ib-info-block-r:hover .info-content {
+  display: block !important;
+}
+
+
+/*---------------------------*/

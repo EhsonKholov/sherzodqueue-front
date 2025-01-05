@@ -44,6 +44,22 @@ export class RecordsComponent implements OnInit, OnDestroy {
   isRecordEdit = false
   record: any
 
+  /*
+   {
+      "page": 1,
+      "pageSize": 10,
+      "filters": {
+        "fromDate": "2025-01-05T05:40:01.555Z",
+        "toDate": "2025-01-05T05:40:01.555Z",
+        "customerId": 0,
+        "employeeId": 0,
+        "chairId": 0,
+        "status": "0 - Created",
+        "includeDependencies": false
+      }
+    }
+  */
+
   filter = new FormGroup({
     fromDate: new FormControl(),
     toDate: new FormControl(),
@@ -55,6 +71,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
   additionalInformationModalShow: WritableSignal<boolean> = signal(false);
   statuses = signal<any[]>([
+    {code: null, text: 'Все'},
     {code: 0, text: 'Ожидается'},
     {code: 1, text: 'Принят'},
     {code: 2, text: 'В процессе'},

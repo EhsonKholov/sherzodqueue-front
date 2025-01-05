@@ -1,4 +1,4 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, signal, WritableSignal} from '@angular/core';
 import $ from 'jquery';
 import {TooltipModule} from 'primeng/tooltip';
 
@@ -13,7 +13,11 @@ import {TooltipModule} from 'primeng/tooltip';
 })
 export class ToothDentalFormulaComponent implements OnInit {
 
+  @Output() onSelectedTooth = new EventEmitter<any>();
+  @Output() onDeselectTooth = new EventEmitter<any>();
+
   selectedTooth: WritableSignal<any[]> = signal([])
+  currentTooth: WritableSignal<any> = signal(null)
   hoverTooth: any
   tooth = [
     {
@@ -242,6 +246,7 @@ export class ToothDentalFormulaComponent implements OnInit {
     }
   ]
 
+
   getPathFromObj(item: any, i: number) {
     return item?.paths[i]
   }
@@ -289,13 +294,20 @@ export class ToothDentalFormulaComponent implements OnInit {
   }
 
   selectTooth(item: any) {
-    if (this.selectedTooth().includes(item)) {
+    this.currentTooth.set(item)
+    if (!this.selectedTooth().includes(item)) {
+      this.selectedTooth().push(item)
+    }
+
+    this.onSelectedTooth.emit({currentTooth: this.currentTooth(), selectedTooth: this.selectedTooth()})
+
+    /*if (this.selectedTooth().includes(item)) {
       let idx = this.selectedTooth().indexOf(item)
       if(idx > -1)
         this.selectedTooth().splice(idx, 1)
     } else {
-      this.selectedTooth().push(item)
-    }
+    this.selectedTooth().push(item)
+    }*/
   }
 
   setHoverTooth(item: any) {
@@ -307,6 +319,14 @@ export class ToothDentalFormulaComponent implements OnInit {
   }
 
   clearTooth() {
-    this.selectedTooth.set([])
+    let item = this.currentTooth()
+    this.currentTooth.set(null)
+    if (this.selectedTooth().includes(item)) {
+      let idx = this.selectedTooth().indexOf(item)
+      if(idx > -1)
+        this.selectedTooth().splice(idx, 1)
+    }
+
+    this.onDeselectTooth.emit({currentTooth: this.currentTooth(), selectedTooth: this.selectedTooth()})
   }
 }

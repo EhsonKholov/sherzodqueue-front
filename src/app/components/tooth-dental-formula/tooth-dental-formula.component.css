@@ -49,6 +49,10 @@
   transition: all 150ms linear;
 }
 
+.cancel-btn:active {
+  transform: scale(0);
+}
+
 .tooth-number:hover .tooth-code {
   display: none;
 }
@@ -156,4 +160,15 @@
   margin-left:8px;
   transform: translateX(0%)   translateY(-50%);
 }
+
+.current-tooth {
+  background: #32abab;
+}
+
+.active-tooth {
+  background: #e8dd95;
+}
+
+
+
 

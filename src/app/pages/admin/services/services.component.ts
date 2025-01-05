@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {Subject, takeUntil} from 'rxjs';
@@ -9,17 +9,23 @@ import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {
   AddEditServiceModalComponent
 } from '../../../components/modals/add-edit-service-modal/add-edit-service-modal.component';
+import {DropdownModule} from 'primeng/dropdown';
+import {FloatLabelModule} from 'primeng/floatlabel';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {ServiceCategoryService} from '../../../services/service-category.service';
 
 @Component({
   selector: 'app-services',
   standalone: true,
   imports: [
-    DatePipe,
     FormsModule,
     PaginationComponent,
     ReactiveFormsModule,
     CurrencyPipe,
-    AddEditServiceModalComponent
+    AddEditServiceModalComponent,
+    DropdownModule,
+    FloatLabelModule,
+    NgMultiSelectDropDownModule
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.css',
@@ -37,16 +43,31 @@ export class ServicesComponent implements OnInit, OnDestroy {
   deleteServiceModalShow: WritableSignal<boolean> = signal(false)
   service: any
 
+  enabledArr: WritableSignal<any[]> = signal([
+    {value: null, label: 'Все'},
+    {value: true, label: 'Активные'},
+    {value: false, label: 'Не активные'},
+  ])
+
   filter = new FormGroup({
-    startDate: new FormControl<Date | null>(null),
-    endDate: new FormControl<Date | null>(null),
-    query: new FormControl<string | null>(null),
+    name: new FormControl(),
+    category: new FormControl<any>(null),
+    enabled: new FormControl<any>(null),
+    includeDependencies: new FormControl<any>(true),
   })
 
-  constructor(private servicesService: ServicesService, private toastService: ToastService) {}
+  categories: WritableSignal<any[]> = signal([])
+
+  constructor(
+    private servicesService: ServicesService,
+    private toastService: ToastService,
+    private serviceCategoryService: ServiceCategoryService
+  ) {
+  }
 
   ngOnInit(): void {
     this.getServices()
+    this.getServicesCategories()
   }
 
   ngOnDestroy(): void {
@@ -54,16 +75,35 @@ export class ServicesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getServices() {
-    this.servicesService.getServices(this.filter.controls['query'].value, this.page_num, this.page_size)
+  getServicesCategories() {
+    let body = {
+      includeDependencies: false,
+    }
+    this.serviceCategoryService.getServicesCategoryList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.services.set(res?.data?.items)
-          this.page_num = res?.data?.page
-          this.page_size = res?.data?.size
-          this.totalElements = res?.data?.totalCount
-          this.total_pages = res?.data?.totalPages
+          this.categories.set(res?.items)
+        }
+      })
+  }
+
+  getServices() {
+    let body = {
+      page: this.page_num,
+      pageSize: this.page_size,
+      filters: this.filter.value
+
+  }
+    this.servicesService.getServices(body)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          this.services.set(res?.items)
+          this.page_num = res?.page
+          this.page_size = res?.pageSize
+          this.totalElements = res?.totalCount
+          this.total_pages = res?.totalPages
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')

@@ -24,7 +24,10 @@
         <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getServicesCategories()">
           <div class="row g-3">
             <div class="col-sm-2">
-              <input type="text" class="form-control" formControlName="name" placeholder="Наименование">
+              <p-floatLabel>
+                <input class="form-control" pInputText id="name" formControlName="name" />
+                <label for="name">Наименование</label>
+              </p-floatLabel>
             </div>
             <div class="col-sm-2">
               <p-floatLabel>
@@ -35,6 +38,7 @@
                   [ariaLabel]="'Test'"
                   [checkmark]="true"
                   inputId="technic"
+                  id="technic"
                   optionLabel="label" />
                 <label for="technic">Техник</label>
               </p-floatLabel>
@@ -47,6 +51,7 @@
                   [options]="enabledArr()"
                   [checkmark]="true"
                   inputId="active"
+                  id="active"
                   optionLabel="label" />
                 <label for="active">Активность</label>
               </p-floatLabel>
@@ -75,6 +80,7 @@
           <th scope="col" class="px-4 essp-th-spec-color">Создано</th>
           <th scope="col" class="px-4 essp-th-spec-color">Обновлено</th>
           <th scope="col" class="px-4 essp-th-spec-color">Активность</th>
+          <th scope="col" class="px-4 essp-th-spec-color">Для техника</th>
           <th scope="col" class="px-4 essp-th-spec-color">Дата добавления</th>
           <th scope="col" class="px-4 essp-th-spec-color">Дата изменения</th>
           <th scope="col" class="px-4 essp-th-spec-color"></th>
@@ -95,7 +101,10 @@
                 <span class="essp-table-info">{{ item.modifyBy || '—' }}</span>
               </td>
               <td class="px-4">
-                <span class="{{item.enabled ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item.enabled ? 'Активна' : 'Неактивна' }}</span>
+                <span class="{{item?.enabled ? 'essp-status-active' : 'essp-status-inactive'}}">{{ item?.enabled ? 'Активна' : 'Неактивна' }}</span>
+              </td>
+              <td class="px-4">
+                <span class="essp-table-info">{{ item?.isTechnician ? 'Да' : 'Нет' }}</span>
               </td>
               <td class="px-4">
                 <span class="essp-table-info">{{ item.dateCreated | secondsToDate }}</span>

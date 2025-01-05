@@ -25,6 +25,7 @@ export class AddEditServiceCategoryModalComponent implements OnInit, OnDestroy {
     id: new FormControl(null),
     name: new FormControl('', [Validators.required]),
     enabled: new FormControl(true),
+    isTechnician: new FormControl(false),
   })
 
   constructor(
@@ -34,11 +35,13 @@ export class AddEditServiceCategoryModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.serviceCategory)
     if (!!this.serviceCategory) {
       this.addServiceFormGroup.setValue({
         id: this.serviceCategory.id,
         name: this.serviceCategory.name,
         enabled: this.serviceCategory.enabled,
+        isTechnician: this.serviceCategory?.isTechnician,
       })
     }
   }

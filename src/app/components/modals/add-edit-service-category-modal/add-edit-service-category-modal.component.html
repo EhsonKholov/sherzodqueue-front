@@ -26,6 +26,15 @@
               </div>
             </div>
           </div>
+          <div class="mb-3 col-6">
+            <label for="enabled" class="form-label">Для техника</label>
+            <div class="form-control">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="isTechnician" formControlName="isTechnician">
+                <label class="form-check-label" for="isTechnician">{{ addServiceFormGroup.controls.isTechnician.value ? 'Да' : 'Нет' }}</label>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer p-4">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>

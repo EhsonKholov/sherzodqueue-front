@@ -15,6 +15,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import moment from 'moment';
 import {DatePipe} from '@angular/common';
 import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dental-formula.component';
+import {ServiceCategoryService} from '../../../services/service-category.service';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -41,6 +42,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   @Output() getRecords: EventEmitter<any> = new EventEmitter<any>()
 
   today = new Date()
+
+  activeTooth: WritableSignal<any> = signal(null)
+  selectedTooth: WritableSignal<any[]> = signal([]);
 
   availableTimes: WritableSignal<any[]> = signal([]);
 
@@ -92,6 +96,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     private employeeService: EmployeeService,
     private customerService: CustomersService,
     private servicesService: ServicesService,
+    private serviceCategoryService: ServiceCategoryService,
     private chairsService: ChairsService,
   ) {
   }
@@ -103,7 +108,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       "customerSurname": "string",
       "customerLastname": "string",
       "employeeId": 0,
-      "recordingTime": "2024-12-31T04:48:32.962Z",
+      "recordingTime": "2025-01-05T05:37:31.426Z",
       "amountPaid": 0,
       "totalPrice": 0,
       "techniqueAmount": 0,
@@ -125,9 +130,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.record)
 
-    this.getEmployees()
+    /*this.getEmployees()
     this.getServices()
-    this.getChairs()
+    this.getChairs()*/
 
     if (this.record == null) {
       this.addRecordFormGroup = new FormGroup({
@@ -224,13 +229,10 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   getServices() {
     this.completeRequests()
     let body = {
-      //"name": "string",
-      //isTechnician: true,
       enabled: true,
-      includeDependencies: true
+      includeDependencies: false
     }
-
-    this.servicesService.getCategoriesWithServices(body)
+    this.serviceCategoryService.getServicesCategoryList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -350,4 +352,13 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.addRecordFormGroup.controls.customerPhoneNumber.setValue(event?.value?.phoneNumber)
   }
 
+  onSelectedTooth(event: any) {
+    this.activeTooth.set(event?.currentTooth)
+    this.selectedTooth.set(event?.selectedTooth)
+  }
+
+  onDeselectTooth(event: any) {
+    this.activeTooth.set(event?.currentTooth)
+    this.selectedTooth.set(event?.selectedTooth)
+  }
 }

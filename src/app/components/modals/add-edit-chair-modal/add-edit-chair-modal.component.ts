@@ -72,7 +72,7 @@ export class AddEditChairModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.chairs.set(res?.data?.items)
+          this.chairs.set(res?.items)
         }
       })
   }

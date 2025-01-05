@@ -22,15 +22,6 @@
             <input type="text" class="form-control" id="price" formControlName="price" required>
           </div>
           <div class="mb-3 col-6">
-            <label for="enabled" class="form-label required">Активность</label>
-            <div class="form-control">
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="enabled" formControlName="enabled">
-                <label class="form-check-label" for="enabled">{{ addServiceFormGroup.controls.enabled.value ? 'Активна' : 'Неактивна' }}</label>
-              </div>
-            </div>
-          </div>
-          <div class="mb-3 col-6">
             <label class="form-label required">Категории</label>
             <ng-multiselect-dropdown
               name="services"
@@ -43,6 +34,15 @@
               (onDeSelect)="onDeSelectCategories($event)"
             >
             </ng-multiselect-dropdown>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="enabled" class="form-label required">Активность</label>
+            <div class="form-control">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="enabled" formControlName="enabled">
+                <label class="form-check-label" for="enabled">{{ addServiceFormGroup.controls.enabled.value ? 'Активна' : 'Неактивна' }}</label>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer p-4">

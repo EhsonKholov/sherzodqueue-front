@@ -87,11 +87,11 @@ export class EmployeeComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.employees.set(res?.data?.items)
-          this.page_num = res?.data?.page
-          this.page_size = res?.data?.size
-          this.totalElements = res?.data?.totalCount
-          this.total_pages = res?.data?.totalPages
+          this.employees.set(res?.items)
+          this.page_num = res?.page
+          this.page_size = res?.pageSize
+          this.totalElements = res?.totalCount
+          this.total_pages = res?.totalPages
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')

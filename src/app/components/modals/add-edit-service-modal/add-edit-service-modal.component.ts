@@ -49,7 +49,7 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
     duration: new FormControl(null, [Validators.required]),
     price: new FormControl(0, [Validators.required]),
     enabled: new FormControl(true, [Validators.required]),
-    categoryId: new FormControl(null, [Validators.required]),
+    categoryId: new FormControl<any>(null, [Validators.required]),
   })
 
   constructor(
@@ -64,14 +64,14 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
     console.log(this.service)
     this.getServicesCategories()
 
-    if (!!this.service) {
+    if (this.service != null) {
       this.addServiceFormGroup.setValue({
         id: this.service?.id,
         name: this.service?.name,
         duration: this.service?.duration,
         price: this.service?.price,
         enabled: this.service?.enabled,
-        categoryId: this.service?.categoryId
+        categoryId: this.service?.category?.id,
       })
     }
   }
@@ -82,13 +82,16 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
   }
 
   getServicesCategories() {
-    let body = {}
+    let body = {
+      enabled: true,
+      includeDependencies: false
+    }
     this.serviceCategoryService.getServicesCategoryList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.categories.set(res?.data?.items)
-          this.selectedCategories = this.categories().filter((c) => c?.id == this.service?.categoryId)
+          this.categories.set(res?.items)
+          this.selectedCategories = this.categories().filter((c) => c?.id == this.service?.category?.id)
         }
       })
   }
@@ -128,7 +131,7 @@ export class AddEditServiceModalComponent implements OnInit, OnDestroy {
   }
 
   onSelectCategories(items: any) {
-    this.addServiceFormGroup.controls.categoryId.setValue(items.id)
+    this.addServiceFormGroup.controls.categoryId.setValue(items?.id)
   }
 
   onDeSelectCategories(items: any) {

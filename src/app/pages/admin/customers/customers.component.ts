@@ -9,6 +9,7 @@ import {ToastService} from '../../../services/toast.service';
 import {Subject, takeUntil} from 'rxjs';
 import {DialogModule} from 'primeng/dialog';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
+import {FloatLabelModule} from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-customers',
@@ -20,7 +21,8 @@ import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
     ReactiveFormsModule,
     AddCustomerModalComponent,
     DialogModule,
-    SecondsToDatePipe
+    SecondsToDatePipe,
+    FloatLabelModule
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css',
@@ -40,9 +42,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customer: any = {}
 
   filter = new FormGroup({
-    startDate: new FormControl<Date | null>(null),
-    endDate: new FormControl<Date | null>(null),
-    query: new FormControl<string | null>(null),
+    phoneNumber: new FormControl<any[]>([]),
+    ids: new FormControl<any>(null),
   })
 
   additionalInformationModalShow = signal<boolean>(false);
@@ -60,16 +61,39 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  /*
+  {
+    "page": 1,
+    "pageSize": 10,
+    "filters": {
+      "ids": [
+        0
+      ],
+      "phoneNumber": "string"
+    }
+  }
+  */
+
   getCustomers() {
-    this.customerService.getCustomers(this.filter.controls['query'].value, this.page_num, this.page_size)
+    let filters = {}
+
+
+    let body = {
+      page: this.page_num,
+      pageSize: this.page_size,
+      filters: {
+
+      }
+    }
+    this.customerService.getCustomers(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.customers.set(res?.data?.items)
-          this.page_num = res?.data?.page
-          this.page_size = res?.data?.size
-          this.totalElements = res?.data?.totalCount
-          this.total_pages = res?.data?.totalPages
+          this.customers.set(res?.items)
+          this.page_num = res?.page
+          this.page_size = res?.pageSize
+          this.totalElements = res?.totalCount
+          this.total_pages = res?.totalPages
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')

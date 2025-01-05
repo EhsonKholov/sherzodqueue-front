@@ -15,22 +15,22 @@ export class ServiceCategoryService {
   }
 
   getServicesCategoryList(body: any) {
-    return this.http.get(environment.URI + 'api/service-category/list', body);
+    return this.http.post(environment.URI + 'api/service-category/list', body);
   }
 
   addServiceCategory(service: any) {
-    return this.http.post(environment.URI + `api/service-category`, service)
+    return this.http.post(environment.URI + `api/service-category/create`, service)
   }
 
   editServiceCategory(service: any) {
-    return this.http.put(environment.URI + `api/service-category/${service?.id}`, service)
+    return this.http.put(environment.URI + `api/service-category/update?Id=${service?.id}`, service)
   }
 
   getServiceCategoryById(id: number) {
-    return this.http.get(environment.URI + `api/service-category/${id}`)
+    return this.http.get(environment.URI + `api/service-category/get/${id}`)
   }
 
   deleteServiceCategory(id: number) {
-    return this.http.delete(environment.URI + `api/service-category/${id}`)
+    return this.http.delete(environment.URI + `api/service-category/delete/${id}`)
   }
 }

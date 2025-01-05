@@ -115,7 +115,7 @@
             <div class="vr h-100"></div>
           </div>
           <div class="col-4">
-            <app-tooth-dental-formula />
+            <app-tooth-dental-formula (onSelectedTooth)="onSelectedTooth($event)" (onDeselectTooth)="onDeselectTooth($event)" />
           </div>
         </div>
         <div class="modal-footer p-4">

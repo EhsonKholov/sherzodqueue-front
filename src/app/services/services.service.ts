@@ -9,32 +9,23 @@ export class ServicesService {
 
   constructor(private http: HttpClient) {}
 
-  getServices(Query: any, Page: number, PerPage: number) {
-    let s = !!Query ? `Query=${Query}&` : '';
-    return this.http.get(environment.URI + `api/services?${s}Page=${Page}&PerPage=${PerPage}`);
+  getServices(body: any) {
+    return this.http.post(environment.URI + `api/service/search`, body);
   }
 
   addService(service: any) {
-    return this.http.post(environment.URI + `api/services`, service)
+    return this.http.post(environment.URI + `api/service/create`, service)
   }
 
   editService(service: any) {
-    return this.http.put(environment.URI + `api/services/${service?.id}`, service)
+    return this.http.put(environment.URI + `api/service/update?Id=${service?.id}`, service)
   }
 
   getServiceById(id: number) {
-    return this.http.get(environment.URI + `api/services/${id}`)
+    return this.http.get(environment.URI + `api/service/get/${id}`)
   }
 
   deleteService(id: number) {
-    return this.http.delete(environment.URI + `api/services/${id}`)
-  }
-
-  getActivesServices() {
-    return this.http.get(environment.URI + 'api/services/active')
-  }
-
-  getCategoriesWithServices(body: any) {
-    return this.http.post(environment.URI + 'api/service-category/list', body)
+    return this.http.delete(environment.URI + `api/service/delete/${id}`)
   }
 }
