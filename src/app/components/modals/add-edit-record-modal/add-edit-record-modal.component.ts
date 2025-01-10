@@ -137,9 +137,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.record)
 
-    //this.getEmployees()
+    this.getEmployees()
     this.getServices()
-    // /this.getChairs()
+    this.getChairs()
 
     if (this.record == null) {
       this.addRecordFormGroup = this.formBuilder.group({
@@ -226,7 +226,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     let body = {
       phoneNumber: obj.query,
     }
-    this.customerService.getCustomersList(body)
+    this.customerService.getCustomersList(body, false)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -252,7 +252,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   getChairs() {
     this.completeRequests()
-    this.chairsService.getChairs(null, 1, 100)
+    let body = {
+    }
+    this.chairsService.getChairsList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -263,11 +265,14 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   getEmployees() {
     this.completeRequests()
-    this.employeeService.getActivesEmployees()
+    let body = {
+      enabled: true
+    }
+    this.employeeService.getEmployeesList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.employees.set(res)
+          this.employees.set(res?.items)
         }
       })
   }

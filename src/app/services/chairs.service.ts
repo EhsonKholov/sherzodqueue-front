@@ -9,9 +9,12 @@ export class ChairsService {
 
   constructor(private http: HttpClient) {}
 
-  getChairs(Query: any, Page: number, PerPage: number) {
-    let s = !!Query ? `Query=${Query}&` : '';
-    return this.http.get(environment.URI + `api/chairs?${s}Page=${Page}&PerPage=${PerPage}`);
+  getChairs(body: any) {
+    return this.http.post(environment.URI + `api/chair/search`, body);
+  }
+
+  getChairsList(body: any) {
+    return this.http.post(environment.URI + `api/chair/list`, body);
   }
 
   addChairs(customer: any) {

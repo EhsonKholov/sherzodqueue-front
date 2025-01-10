@@ -61,7 +61,8 @@ export class ChairsComponent implements OnInit, OnDestroy {
   }
 
   getChairs() {
-    this.chairService.getChairs(this.filter.controls['query'].value, this.page_num, this.page_size)
+    let body = {}
+    this.chairService.getChairs(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {

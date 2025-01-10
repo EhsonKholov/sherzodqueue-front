@@ -68,7 +68,8 @@ export class AddEditChairModalComponent implements OnInit, OnDestroy {
 
   getChairs() {
     this.completeRequests()
-    this.chairsService.getChairs(null, 1, 100)
+    let body = {}
+    this.chairsService.getChairs(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {

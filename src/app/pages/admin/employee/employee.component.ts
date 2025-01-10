@@ -83,7 +83,8 @@ export class EmployeeComponent implements OnDestroy {
   }
 
   getEmployees() {
-    this.employeeService.getEmployees(this.filter.controls['query'].value, this.page_num, this.page_size)
+    let body = {}
+    this.employeeService.getEmployees(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {

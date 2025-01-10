@@ -17,7 +17,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const modifiedReq = authService.addToken(req)
 
-  loadingService.requestStarted()
+  if (!modifiedReq.headers.get('x-show-loader'))
+    loadingService.requestStarted()
 
   return next(modifiedReq)
     .pipe(
@@ -36,7 +37,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return throwError(error);
       }),
 
-      finalize(() => loadingService.requestEnded())
+      finalize(() => {
+        if (!modifiedReq.headers.get('x-show-loader'))
+          loadingService.requestEnded()
+      })
     )
 };
 
