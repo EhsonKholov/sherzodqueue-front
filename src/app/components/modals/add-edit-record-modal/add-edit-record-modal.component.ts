@@ -1,5 +1,13 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {RecordsService} from '../../../services/records.service';
 import {Subject, takeUntil} from 'rxjs';
@@ -43,8 +51,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   today = new Date()
 
-  activeTooth: WritableSignal<any> = signal(null)
-  selectedTooth: WritableSignal<any[]> = signal([]);
+  activeToothCode: WritableSignal<any> = signal(null)
 
   availableTimes: WritableSignal<any[]> = signal([]);
 
@@ -95,9 +102,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private employeeService: EmployeeService,
     private customerService: CustomersService,
-    private servicesService: ServicesService,
     private serviceCategoryService: ServiceCategoryService,
     private chairsService: ChairsService,
+    private formBuilder: FormBuilder,
   ) {
   }
 
@@ -130,42 +137,41 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.record)
 
-    /*this.getEmployees()
+    //this.getEmployees()
     this.getServices()
-    this.getChairs()*/
+    // /this.getChairs()
 
     if (this.record == null) {
-      this.addRecordFormGroup = new FormGroup({
-        customerSurname: new FormControl(null, [Validators.required]),
-        customerName: new FormControl(null, [Validators.required]),
-        customerLastname: new FormControl(null),
-        customerPhoneNumber: new FormControl(null, [Validators.required]),
-        employee: new FormControl(null, [Validators.required]),
-        services: new FormControl(null, [Validators.required]),
-        recordingDay: new FormControl(null),
-        recordingTime: new FormControl(null),
-        amountPaid: new FormControl(0),
-        totalPrice: new FormControl(0),
-        chair: new FormControl(null),
-        tooth: new FormControl(null, [Validators.required]),
+      this.addRecordFormGroup = this.formBuilder.group({
+        customerSurname: null,
+        customerName: null,
+        customerLastname: null,
+        customerPhoneNumber: null,
+        employee: null,
+        recordingDay: null,
+        recordingTime: null,
+        amountPaid: 0,
+        totalPrice: 0,
+        chair: null,
+        details: this.formBuilder.array([]),
       })
     } else {
       let recordingDay = moment(this.record?.recordingTime).format('YYYY-MM-DD')
       let recordingTime = moment(this.record?.recordingTime).format('HH:MM:SS')
 
-      this.addRecordFormGroup = new FormGroup({
-        id: new FormControl(this.record?.id, [Validators.required]),
-        customerSurname: new FormControl(this.record?.employee?.surname, [Validators.required]),
-        customerName: new FormControl(this.record?.employee?.name, [Validators.required]),
-        customerLastname: new FormControl(this.record?.employee?.lastname),
-        customerPhoneNumber: new FormControl(this.record?.employee?.phoneNumber, [Validators.required]),
-        employee: new FormControl(this.record?.employee, [Validators.required]),
-        services: new FormControl(this.record?.services, [Validators.required]),
-        recordingDay: new FormControl(recordingDay),
-        recordingTime: new FormControl(recordingTime),
-        amountPaid: new FormControl(this.record?.amountPaid),
-        totalPrice: new FormControl(this.record?.totalPrice),
-        chair: new FormControl(this.record?.chair?.id),
+      this.addRecordFormGroup = this.formBuilder.group({
+        id: this.record?.id,
+        customerSurname: this.record?.employee?.surname,
+        customerName: this.record?.employee?.name,
+        customerLastname: this.record?.employee?.lastname,
+        customerPhoneNumber: this.record?.employee?.phoneNumber,
+        employee: this.record?.employee,
+        recordingDay: recordingDay,
+        recordingTime: recordingTime,
+        amountPaid: this.record?.amountPaid,
+        totalPrice: this.record?.totalPrice,
+        chair: this.record?.chair?.id,
+        details: this.formBuilder.array([]),
       })
 
       this.getAvailableTimes()
@@ -217,11 +223,14 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   }
 
   filterCustomers(obj: any = '') {
-    this.customerService.getByPhone(obj.query)
+    let body = {
+      phoneNumber: obj.query,
+    }
+    this.customerService.getCustomersList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.filteredCustomers.set(res)
+          this.filteredCustomers.set(res?.items)
         }
       })
   }
@@ -230,7 +239,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.completeRequests()
     let body = {
       enabled: true,
-      includeDependencies: false
+      includeDependencies: true
     }
     this.serviceCategoryService.getServicesCategoryList(body)
       .pipe(takeUntil(this.destroy$))
@@ -310,15 +319,21 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   }
 
   //----------------------Services----------------------------------
-  onSelectService(item: any) {
-    this.addRecordFormGroup.controls?.services?.setValue(this.selectedServices)
+  onSelectService(items: any) {
+    if (items == null)
+      this.selectedServices = []
+    else
+      this.selectedServices = items?.value
+
+    let idx = this.getIndexFromAddRecordFormGroupByToothCode(this.activeToothCode())
+    if (idx > -1) {
+      this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.servicesId.setValue(this.selectedServices)
+    }
   }
 
   onDeSelectService(item: any) {
-    this.addRecordFormGroup.controls?.services?.setValue(this.selectedServices)
+    //this.addRecordFormGroup.controls?.services?.setValue(this.selectedServices)
   }
-
-  //----------------------------------------------------------------
 
   //----------------------Employees----------------------------------
   onSelectEmployees(item: any) {
@@ -345,20 +360,48 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   //----------------------------------------------------------------
 
   onSelectCustomer(event: any) {
-    console.log(event)
     this.addRecordFormGroup.controls.customerSurname.setValue(event?.value?.surname)
     this.addRecordFormGroup.controls.customerName.setValue(event?.value?.name)
     this.addRecordFormGroup.controls.customerLastname.setValue(event?.value?.lastname)
     this.addRecordFormGroup.controls.customerPhoneNumber.setValue(event?.value?.phoneNumber)
   }
 
-  onSelectedTooth(event: any) {
-    this.activeTooth.set(event?.currentTooth)
-    this.selectedTooth.set(event?.selectedTooth)
+  //----------------------------------------------------------------
+
+  onSelectedTooth(currentToothCode: any) {
+    this.activeToothCode.set(currentToothCode)
+    let idx = this.getIndexFromAddRecordFormGroupByToothCode(currentToothCode)
+
+    if (idx == -1) {
+      this.addRecordFormGroup.controls?.details?.push(
+        new FormGroup({
+          toothId: new FormControl(this.activeToothCode()),
+          details: new FormControl(''),
+          servicesId: new FormControl([])
+        })
+      )
+
+      this.selectedServices = []
+    } else {
+      this.selectedServices = this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.servicesId?.value
+      console.log('selectedServices', this.selectedServices)
+      console.log(this.addRecordFormGroup.controls?.details?.value)
+    }
   }
 
-  onDeselectTooth(event: any) {
-    this.activeTooth.set(event?.currentTooth)
-    this.selectedTooth.set(event?.selectedTooth)
+  onDeselectTooth(deselectedToothCode: any) {
+    this.activeToothCode.set(null)
+    let idx = this.getIndexFromAddRecordFormGroupByToothCode(deselectedToothCode)
+
+    if (idx > -1) {
+      this.addRecordFormGroup.controls?.details?.removeAt(idx)
+    }
+    console.log(this.addRecordFormGroup.controls?.details?.value)
   }
+  //----------------------------------------------------------------
+
+  getIndexFromAddRecordFormGroupByToothCode(toothCode: any) {
+    return this.addRecordFormGroup.controls?.details?.controls.findIndex((d: any) => d?.value?.toothId == toothCode)
+  }
+
 }

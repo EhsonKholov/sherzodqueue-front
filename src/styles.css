@@ -423,16 +423,26 @@ p-multiselect.p-multiselect {
 
 /*-------------------------------------------------------------------------------*/
 
-.p-multiSelect-customize1 .p-multiselect-header .p-checkbox-box,
-.p-multiSelect-customize1 p-multiselectitem .p-checkbox-box {
-  width: 16px;
-  height: 16px;
+.p-multiSelect-customize .p-multiselect-header .p-checkbox-box,
+.p-multiSelect-customize p-multiselectitem .p-checkbox-box {
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
 }
 
 .p-multiSelect-customize .p-multiselect-items {
   padding-left: 0 !important;
+}
+
+.p-multiSelect-customize p-multiselectitem .p-element {
+  padding: 0.5rem 1rem !important;
+  color: #334155;
+}
+
+.p-multiSelect-customize .p-multiselect-item-group {
+  padding: 0.5rem 1rem !important;
+  color: #94a3b8;
 }
 
 .p-multiSelect-customize .p-multiselect-label {
@@ -646,3 +656,4 @@ p-multiselect.p-multiselect {
 
 
 /*---------------------------*/
+

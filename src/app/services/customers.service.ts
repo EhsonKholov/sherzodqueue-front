@@ -10,11 +10,11 @@ export class CustomersService {
   constructor(private http: HttpClient) {}
 
   getCustomers(body: any) {
-    return this.http.get(environment.URI + `api/customers/search`, body);
+    return this.http.post(environment.URI + `api/customer/search`, body);
   }
 
   getCustomersList(body: any) {
-    return this.http.get(environment.URI + `api/customers/list`, body);
+    return this.http.post(environment.URI + `api/customer/list`, body);
   }
 
   addCustomer(customer: any) {
@@ -31,9 +31,5 @@ export class CustomersService {
 
   deleteCustomer(id: number) {
     return this.http.delete(environment.URI + `api/customer/delete/${id}`)
-  }
-
-  getByPhone(phone: string) {
-    return this.http.get(environment.URI + `api/customer/get-by-phone?phone=${phone}`)
   }
 }

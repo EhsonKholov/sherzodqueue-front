@@ -299,15 +299,7 @@ export class ToothDentalFormulaComponent implements OnInit {
       this.selectedTooth().push(item)
     }
 
-    this.onSelectedTooth.emit({currentTooth: this.currentTooth(), selectedTooth: this.selectedTooth()})
-
-    /*if (this.selectedTooth().includes(item)) {
-      let idx = this.selectedTooth().indexOf(item)
-      if(idx > -1)
-        this.selectedTooth().splice(idx, 1)
-    } else {
-    this.selectedTooth().push(item)
-    }*/
+    this.onSelectedTooth.emit(item?.code)
   }
 
   setHoverTooth(item: any) {
@@ -327,6 +319,6 @@ export class ToothDentalFormulaComponent implements OnInit {
         this.selectedTooth().splice(idx, 1)
     }
 
-    this.onDeselectTooth.emit({currentTooth: this.currentTooth(), selectedTooth: this.selectedTooth()})
+    this.onDeselectTooth.emit(item?.code)
   }
 }
