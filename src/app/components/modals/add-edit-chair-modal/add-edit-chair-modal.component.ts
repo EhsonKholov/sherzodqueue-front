@@ -14,7 +14,6 @@ import {ChairsService} from '../../../services/chairs.service';
   standalone: true,
   imports: [
     AutoCompleteModule,
-    DatePipe,
     MultiSelectModule,
     NgMultiSelectDropDownModule,
     PaginatorModule,

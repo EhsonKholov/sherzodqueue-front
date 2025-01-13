@@ -13,23 +13,27 @@ export class RecordsService {
     return this.http.post(environment.URI + 'api/record/search', body);
   }
 
-  addRecord(customer: any) {
-    return this.http.post(environment.URI + `api/records`, customer)
+  getRecordsList(body: any) {
+    return this.http.post(environment.URI + 'api/record/list', body);
+  }
+
+  addRecord(record: any) {
+    return this.http.post(environment.URI + `api/record/create`, record)
   }
 
   editRecord(id: number, customer: any) {
-    return this.http.put(environment.URI + `api/records/${id}`, customer)
+    return this.http.put(environment.URI + `api/record/update?recrodId=${id}`, customer)
   }
 
   getRecordById(id: number) {
-    return this.http.get(environment.URI + `api/records/${id}`)
+    return this.http.get(environment.URI + `api/record/get?id=${id}`)
   }
 
   deleteRecord(id: number) {
-    return this.http.delete(environment.URI + `api/records/${id}`)
+    return this.http.delete(environment.URI + `api/record/delete?recrodId=${id}`)
   }
 
-  getAvailableTimes(date: Date, employeeId: number, chairId: number) {
-    return this.http.get(environment.URI + `api/records/get-available-times?date=${date}&employeeId=${employeeId}&chairId=${chairId}`)
+  getAvailableTimes(body: any) {
+    return this.http.post(environment.URI + `api/record/get-available-times`, body)
   }
 }

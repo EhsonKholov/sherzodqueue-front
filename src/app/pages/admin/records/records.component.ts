@@ -102,6 +102,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
         employeeId: this.filter.controls.employeeId.value,
         chairId: this.filter.controls.chairId.value,
         status: this.filter.controls.status?.value?.code,
+        includeDependencies: true
       },
     }
 
@@ -136,7 +137,6 @@ export class RecordsComponent implements OnInit, OnDestroy {
   }
 
   editRecord(item: any) {
-    console.log('editRecord', item)
     this.addRecordModalShow.set(true)
     this.isRecordEdit = true
     this.record = item

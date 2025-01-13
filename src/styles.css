@@ -436,12 +436,15 @@ p-multiselect.p-multiselect {
 }
 
 .p-multiSelect-customize p-multiselectitem .p-element {
-  padding: 0.5rem 1rem !important;
   color: #334155;
 }
 
+.p-multiSelect-customize p-multiselectitem .p-element,
 .p-multiSelect-customize .p-multiselect-item-group {
-  padding: 0.5rem 1rem !important;
+  padding: 0.3rem 0.75rem !important;
+}
+
+.p-multiSelect-customize .p-multiselect-item-group {
   color: #94a3b8;
 }
 

@@ -1,19 +1,10 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, WritableSignal} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {RecordsService} from '../../../services/records.service';
 import {Subject, takeUntil} from 'rxjs';
 import {EmployeeService} from '../../../services/employee.service';
 import {CustomersService} from '../../../services/customers.service';
-import {ServicesService} from '../../../services/services.service';
 import {ChairsService} from '../../../services/chairs.service';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -48,8 +39,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   @Input() record: any
   @Output() close = new EventEmitter<any>();
   @Output() getRecords: EventEmitter<any> = new EventEmitter<any>()
-
-  today = new Date()
 
   activeToothCode: WritableSignal<any> = signal(null)
 
@@ -143,16 +132,17 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
     if (this.record == null) {
       this.addRecordFormGroup = this.formBuilder.group({
-        customerSurname: null,
-        customerName: null,
+        customerSurname: [null, Validators.required],
+        customerName: [null, Validators.required],
         customerLastname: null,
-        customerPhoneNumber: null,
-        employee: null,
-        recordingDay: null,
-        recordingTime: null,
+        customerPhoneNumber: [null, Validators.required],
+        employeeId: [null, Validators.required],
+        recordingTime: [null, Validators.required],
         amountPaid: 0,
         totalPrice: 0,
-        chair: null,
+        techniqueAmount: 0,
+        employeeAmount: 0,
+        chairId: null,
         details: this.formBuilder.array([]),
       })
     } else {
@@ -160,21 +150,24 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       let recordingTime = moment(this.record?.recordingTime).format('HH:MM:SS')
 
       this.addRecordFormGroup = this.formBuilder.group({
-        id: this.record?.id,
-        customerSurname: this.record?.employee?.surname,
-        customerName: this.record?.employee?.name,
-        customerLastname: this.record?.employee?.lastname,
-        customerPhoneNumber: this.record?.employee?.phoneNumber,
-        employee: this.record?.employee,
-        recordingDay: recordingDay,
-        recordingTime: recordingTime,
-        amountPaid: this.record?.amountPaid,
-        totalPrice: this.record?.totalPrice,
-        chair: this.record?.chair?.id,
+        id: [this.record?.id, Validators.required],
+        customerSurname: [this.record?.customer?.surname, Validators.required],
+        customerName: [this.record?.customer?.name, Validators.required],
+        customerLastname: this.record?.customer?.lastname,
+        customerPhoneNumber: [this.record?.customer?.phoneNumber, Validators.required],
+        employeeId: [this.record?.employee, Validators.required],
+        recordingTime: [this.record?.recordingTime, Validators.required],
+        amountPaid: this.record?.amountPaid || 0,
+        totalPrice: this.record?.totalPrice || 0,
+        techniqueAmount: this.record?.techniqueAmount || 0,
+        employeeAmount: this.record?.employeeAmount || 0,
+        chairId: this.record?.chair,
         details: this.formBuilder.array([]),
       })
 
-      this.getAvailableTimes()
+      console.log('aaaaaa', this.addRecordFormGroup?.value)
+
+      //this.getAvailableTimes()
     }
 
     this.selectedServices = this.record?.services
@@ -195,18 +188,23 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.addRecordFormGroup.controls?.recordingTime?.setValue(null)
     this.availableTimes.set([])
 
-    if (this.addRecordFormGroup.controls?.services?.invalid || this.addRecordFormGroup.controls?.employee?.invalid
+    if (this.addRecordFormGroup.controls?.services?.invalid || this.addRecordFormGroup.controls?.employeeId?.invalid
       || this.addRecordFormGroup.controls?.chair?.invalid || this.addRecordFormGroup.controls?.recordingDay?.invalid) {
 
       return false
     }
 
     const date = this.addRecordFormGroup.controls?.recordingDay?.value
-    const employeeId = this.addRecordFormGroup.controls?.employee?.value?.id
+    const employeeId = this.addRecordFormGroup.controls?.employeeId?.value?.id
     const chairId = this.addRecordFormGroup.controls?.chair?.value?.id
 
+    let body = {
+      /*"date": "2025-01-13",
+      "employeeId": 0,
+      "chairId": 0*/
+    }
 
-    this.recordService.getAvailableTimes(date, employeeId, chairId)
+    this.recordService.getAvailableTimes(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -252,8 +250,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   getChairs() {
     this.completeRequests()
-    let body = {
-    }
+    let body = {}
     this.chairsService.getChairsList(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -278,19 +275,19 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   }
 
   addEditRecord() {
-    let servicesId = new Set()
-    let services: any[] = this.addRecordFormGroup.controls?.services?.value
-    if (services?.length) {
-      services?.forEach(val => servicesId.add(val?.id))
+    console.log('addRecordFormGroup', this.addRecordFormGroup?.value)
+
+    let record = this.addRecordFormGroup.value
+    record.employeeId = this.addRecordFormGroup.controls.employeeId.value.id
+    record.chairId = this.addRecordFormGroup.controls.chairId?.value?.id
+
+    if (record?.details !== null) {
+      record?.details.forEach((d: any) => {
+        d.servicesId = d?.servicesId.map((s: any) => s?.id)
+      })
     }
 
-    let record = {
-      ...this.addRecordFormGroup.value,
-      employeeId: this.addRecordFormGroup.controls.employee.value.id,
-      chairId: this.addRecordFormGroup.controls.chair.value.id,
-      servicesId: Array.from(servicesId),
-      recordingTime: this.addRecordFormGroup.controls.recordingDay.value + 'T' + this.addRecordFormGroup.controls.recordingTime.value,
-    }
+    console.log('record', record)
 
     if (!!this.record) {
       this.recordService.editRecord(this.record.id, record)
@@ -334,6 +331,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     if (idx > -1) {
       this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.servicesId.setValue(this.selectedServices)
     }
+
+    this.calculateAmounts()
   }
 
   onDeSelectService(item: any) {
@@ -342,24 +341,24 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   //----------------------Employees----------------------------------
   onSelectEmployees(item: any) {
-    this.addRecordFormGroup.controls?.employee?.setValue(item)
-    this.getAvailableTimes()
+    this.addRecordFormGroup.controls?.employeeId?.setValue(item)
+    //this.getAvailableTimes()
   }
 
   onDeSelectEmployees(item: any) {
-    this.addRecordFormGroup.controls?.employee?.setValue(item)
-    this.getAvailableTimes()
+    this.addRecordFormGroup.controls?.employeeId?.setValue(item)
+    //this.getAvailableTimes()
   }
 
   //----------------------------------------------------------------
 
   // ----------------------Chairs----------------------------------
   onSelectChairs(item: any) {
-    this.addRecordFormGroup.controls?.chair?.setValue(item)
+    this.addRecordFormGroup.controls?.chairId?.setValue(item)
   }
 
   onDeSelectChairs(item: any) {
-    this.addRecordFormGroup.controls?.chair?.setValue(item)
+    this.addRecordFormGroup.controls?.chairId?.setValue(item)
   }
 
   //----------------------------------------------------------------
@@ -403,10 +402,47 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     }
     console.log(this.addRecordFormGroup.controls?.details?.value)
   }
+
   //----------------------------------------------------------------
 
   getIndexFromAddRecordFormGroupByToothCode(toothCode: any) {
     return this.addRecordFormGroup.controls?.details?.controls.findIndex((d: any) => d?.value?.toothId == toothCode)
   }
 
+  findCategoryByServiceId(service: any) {
+    return this.categoryWithService().find(category =>
+      category.services.some((ser: any) => ser.id === service.id)
+    )
+  }
+
+  calculateAmounts() {
+    if (this.addRecordFormGroup.controls?.details?.value == null || this.addRecordFormGroup.controls?.details?.value?.length == 0) {
+      this.addRecordFormGroup.controls?.amountPaid.setValue(0)
+      this.addRecordFormGroup.controls?.totalPrice.setValue(0)
+      this.addRecordFormGroup.controls?.techniqueAmount.setValue(0)
+      this.addRecordFormGroup.controls?.employeeAmount.setValue(0)
+    }
+
+    let techniqueAmount = 0, employeeAmount = 0
+    let details = this.addRecordFormGroup.controls?.details?.value
+    for (let item of details) {
+      if (item?.servicesId == null || item?.servicesId?.length == 0) {
+        continue;
+      }
+
+      for (let service of item?.servicesId) {
+        let category = this.findCategoryByServiceId(service)
+        if (category?.isTechnician) {
+          techniqueAmount += +service?.price
+        } else {
+          employeeAmount += +service?.price
+        }
+      }
+    }
+
+    let totalPrice = this.addRecordFormGroup.controls?.totalPrice?.value + techniqueAmount + employeeAmount
+    this.addRecordFormGroup.controls?.totalPrice.setValue(totalPrice)
+    this.addRecordFormGroup.controls?.techniqueAmount.setValue(techniqueAmount)
+    this.addRecordFormGroup.controls?.employeeAmount.setValue(employeeAmount)
+  }
 }
