@@ -9,7 +9,7 @@
 
 <div class="app-padding-left">
   <div class="container-fluid px-3 mb-4">
-    <div class="row g-4 mb-4">
+    <!--<div class="row g-4 mb-4">
 
       <div class="col-sm-6 col-xl-3">
         <div class="card border-0 rounded-4 app-shadow">
@@ -98,8 +98,7 @@
           </div>
         </div>
       </div>
-
-    </div>
+    </div>-->
 
     <div class="py-4 mb-5 rounded-4 bg-white app-shadow">
 
@@ -203,11 +202,16 @@
                   <span class="essp-table-info">{{ item.endTime | date: 'yyyy.MM.dd HH:MM' }}</span>
                 </td>-->
                 <td class="px-4">
-                  <p-dropdown
+                  <!--<p-dropdown
                     styleClass="custom-dropdown"
                     [options]="statuses()"
                     [checkmark]="true"
-                    optionLabel="text" />
+                    optionLabel="text" />-->
+                  <select class="form-select form-select-sm" (change)="changeRecordStatus($event, item)">
+                    @for (status of statuses(); track $index) {
+                      <option [selected]="status.code == item.status" [value]="status.code">{{ status.text }}</option>
+                    }
+                  </select>
 
                   <!--@switch (item?.status) {
                     @case (item?.status == 0) {
@@ -321,24 +325,24 @@
       </div>
     </div>
     <div class="form-group mb-3">
-      <label class="text-muted fw-light">Начала записи</label>
+      <label class="text-muted fw-light">Время записи</label>
       <div class="text-dark">{{ record?.recordingTime | secondsToDate }}</div>
     </div>
     <div class="form-group mb-3">
-      <label class="text-muted fw-light">Конец записи</label>
-      <div class="text-dark">{{ record?.endTime | secondsToDate }}</div>
-    </div>
-    <div class="form-group mb-3">
-      <label class="text-muted fw-light">Конец записи</label>
-      <div class="text-dark">{{ record?.endTime | secondsToDate }}</div>
-    </div>
-    <div class="form-group mb-3">
       <label class="text-muted fw-light">Предоплата</label>
-      <div class="text-dark">{{ record?.amountPaid | currency: '':'' }}</div>
+      <div class="text-dark">{{ (record?.amountPaid | currency: '':'') || 0 }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Сумма техника</label>
+      <div class="text-dark">{{ (record?.techniqueAmount | currency: '':'') || 0 }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Сумма доктора</label>
+      <div class="text-dark">{{ (record?.employeeAmount | currency: '':'') || 0}}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Общая сумма</label>
-      <div class="text-dark">{{ record?.totalPrice | currency: '':'' }}</div>
+      <div class="text-dark">{{ (record?.totalPrice | currency: '':'') || 0 }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Дата создания</label>

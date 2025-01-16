@@ -12,6 +12,7 @@ import {Subject, takeUntil} from 'rxjs';
 import {DialogModule} from 'primeng/dialog';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 import {DropdownModule} from 'primeng/dropdown';
+import {UtilsService} from '../../../services/utils.service';
 
 @Component({
   selector: 'app-records',
@@ -34,7 +35,6 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
   records: WritableSignal<any[]> = signal([])
-  show_filter: WritableSignal<boolean> = signal(true)
   page_num: number = 1
   page_size: number = 10
   total_pages: number = 0
@@ -71,7 +71,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
   additionalInformationModalShow: WritableSignal<boolean> = signal(false);
   statuses = signal<any[]>([
-    {code: null, text: 'Все'},
+    /*{code: null, text: 'Все'},*/
     {code: 0, text: 'Ожидается'},
     {code: 1, text: 'Принят'},
     {code: 2, text: 'В процессе'},
@@ -79,7 +79,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
     {code: 4, text: 'Отменен'},
   ]);
 
-  constructor(private recordService: RecordsService, private toastService: ToastService) {
+  constructor(private recordService: RecordsService, private toastService: ToastService, private utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -182,5 +182,37 @@ export class RecordsComponent implements OnInit, OnDestroy {
     console.log(item)
     this.additionalInformationModalShow.set(true)
     this.record = item
+  }
+
+  changeRecordStatus(event: any, item: any) {
+    let record = this.utilsService.cloneObject(item)
+    let record_new = {
+      customerPhoneNumber: record?.customer?.phoneNumber,
+      customerName: record?.customer?.name,
+      customerSurname: record?.customer?.surname,
+      customerLastname: record?.customer?.lastname,
+      employeeId: record?.employee?.id,
+      recordingTime: record?.recordingTime,
+      amountPaid: record?.amountPaid || 0,
+      totalPrice: record?.totalPrice || 0,
+      techniqueAmount: record?.techniqueAmount || 0,
+      employeeAmount: record?.employeeAmount || 0,
+      chairId: record?.chair?.id,
+      details: record?.details,
+    }
+
+    console.log(record)
+    console.log(record_new)
+
+    this.recordService.editRecord(record.id, record_new)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          console.log(res)
+          this.toastService.success('Статус записи успешно изменен!')
+        }, error: () => {
+          this.toastService.error('Не удалось изменить статус записи!')
+        }
+      })
   }
 }

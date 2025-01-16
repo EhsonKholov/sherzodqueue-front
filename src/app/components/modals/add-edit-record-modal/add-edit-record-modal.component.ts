@@ -275,8 +275,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   }
 
   addEditRecord() {
-    console.log('addRecordFormGroup', this.addRecordFormGroup?.value)
-
     let record = this.addRecordFormGroup.value
     record.employeeId = this.addRecordFormGroup.controls.employeeId.value.id
     record.chairId = this.addRecordFormGroup.controls.chairId?.value?.id
@@ -286,8 +284,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         d.servicesId = d?.servicesId.map((s: any) => s?.id)
       })
     }
-
-    console.log('record', record)
 
     if (!!this.record) {
       this.recordService.editRecord(this.record.id, record)

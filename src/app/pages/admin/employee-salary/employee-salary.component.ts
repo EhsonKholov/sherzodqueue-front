@@ -24,8 +24,10 @@ export class EmployeeSalaryComponent implements OnInit {
 
   employeesSalaries: WritableSignal<any[]> = signal([])
   toDay = new Date()
+  agoMonth = new Date(new Date().setMonth(this.toDay.getMonth() - 1))
+
   filter = new FormGroup({
-    dateFrom: new FormControl<any>(new Date()),
+    dateFrom: new FormControl<any>(this.agoMonth),
     dateTo: new FormControl(),
   })
 
@@ -68,7 +70,7 @@ export class EmployeeSalaryComponent implements OnInit {
   }
 
   getTotalAmount() {
-    if (this.employeesSalaries().length == 0) return 0
+    if (this.employeesSalaries() == null || this.employeesSalaries().length == 0) return 0
 
     return this.employeesSalaries().reduce(function(sum, item) {
       return sum + +item?.totalAmount
@@ -76,7 +78,7 @@ export class EmployeeSalaryComponent implements OnInit {
   }
 
   getTotalAmountSalary() {
-    if (this.employeesSalaries().length == 0) return 0
+    if (this.employeesSalaries() == null || this.employeesSalaries().length == 0) return 0
 
     return this.employeesSalaries().reduce(function(sum, item) {
       return sum + +item?.salary
@@ -84,7 +86,7 @@ export class EmployeeSalaryComponent implements OnInit {
   }
 
   getTotalRecordsCount() {
-    if (this.employeesSalaries().length == 0) return 0
+    if (this.employeesSalaries() == null || this.employeesSalaries().length == 0) return 0
 
     return this.employeesSalaries().reduce(function(sum, item) {
       return sum + +item?.recordsCount
