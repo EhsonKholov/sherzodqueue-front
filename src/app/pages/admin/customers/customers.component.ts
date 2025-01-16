@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomersService} from '../../../services/customers.service';
 import {DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
@@ -41,18 +41,26 @@ export class CustomersComponent implements OnInit, OnDestroy {
   isCustEdit = false
   customer: any = {}
 
-  filter = new FormGroup({
-    phoneNumber: new FormControl<any[]>([]),
-    ids: new FormControl<any>(null),
-  })
+  filter: any
 
   additionalInformationModalShow = signal<boolean>(false);
 
-  constructor(private customerService: CustomersService, private toastService: ToastService) {
+  constructor(
+    private customerService: CustomersService,
+    private toastService: ToastService,
+    private formBuilder: FormBuilder,
+  ) {
   }
 
 
   ngOnInit(): void {
+    this.filter = this.formBuilder.group({
+      name: null,
+      surname: null,
+      lastname: null,
+      phoneNumber: null,
+    })
+
     this.getCustomers()
   }
 
@@ -61,29 +69,11 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /*
-  {
-    "page": 1,
-    "pageSize": 10,
-    "filters": {
-      "ids": [
-        0
-      ],
-      "phoneNumber": "string"
-    }
-  }
-  */
-
   getCustomers() {
-    let filters = {}
-
-
     let body = {
       page: this.page_num,
       pageSize: this.page_size,
-      filters: {
-
-      }
+      filters: this.filter.value
     }
     this.customerService.getCustomers(body)
       .pipe(takeUntil(this.destroy$))

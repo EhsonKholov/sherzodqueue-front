@@ -26,15 +26,36 @@
           <div class="row g-3">
 
             <div class="col-sm-2">
-              <input type="date" class="form-control" formControlName="startDate">
+              <input class="form-control" placeholder="Фамилия" id="surname" formControlName="surname"/>
             </div>
-
             <div class="col-sm-2">
-              <input type="date" class="form-control" formControlName="endDate">
+              <input class="form-control" placeholder="Имя" id="name" formControlName="name"/>
             </div>
-
             <div class="col-sm-2">
-              <input type="text" class="form-control" formControlName="query" placeholder="">
+              <input class="form-control" placeholder="Отчество" id="lastname" formControlName="lastname"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Телефон" id="phoneNumber" formControlName="phoneNumber"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="ИНН" id="taxId" formControlName="taxId"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Должность" id="position" formControlName="position"/>
+            </div>
+            <div class="col-sm-2">
+              <select class="form-select" id="enabled" formControlName="enabled">
+                <option [value]="null">Все</option>
+                <option [value]="true">Активные</option>
+                <option [value]="false">Неактивные</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
+              <select class="form-select" id="available" formControlName="available">
+                <option [value]="null">Все</option>
+                <option [value]="true">Доступные</option>
+                <option [value]="false">Недоступные</option>
+              </select>
             </div>
 
             <div class="col d-flex align-items-center">

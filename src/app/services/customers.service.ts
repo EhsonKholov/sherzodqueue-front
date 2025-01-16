@@ -13,8 +13,7 @@ export class CustomersService {
     return this.http.post(environment.URI + `api/customer/search`, body);
   }
 
-  getCustomersList(body: any, loader?: boolean) {
-    const headers = new HttpHeaders({ 'X-Show-Loader': 'false' });
+  getCustomersList(body: any, headers?: any) {
     return this.http.post(environment.URI + `api/customer/list`, body, {headers});
   }
 

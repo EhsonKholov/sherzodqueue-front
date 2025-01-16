@@ -15,6 +15,7 @@ import moment from 'moment';
 import {DatePipe} from '@angular/common';
 import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dental-formula.component';
 import {ServiceCategoryService} from '../../../services/service-category.service';
+import {HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -224,7 +225,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     let body = {
       phoneNumber: obj.query,
     }
-    this.customerService.getCustomersList(body, false)
+    const headers = new HttpHeaders({ 'X-Show-Loader': 'false' });
+    this.customerService.getCustomersList(body, headers)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {

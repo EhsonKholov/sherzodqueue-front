@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {EmployeeService} from '../../../services/employee.service';
 import {DatePipe} from '@angular/common';
@@ -26,7 +26,7 @@ import {DialogModule} from 'primeng/dialog';
   styleUrl: './employee.component.css',
   animations: [slideLeftMargin]
 })
-export class EmployeeComponent implements OnDestroy {
+export class EmployeeComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
   employees: WritableSignal<any[]> = signal([])
@@ -39,21 +39,18 @@ export class EmployeeComponent implements OnDestroy {
   deleteEmployeeModalShow: WritableSignal<boolean> = signal(false)
   employee: any
 
-  filter = new FormGroup({
-    startDate: new FormControl<Date | null>(null),
-    endDate: new FormControl<Date | null>(null),
-    query: new FormControl<string | null>(null),
-  })
+  filter: any
 
   additionalInformationModalShow = signal<boolean>(false);
 
-  constructor(private employeeService: EmployeeService, private toastService: ToastService) {
+  constructor(
+    private employeeService: EmployeeService,
+    private toastService: ToastService,
+    private formBuilder: FormBuilder,
+  ) {
   }
 
-  ngOnInit(): void {
-    this.getEmployees()
-
-    /*
+  /*
     {
         "name": "Shohin update",
         "surname": "sherov",
@@ -75,6 +72,20 @@ export class EmployeeComponent implements OnDestroy {
         "modifyBy": "admin"
       },
     */
+
+  ngOnInit(): void {
+    this.filter = this.formBuilder.group({
+      name: null,
+      surname: null,
+      lastname: null,
+      phoneNumber: null,
+      taxId: null,
+      position: null,
+      enabled: null,
+      available: null,
+    })
+
+    this.getEmployees()
   }
 
   ngOnDestroy(): void {
@@ -83,7 +94,11 @@ export class EmployeeComponent implements OnDestroy {
   }
 
   getEmployees() {
-    let body = {}
+    let body = {
+      page: this.page_num,
+      pageSize: this.page_size,
+      filters: this.filter.value
+    }
     this.employeeService.getEmployees(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

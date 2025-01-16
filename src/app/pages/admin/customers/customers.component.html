@@ -25,10 +25,16 @@
         <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getCustomers()">
           <div class="row g-3">
             <div class="col-sm-2">
-              <p-floatLabel>
-                <input class="form-control" pInputText id="name" formControlName="name"/>
-                <label for="name">Наименование</label>
-              </p-floatLabel>
+              <input class="form-control" placeholder="Фамилия" id="surname" formControlName="surname"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Имя" id="name" formControlName="name"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Отчество" id="lastname" formControlName="lastname"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Телефон" id="phoneNumber" formControlName="phoneNumber"/>
             </div>
 
             <div class="col d-flex align-items-center">
@@ -70,7 +76,7 @@
                   </div>
                 </td>
                 <td class="px-4">
-                  <span class="essp-table-info">+992 {{ item.phoneNumber }}</span>
+                  <span class="essp-table-info">{{ item.phoneNumber }}</span>
                 </td>
                 <td class="px-4">
                   <div class="essp-status-position">
