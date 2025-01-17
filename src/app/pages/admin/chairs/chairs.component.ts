@@ -43,9 +43,7 @@ export class ChairsComponent implements OnInit, OnDestroy {
   chair: any
 
   filter = new FormGroup({
-    startDate: new FormControl<Date | null>(null),
-    endDate: new FormControl<Date | null>(null),
-    query: new FormControl<string | null>(null),
+    name: new FormControl(null)
   })
 
   constructor(private chairService: ChairsService, private toastService: ToastService) {}
@@ -61,7 +59,11 @@ export class ChairsComponent implements OnInit, OnDestroy {
   }
 
   getChairs() {
-    let body = {}
+    let body = {
+      page: this.page_num,
+      pageSize: this.page_size,
+      filters: this.filter.value
+    }
     this.chairService.getChairs(body)
       .pipe(takeUntil(this.destroy$))
       .subscribe({

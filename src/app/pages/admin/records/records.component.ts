@@ -199,16 +199,17 @@ export class RecordsComponent implements OnInit, OnDestroy {
       employeeAmount: record?.employeeAmount || 0,
       chairId: record?.chair?.id,
       details: record?.details,
-    }
-
-    console.log(record)
-    console.log(record_new)
+      status: event?.target?.value,
+      }
 
     this.recordService.editRecord(record.id, record_new)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          console.log(res)
+          let idx = this.records().findIndex((r: any) => r.id == res.id)
+          if (idx > 0) {
+            this.records()[idx] = res
+          }
           this.toastService.success('Статус записи успешно изменен!')
         }, error: () => {
           this.toastService.error('Не удалось изменить статус записи!')
