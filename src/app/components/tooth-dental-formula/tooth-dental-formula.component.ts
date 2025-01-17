@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, signal, WritableSignal} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal} from '@angular/core';
 import $ from 'jquery';
 import {TooltipModule} from 'primeng/tooltip';
 
@@ -16,7 +16,7 @@ export class ToothDentalFormulaComponent implements OnInit {
   @Output() onSelectedTooth = new EventEmitter<any>();
   @Output() onDeselectTooth = new EventEmitter<any>();
 
-  selectedTooth: WritableSignal<any[]> = signal([])
+  @Input('selectedTooth') selectedTooth: WritableSignal<any[]> = signal([])
   currentTooth: WritableSignal<any> = signal(null)
   hoverTooth: any
   tooth = [
@@ -294,9 +294,9 @@ export class ToothDentalFormulaComponent implements OnInit {
   }
 
   selectTooth(item: any) {
-    this.currentTooth.set(item)
-    if (!this.selectedTooth().includes(item)) {
-      this.selectedTooth().push(item)
+    this.currentTooth.set(item.code)
+    if (!this.selectedTooth().includes(item.code)) {
+      this.selectedTooth().push(item.code)
     }
 
     this.onSelectedTooth.emit(item?.code)
@@ -313,8 +313,8 @@ export class ToothDentalFormulaComponent implements OnInit {
   clearTooth() {
     let item = this.currentTooth()
     this.currentTooth.set(null)
-    if (this.selectedTooth().includes(item)) {
-      let idx = this.selectedTooth().indexOf(item)
+    if (this.selectedTooth().includes(item.code)) {
+      let idx = this.selectedTooth().indexOf(item.code)
       if(idx > -1)
         this.selectedTooth().splice(idx, 1)
     }

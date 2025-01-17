@@ -42,6 +42,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   @Output() getRecords: EventEmitter<any> = new EventEmitter<any>()
 
   activeToothCode: WritableSignal<any> = signal(null)
+  selectedTooth: WritableSignal<any[]> = signal([])
 
   availableTimes: WritableSignal<any[]> = signal([]);
 
@@ -163,11 +164,16 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         techniqueAmount: this.record?.techniqueAmount || 0,
         employeeAmount: this.record?.employeeAmount || 0,
         chairId: this.record?.chair,
-        details: this.formBuilder.array([]),
+        details: this.formBuilder.array(this.record?.details || []),
       })
 
-      console.log('aaaaaa', this.addRecordFormGroup?.value)
+      console.log(this.addRecordFormGroup?.value)
 
+      if (this.record?.details != null && this.record?.details.length > 0) {
+        for (let detail of this.record?.details) {
+          this.selectedTooth().push(detail?.toothId)
+        }
+      }
       //this.getAvailableTimes()
     }
 
@@ -283,7 +289,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
     if (record?.details !== null) {
       record?.details.forEach((d: any) => {
-        d.servicesId = d?.servicesId.map((s: any) => s?.id)
+        d.servicesId = d?.services.map((s: any) => s?.id)
       })
     }
 
@@ -327,7 +333,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
     let idx = this.getIndexFromAddRecordFormGroupByToothCode(this.activeToothCode())
     if (idx > -1) {
-      this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.servicesId.setValue(this.selectedServices)
+      this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.services.setValue(this.selectedServices)
     }
 
     this.calculateAmounts()
@@ -371,6 +377,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   //----------------------------------------------------------------
 
   onSelectedTooth(currentToothCode: any) {
+    console.log('currentToothCode', currentToothCode)
     this.activeToothCode.set(currentToothCode)
     let idx = this.getIndexFromAddRecordFormGroupByToothCode(currentToothCode)
 
@@ -379,13 +386,13 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         new FormGroup({
           toothId: new FormControl(this.activeToothCode()),
           details: new FormControl(''),
-          servicesId: new FormControl([])
+          services: new FormControl([])
         })
       )
 
       this.selectedServices = []
     } else {
-      this.selectedServices = this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.servicesId?.value
+      this.selectedServices = this.selectedServices = this.addRecordFormGroup.controls?.details?.controls[idx]?.value?.services
       console.log('selectedServices', this.selectedServices)
       console.log(this.addRecordFormGroup.controls?.details?.value)
     }
@@ -424,11 +431,11 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     let techniqueAmount = 0, employeeAmount = 0
     let details = this.addRecordFormGroup.controls?.details?.value
     for (let item of details) {
-      if (item?.servicesId == null || item?.servicesId?.length == 0) {
+      if (item?.services == null || item?.services?.length == 0) {
         continue;
       }
 
-      for (let service of item?.servicesId) {
+      for (let service of item?.services) {
         let category = this.findCategoryByServiceId(service)
         if (category?.isTechnician) {
           techniqueAmount += +service?.price

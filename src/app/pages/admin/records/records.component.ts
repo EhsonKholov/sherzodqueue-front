@@ -13,6 +13,7 @@ import {DialogModule} from 'primeng/dialog';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 import {DropdownModule} from 'primeng/dropdown';
 import {UtilsService} from '../../../services/utils.service';
+import {ToothDentalFormulaComponent} from '../../../components/tooth-dental-formula/tooth-dental-formula.component';
 
 @Component({
   selector: 'app-records',
@@ -25,7 +26,8 @@ import {UtilsService} from '../../../services/utils.service';
     CurrencyPipe,
     DialogModule,
     SecondsToDatePipe,
-    DropdownModule
+    DropdownModule,
+    ToothDentalFormulaComponent
   ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css',
@@ -114,7 +116,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
           this.page_num = res?.page
           this.page_size = res?.pageSize
           this.totalElements = res?.totalCount
-          this.total_pages = res?.totalPages
+          this.total_pages = (this.totalElements / this.page_size) + (this.totalElements % this.page_size > 0 ? 1 : 0)
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')
@@ -215,5 +217,16 @@ export class RecordsComponent implements OnInit, OnDestroy {
           this.toastService.error('Не удалось изменить статус записи!')
         }
       })
+  }
+
+  getSelectedToothFromRecordAsSignal(record: any) {
+    let selectedTooth: WritableSignal<any[]> = signal([])
+    if (record?.details != null && record?.details.length > 0) {
+      for (let detail of this.record?.details) {
+        selectedTooth().push(detail?.toothId)
+      }
+    }
+
+    return selectedTooth;
   }
 }

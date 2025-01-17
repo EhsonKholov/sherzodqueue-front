@@ -126,7 +126,10 @@
             </div>
           </div>
           <div class="col-3 border-start border-end">
-            <app-tooth-dental-formula (onSelectedTooth)="onSelectedTooth($event)"
+            <div class="text-center d-flex justify-content-center align-items-center">
+              Выберите зуб на картинке
+            </div>
+            <app-tooth-dental-formula [selectedTooth]="selectedTooth" (onSelectedTooth)="onSelectedTooth($event)"
                                       (onDeselectTooth)="onDeselectTooth($event)"/>
           </div>
           <div class="col-3">
@@ -136,7 +139,7 @@
               @for (item of this.addRecordFormGroup.controls?.details?.value; track $index) {
                 <div class="mb-2 mt-3">Зуб: {{ item.toothId }}</div>
                 <ul class="list-group list-group-flush border-bottom ms-3">
-                  @for (service of item.servicesId; track $index) {
+                  @for (service of item.services; track $index) {
                     <li class="list-group-item">{{ service?.name }}</li>
                   }
                 </ul>

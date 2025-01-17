@@ -1,45 +1,3 @@
-<div class="text-center d-flex justify-content-center align-items-center">
-  Выберите зуб на картинке
-
-  <div class="ib-info-block-r ms-3">
-    <div class="info-btn">
-      <i class="ri-information-line fs-5"></i>
-    </div>
-    <div class="info-content" style="right: 0 !important;">
-      <div class="ib-mb-10">
-        <div class="ib-mb-5"><b>Правила заполнения</b></div>
-        <div>
-          <div>
-            <div>Указываются реквизиты клиента, осуществляющего перевод средств:</div>
-            <ul>
-              <li>Номер счета клиента, с которого списываются средства при переводе;</li>
-              <li>Наименование клиента: полное или краткое, предусмотренное учредительными документами клиента; ФИО-
-                для физ.лиц;
-              </li>
-              <li>Адрес;</li>
-              <li>Cерия и номер паспорта для физ.лиц без открытия счета</li>
-            </ul>
-            <span class="ib-i-orange">(Обязательно для заполнения)</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="ib-mb-5"><b>Формат поля</b></div>
-        <div>
-          <div>Максимально 5 строк по 35 символов, включая строку с номером счета</div>
-          <ul>
-            <li>1/Наим.клиента или ФИО</li>
-            <li>2/адрес</li>
-            <li>3/код страны/город</li>
-            <li>6/код страны/TXID/ИНН- для юр.лиц</li>
-            <li>6/код страны/CCPT/серия и номер паспорта для физ. лиц</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
 <div class="d-flex justify-content-center align-items-center h-100 w-100">
   <div class="tooth-wrapper position-relative">
     <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="49mm" height="91mm" version="1.0"
@@ -77,7 +35,7 @@
       <g>
       @for (item of tooth; track item.code) {
         <g class="tooth" (mouseout)="setHoverTooth(item)" (mouseleave)="removeHoverTooth()"
-           [class.active]="selectedTooth().includes(item)" (click)="selectTooth(item)"
+           [class.active]="selectedTooth().includes(item.code)" (click)="selectTooth(item)"
            [class.current]="currentTooth()?.code == item?.code"
            data-title="{{item.code}}" pTooltip="{{item.code}}" tooltipPosition="top" tooltipEvent="hover">
           <path class="fil0" [attr.d]="getPathFromObj(item, 0)"/>

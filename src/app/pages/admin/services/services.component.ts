@@ -103,7 +103,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
           this.page_num = res?.page
           this.page_size = res?.pageSize
           this.totalElements = res?.totalCount
-          this.total_pages = res?.totalPages
+          this.total_pages = (this.totalElements / this.page_size) + (this.totalElements % this.page_size > 0 ? 1 : 0)
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')
