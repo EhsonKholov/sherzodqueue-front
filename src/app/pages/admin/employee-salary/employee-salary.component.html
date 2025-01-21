@@ -14,7 +14,7 @@
             </div>
             <div class="col-sm-1 d-flex justify-content-center align-items-center">—</div>
             <div class="col-sm-2">
-              <p-calendar formControlName="dateTo" [maxDate]="toDay" [showButtonBar]="true" [inputStyleClass]="'form-control'" view="month" dateFormat="mm.yy" [readonlyInput]="true"/>
+              <p-calendar formControlName="dateTo" [disabled]="filter.controls.dateFrom.value == null" [minDate]="filter.controls.dateFrom.value" [maxDate]="toDay" [showButtonBar]="true" [inputStyleClass]="'form-control'" view="month" dateFormat="mm.yy" [readonlyInput]="true"/>
             </div>
 
             <div class="col d-flex align-items-center">

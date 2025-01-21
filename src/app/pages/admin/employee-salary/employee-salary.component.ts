@@ -43,17 +43,17 @@ export class EmployeeSalaryComponent implements OnInit {
   getEmployeesSalaries() {
     console.log(this.filter)
     let body
-    let dateFrom: any = this.filter.controls?.dateFrom
-    let dateTo: any = this.filter.controls?.dateTo
-    if (dateFrom.valid && dateTo.invalid) {
+    let dateFrom: any = this.filter.controls?.dateFrom?.value
+    let dateTo: any = this.filter.controls?.dateTo?.value
+    if (dateFrom != null && dateTo == null) {
       body = {
-        year: dateFrom?.value?.getFullYear(),
-        month: dateFrom?.value?.getMonth() + 1
+        year: dateFrom?.getFullYear(),
+        month: dateFrom?.getMonth() + 1
       }
-    } else if (dateFrom.valid && dateTo.valid) {
+    } else if (dateFrom != null && dateTo != null) {
       body = {
-        fromDate: `${dateFrom?.value?.getFullYear()}-${(dateFrom?.value?.getMonth() + 1).toString().padStart(2, "0")}-01`,
-        fromTo: `${dateTo?.value?.getFullYear()}-${(dateTo?.value?.getMonth() + 1).toString().padStart(2, "0")}-01`,
+        fromDate: `${dateFrom?.getFullYear()}-${(dateFrom?.getMonth() + 1).toString().padStart(2, "0")}-01`,
+        fromTo: `${dateTo?.getFullYear()}-${(dateTo?.getMonth() + 1).toString().padStart(2, "0")}-01`,
       }
     }
 
@@ -61,7 +61,7 @@ export class EmployeeSalaryComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.employeesSalaries.set(res?.data)
+          this.employeesSalaries.set(res)
         }, error: (err: any) => {
           if (err.status != 401) return
           this.toastService.error('Ошибка получения данных!')

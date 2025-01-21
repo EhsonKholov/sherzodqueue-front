@@ -160,11 +160,11 @@ export class RecordsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          this.toastService.success('Клиент удален!')
+          this.toastService.success('Запись удален!')
           this.deleteRecordModalShow.set(false)
           this.getRecords()
         }, error: (error: any) => {
-          this.toastService.success('Ошибка удаления клиента!')
+          this.toastService.success('Ошибка удаления записи!')
         }
       })
   }

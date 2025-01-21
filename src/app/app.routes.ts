@@ -13,7 +13,7 @@ import {DashboardComponent} from './pages/admin/dashboard/dashboard.component';
 import {TotalIncomeComponent} from './pages/admin/total-income/total-income.component';
 
 export const routes: Routes = [
-  {path: '', title: 'Главная', redirectTo: '/admin/records', /*component: HomeComponent,*/pathMatch: 'full'},
+  {path: '', title: 'Главная', redirectTo: '/admin/dashboard', /*component: HomeComponent,*/pathMatch: 'full'},
   {
     path: 'admin', loadComponent: () => import('./pages/admin/admin/admin.component').then(m => m.AdminComponent),
     canActivate: [authGuard],
