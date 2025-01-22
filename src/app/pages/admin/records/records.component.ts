@@ -14,6 +14,7 @@ import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 import {DropdownModule} from 'primeng/dropdown';
 import {UtilsService} from '../../../services/utils.service';
 import {ToothDentalFormulaComponent} from '../../../components/tooth-dental-formula/tooth-dental-formula.component';
+import {CalendarComponent} from '../../../components/calendar/calendar.component';
 
 @Component({
   selector: 'app-records',
@@ -27,7 +28,8 @@ import {ToothDentalFormulaComponent} from '../../../components/tooth-dental-form
     DialogModule,
     SecondsToDatePipe,
     DropdownModule,
-    ToothDentalFormulaComponent
+    ToothDentalFormulaComponent,
+    CalendarComponent
   ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css',

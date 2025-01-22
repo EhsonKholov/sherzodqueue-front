@@ -1,0 +1,65 @@
+<div class="app-calendar-wrapper">
+  <div class="flex-grow-1 container-p-y">
+    <div class="app-calendar-wrapper">
+      <div class="row g-0">
+        <div class="col-3 app-calendar-sidebar border-end" id="app-calendar-sidebar">
+          <div class="px-5 pb-4 my-sm-0 mb-4 border-bottom">
+            <button class="btn btn-primary btn-toggle-sidebar w-100 waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
+              <i class="ri-add-line ri-16px me-1"></i>
+              <span class="align-middle">Add Event</span>
+            </button>
+          </div>
+          <div class="">
+            <div class="inline-calendar flatpickr-input" readonly="readonly"></div>
+            <p-calendar
+              class="max-w-full"
+              [inline]="true"
+              [showWeek]="true" />
+            <hr class="mb-5 mx-n4 mt-3">
+            <div class="mb-4 ms-1">
+              <h5>Event Filters</h5>
+            </div>
+            <div class="form-check form-check-secondary mb-5 ms-3">
+              <input class="form-check-input select-all" type="checkbox" id="selectAll" data-value="all" checked="">
+              <label class="form-check-label" for="selectAll">View All</label>
+            </div>
+            <div class="app-calendar-events-filter text-heading">
+              <div class="form-check form-check-danger mb-5 ms-3">
+                <input class="form-check-input input-filter" type="checkbox" id="select-personal" data-value="personal" checked="">
+                <label class="form-check-label" for="select-personal">Personal</label>
+              </div>
+              <div class="form-check mb-5 ms-3">
+                <input class="form-check-input input-filter" type="checkbox" id="select-business" data-value="business" checked="">
+                <label class="form-check-label" for="select-business">Business</label>
+              </div>
+              <div class="form-check form-check-warning mb-5 ms-3">
+                <input class="form-check-input input-filter" type="checkbox" id="select-family" data-value="family" checked="">
+                <label class="form-check-label" for="select-family">Family</label>
+              </div>
+              <div class="form-check form-check-success mb-5 ms-3">
+                <input class="form-check-input input-filter" type="checkbox" id="select-holiday" data-value="holiday" checked="">
+                <label class="form-check-label" for="select-holiday">Holiday</label>
+              </div>
+              <div class="form-check form-check-info ms-3">
+                <input class="form-check-input input-filter" type="checkbox" id="select-etc" data-value="etc" checked="">
+                <label class="form-check-label" for="select-etc">ETC</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-9 app-calendar-content">
+          <div class="card shadow-none border-0 ">
+            <div class="pb-0">
+              <full-calendar *ngIf='calendarVisible()' [options]='calendarOptions()'>
+                <ng-template #eventContent let-arg>
+                  <b>{{ arg.timeText }}</b>
+                  <i>{{ arg.event.title }}</i>
+                </ng-template>
+              </full-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
