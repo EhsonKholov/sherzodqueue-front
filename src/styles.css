@@ -881,3 +881,175 @@ p-multiselect.p-multiselect {
 
 /*---------------------------*/
 
+.p-calendar-border-none .p-datepicker {
+  border: none !important;
+}
+
+.fc-scrollgrid  .fc-scrollgrid-liquid {
+  border: none !important;
+}
+
+.fc-scrollgrid  .fc-scrollgrid-liquid .fc-scrollgrid-section-header {
+  border: none !important;
+}
+
+.fc-toolbar-title {
+  color: #3b4056 !important;
+}
+
+.fc .fc-toolbar .fc-button-group .fc-button.fc-next-button.fc-button-primary, .fc .fc-toolbar .fc-button-group .fc-button.fc-prev-button.fc-button-primary {
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #6d788d;
+  color: #6d788d;
+}
+
+.fc .fc-toolbar .fc-button-group .fc-button.fc-next-button.fc-button-primary, .fc .fc-toolbar .fc-button-group .fc-button.fc-prev-button.fc-button-primary {
+  margin-right: .5rem !important;
+}
+
+.fc .fc-button:focus {
+  box-shadow: none !important;
+}
+
+.fc .fc-button-primary:hover {
+  color: #6d788d !important;
+  background-color: #f3f4f6 !important;
+  border-color: #6d788d !important;
+}
+
+.fc-button-group {
+  margin-left: 1.5rem !important;
+  margin-right: 1rem !important;
+}
+
+.fc-button-group button {
+  padding: 0.2rem !important;
+  border: 1px solid #6d788d !important;
+  border-radius: 5px !important;
+}
+
+.fc-scrollgrid.fc-scrollgrid-liquid {
+  border-left: none !important;
+}
+
+.light-style .fc table.fc-scrollgrid td {
+  box-shadow: none !important;
+  border-radius: .5rem !important;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #6d788d;
+  color: #6d788d;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+  border: 1px solid var(--fc-border-color);
+}
+
+.fc .fc-toolbar:last-child {
+  justify-content: flex-start;
+}
+
+.fc .fc-toolbar .fc-toolbar-chunk:last-child {
+  margin-left: auto;
+}
+
+.fc .fc-toolbar .fc-toolbar-chunk:last-child .fc-button-group .fc-button:first-child {
+  border-top-left-radius: .5rem !important;
+  border-bottom-left-radius: .5rem !important;
+}
+
+.fc .fc-toolbar .fc-toolbar-chunk:last-child .fc-button-group .fc-button:last-child {
+  border-top-right-radius: .5rem !important;
+  border-bottom-right-radius: .5rem !important;
+}
+
+.fc .fc-button-primary:not(.fc-prev-button):not(.fc-next-button):active,
+.fc .fc-button-primary:not(.fc-prev-button):not(.fc-next-button).fc-button-active {
+  background-color: rgba(102, 108, 255, .1) !important;
+  border-color: #666cff !important;
+  color: #666cff;
+}
+
+.fc .fc-toolbar .fc-toolbar-chunk:last-child .fc-button-group .fc-button {
+  border-radius: 0 !important;
+  background: #ffffff;
+  border-color: #666cff !important;
+  color: #666cff;
+  padding: .438rem 1.375rem !important;
+  text-transform: capitalize;
+}
+
+/*.fc-scrollgrid-section .fc-scrollgrid-section-body .fc-scrollgrid-section-liquid:hover > tr {
+  background: #ffffff !important;
+}*/
+
+/*.fc-scrollgrid.fc-scrollgrid-liquid tbody tr:hover {
+  background: #ffffff !important;
+}*/
+
+.fc table tbody tr:hover td {
+  background-color: #ffffff !important;
+}
+
+.fc .fc-day-today:not(.fc-col-header-cell) {
+  background-color: #f2f2f4 !important;
+}
+
+.fc table.fc-scrollgrid .fc-col-header .fc-col-header-cell {
+  border-left: none !important;
+}
+
+.fc table.fc-scrollgrid .fc-col-header .fc-col-header-cell {
+  border-color: #e5e6e8 !important;
+}
+
+.app-calendar-wrapper table.fc-scrollgrid th,
+.app-calendar-wrapper table.fc-scrollgrid td {
+  border-right: 0;
+}
+
+.fc .fc-col-header-cell-cushion {
+  color: #3b4056;
+  font-weight: 500;
+}
+
+.fc .fc-col-header-cell-cushion {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+a:not([href]) {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+.fc .fc-view-harness .fc-daygrid-body .fc-daygrid-day .fc-daygrid-day-top {
+  flex-direction: row;
+}
+
+.fc-event-danger:not(.fc-list-event) {
+  border-color: rgba(255, 77, 73, .15);
+}
+
+.fc-event-danger:not(.fc-list-event) {
+  background-color: #ffe3e2 !important;
+  color: #ff4d49 !important;
+}
+
+.fc-event-primary:not(.fc-list-event) {
+  background-color: #e7e7ff !important;
+  color: #666cff !important;
+}
+
+.fc .fc-view-harness .fc-event {
+  font-size: .875rem;
+  font-weight: 400;
+  padding: .1rem .5rem;
+  border-radius: 50rem;
+  border: none;
+}
+
+.fc .fc-daygrid-day-events .fc-event, .fc .fc-daygrid-day-events .fc-more-link {
+  margin-left: .75rem !important;
+  margin-right: .75rem !important;
+}
+

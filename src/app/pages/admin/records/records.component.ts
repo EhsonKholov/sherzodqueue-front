@@ -15,6 +15,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {UtilsService} from '../../../services/utils.service';
 import {ToothDentalFormulaComponent} from '../../../components/tooth-dental-formula/tooth-dental-formula.component';
 import {CalendarComponent} from '../../../components/calendar/calendar.component';
+import {fadeAnimation} from '../../../animations/fade.animation';
 
 @Component({
   selector: 'app-records',
@@ -29,11 +30,11 @@ import {CalendarComponent} from '../../../components/calendar/calendar.component
     SecondsToDatePipe,
     DropdownModule,
     ToothDentalFormulaComponent,
-    CalendarComponent
+    CalendarComponent,
   ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css',
-  animations: [slideLeftMargin],
+  animations: [slideLeftMargin, fadeAnimation],
 })
 export class RecordsComponent implements OnInit, OnDestroy {
 
@@ -82,6 +83,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
     {code: 3, text: 'Завершен'},
     {code: 4, text: 'Отменен'},
   ]);
+  isTableCalendarTabActive = signal<boolean>(true);
 
   constructor(private recordService: RecordsService, private toastService: ToastService, private utilsService: UtilsService) {
   }

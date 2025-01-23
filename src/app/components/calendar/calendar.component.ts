@@ -1,4 +1,4 @@
-import { Component , signal, ChangeDetectorRef } from '@angular/core';
+import {Component, signal, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -19,6 +19,26 @@ import {CalendarModule} from 'primeng/calendar';
 })
 export class CalendarComponent {
 
+  event = [
+    {
+      id: createEventId(),
+      title: 'All-day event',
+      start: new Date('2025-01-13T00:00:00'),
+    },
+    {
+      id: createEventId(),
+      title: 'Timed event',
+      start: new Date('2025-01-01T00:00:00'),
+      end: new Date('2025-01-05T03:00:00'),
+    },
+    {
+      id: createEventId(),
+      title: 'Timed event',
+      start: new Date('2025-01-17T12:00:00'),
+      end: new Date('2025-01-18T03:15:00'),
+    }
+  ]
+
   calendarVisible = signal(true);
   calendarOptions = signal<CalendarOptions>({
     plugins: [
@@ -28,10 +48,11 @@ export class CalendarComponent {
       listPlugin,
     ],
     headerToolbar: {
-      left: 'prev,next today',
+      left: 'prev,next',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
+    events: this.event,
     initialView: 'dayGridMonth',
     initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
@@ -49,6 +70,7 @@ export class CalendarComponent {
     */
   });
   currentEvents = signal<EventApi[]>([]);
+  @Output() addRecord = new EventEmitter<any>();
 
   constructor(private changeDetector: ChangeDetectorRef) {
   }

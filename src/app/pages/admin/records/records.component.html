@@ -8,7 +8,7 @@
 
 
 <div class="app-padding-left">
-  <div class="container-fluid px-3 mb-4">
+  <div class="container-fluid px-3">
     <!--<div class="row g-4 mb-4">
 
       <div class="col-sm-6 col-xl-3">
@@ -100,173 +100,187 @@
       </div>
     </div>-->
 
-    <div class="py-4 mb-5 rounded-4 bg-white app-shadow">
+    <div class="pt-4 mb-5 rounded-4 bg-white app-shadow overflow-hidden">
 
       <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
-        <div>
-          <h3 class="m-0">Список записей</h3>
+        <div class="d-flex">
+          <h3 class="m-0 me-4">Список записей</h3>
 
-          <div></div>
-        </div>
-        <div>
-          <button type="button" class="btn btn-light" (click)="addRecord()">
-            <i class="ri-add-line me-2"></i>
-            <span>Добавить запись</span>
-          </button>
-        </div>
-      </div>
+          <div class="btn-group btn-group-custom" role="group">
+            <input type="radio" class="btn-check" (click)="isTableCalendarTabActive.set(true)"
+                   name="tableTab" id="tableTab" autocomplete="off" [checked]="isTableCalendarTabActive()">
+            <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="tableTab"><i class="ri-table-line"></i></label>
 
-      <div class="px-4 mb-4">
-        <app-calendar />
-      </div>
-
-      <div class="px-4 mb-4">
-        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getRecords()">
-          <div class="row g-3">
-
-            <div class="col-sm-2">
-              <input type="datetime-local" class="form-control" placeholder="Дата начала" formControlName="fromDate">
-            </div>
-            <div class="col-sm-2">
-              <input type="datetime-local" class="form-control" placeholder="Дата конца" formControlName="toDate">
-            </div>
-            <div class="col-sm-2">
-              <p-dropdown
-                styleClass="custom-dropdown w-100"
-                formControlName="status"
-                [options]="statuses()"
-                [checkmark]="true"
-                [showClear]="true"
-                optionLabel="text"/>
-            </div>
-
-
-            <div class="col d-flex align-items-center">
-              <button type="submit" class="btn btn-light me-3">
-                <i class="ri-search-line me-2"></i>
-                <span>Поиск</span>
-              </button>
-              <!--<button type="button" class="btn btn-light">
-                <i class="ri-upload-2-line me-2"></i>
-                <span>Экспорт</span>
-              </button>-->
-            </div>
-
+            <input type="radio" class="btn-check" (click)="isTableCalendarTabActive.set(false)"
+                   name="calendarTab" id="calendarTab" autocomplete="off" [checked]="!isTableCalendarTabActive()">
+            <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="calendarTab"><i class="ri-calendar-2-line"></i></label>
           </div>
-        </form>
+        </div>
+        <div>
+          @if (isTableCalendarTabActive()) {
+            <button type="button" class="btn btn-success" (click)="addRecord()">
+              <i class="ri-add-line me-2"></i>
+              <span>Добавить запись</span>
+            </button>
+          }
+        </div>
       </div>
 
-      <div class="overflow-auto" style="min-height: 400px;">
-        <table class="table mb-4">
-          <thead>
-          <tr>
-            <th scope="col" class="px-4 essp-th-spec-color">№</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Пациент</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Телефона</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Врач</th>
-            <!--<th scope="col" class="px-4 essp-th-spec-color">Кресло</th>-->
-            <!--<th scope="col" class="px-4 essp-th-spec-color">Лечение</th>-->
-            <th scope="col" class="px-4 essp-th-spec-color">Начала записи</th>
-            <th scope="col" class="px-4 essp-th-spec-color">Статус</th>
-            <!--<th scope="col" class="px-4 essp-th-spec-color">Конец</th>-->
-            <th scope="col" class="px-4 essp-th-spec-color">Предоплата</th>
-            <!--<th scope="col" class="px-4 essp-th-spec-color">Общая сумма</th>-->
-            <!--<th scope="col" class="px-4 essp-th-spec-color">Создан</th>-->
-            <th scope="col" class="px-4 essp-th-spec-color"></th>
-          </tr>
-          </thead>
-          <tbody>
-            @for (item of records(); track $index) {
-              <tr class="align-middle">
-                <td class="px-4">
-                  <span class="essp-table-info">{{ item.id }}</span>
-                </td>
-                <td class="px-4">
-                  <div class="essp-table-ico">
-                    <span>{{ item?.customer?.surname }} {{ item?.customer?.name }} {{ item?.customer?.lastname }}</span>
-                  </div>
-                </td>
-                <td class="px-4">
-                  <span class="essp-table-info">{{ item?.customer?.phoneNumber }}</span>
-                </td>
-                <td class="px-4">
+      @if (!isTableCalendarTabActive()) {
+        <div [@fade]="!isTableCalendarTabActive()" class="ps-3">
+          <app-calendar (addRecord)="addRecord()"></app-calendar>
+        </div>
+      }
+
+      @if (isTableCalendarTabActive()) {
+        <div [@fade]="isTableCalendarTabActive()" class="px-4 mb-4">
+          <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getRecords()">
+            <div class="row g-3">
+
+              <div class="col-sm-2">
+                <input type="datetime-local" class="form-control" placeholder="Дата начала" formControlName="fromDate">
+              </div>
+              <div class="col-sm-2">
+                <input type="datetime-local" class="form-control" placeholder="Дата конца" formControlName="toDate">
+              </div>
+              <div class="col-sm-2">
+                <p-dropdown
+                  styleClass="custom-dropdown w-100"
+                  formControlName="status"
+                  [options]="statuses()"
+                  [checkmark]="true"
+                  [showClear]="true"
+                  optionLabel="text"/>
+              </div>
+
+
+              <div class="col d-flex align-items-center">
+                <button type="submit" class="btn btn-light me-3">
+                  <i class="ri-search-line me-2"></i>
+                  <span>Поиск</span>
+                </button>
+                <!--<button type="button" class="btn btn-light">
+                  <i class="ri-upload-2-line me-2"></i>
+                  <span>Экспорт</span>
+                </button>-->
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+        <div class="overflow-auto" style="min-height: 400px;">
+          <table class="table mb-4">
+            <thead>
+            <tr>
+              <th scope="col" class="px-4 essp-th-spec-color">№</th>
+              <th scope="col" class="px-4 essp-th-spec-color">Пациент</th>
+              <th scope="col" class="px-4 essp-th-spec-color">Телефона</th>
+              <th scope="col" class="px-4 essp-th-spec-color">Врач</th>
+              <!--<th scope="col" class="px-4 essp-th-spec-color">Кресло</th>-->
+              <!--<th scope="col" class="px-4 essp-th-spec-color">Лечение</th>-->
+              <th scope="col" class="px-4 essp-th-spec-color">Начала записи</th>
+              <th scope="col" class="px-4 essp-th-spec-color">Статус</th>
+              <!--<th scope="col" class="px-4 essp-th-spec-color">Конец</th>-->
+              <th scope="col" class="px-4 essp-th-spec-color">Предоплата</th>
+              <!--<th scope="col" class="px-4 essp-th-spec-color">Общая сумма</th>-->
+              <!--<th scope="col" class="px-4 essp-th-spec-color">Создан</th>-->
+              <th scope="col" class="px-4 essp-th-spec-color"></th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (item of records(); track $index) {
+                <tr class="align-middle">
+                  <td class="px-4">
+                    <span class="essp-table-info">{{ item.id }}</span>
+                  </td>
+                  <td class="px-4">
+                    <div class="essp-table-ico">
+                      <span>{{ item?.customer?.surname }} {{ item?.customer?.name }} {{ item?.customer?.lastname }}</span>
+                    </div>
+                  </td>
+                  <td class="px-4">
+                    <span class="essp-table-info">{{ item?.customer?.phoneNumber }}</span>
+                  </td>
+                  <td class="px-4">
                 <span
                   class="essp-table-info">{{ item?.employee?.surname }} {{ item?.employee?.name }} {{ item?.employee?.lastname }}</span>
-                </td>
-                <!--<td class="px-4">
-                  <span class="essp-table-info">{{ item?.chair?.name }}</span>
-                </td>-->
-                <!--<td class="px-4">
-                  <span class="essp-table-info">
-                    @for (s of item?.services; track $index) {
-                      <span class="me-1 p-1 bg-light">{{ s?.name }}</span>
-                    }
-                  </span>
-                </td>-->
-                <td class="px-4">
-                  <span class="essp-table-info">{{ item.recordingTime | secondsToDate }}</span>
-                </td>
-                <!--<td class="px-4">
-                  <span class="essp-table-info">{{ item.endTime | date: 'yyyy.MM.dd HH:MM' }}</span>
-                </td>-->
-                <td class="px-4">
-                  <!--<p-dropdown
-                    styleClass="custom-dropdown"
-                    [options]="statuses()"
-                    [checkmark]="true"
-                    optionLabel="text" />-->
-                  <select class="form-select form-select-sm" (change)="changeRecordStatus($event, item)">
-                    @for (status of statuses(); track $index) {
-                      <option [selected]="status.code == item.status" [value]="status.code">{{ status.text }}</option>
-                    }
-                  </select>
+                  </td>
+                  <!--<td class="px-4">
+                    <span class="essp-table-info">{{ item?.chair?.name }}</span>
+                  </td>-->
+                  <!--<td class="px-4">
+                    <span class="essp-table-info">
+                      @for (s of item?.services; track $index) {
+                        <span class="me-1 p-1 bg-light">{{ s?.name }}</span>
+                      }
+                    </span>
+                  </td>-->
+                  <td class="px-4">
+                    <span class="essp-table-info">{{ item.recordingTime | secondsToDate }}</span>
+                  </td>
+                  <!--<td class="px-4">
+                    <span class="essp-table-info">{{ item.endTime | date: 'yyyy.MM.dd HH:MM' }}</span>
+                  </td>-->
+                  <td class="px-4">
+                    <!--<p-dropdown
+                      styleClass="custom-dropdown"
+                      [options]="statuses()"
+                      [checkmark]="true"
+                      optionLabel="text" />-->
+                    <select class="form-select form-select-sm" (change)="changeRecordStatus($event, item)">
+                      @for (status of statuses(); track $index) {
+                        <option [selected]="status.code == item.status" [value]="status.code">{{ status.text }}</option>
+                      }
+                    </select>
 
-                  <!--@switch (item?.status) {
-                    @case (item?.status == 0) {
-                      <span class="badge rounded-pill bg-label-secondary">Создан</span>  &lt;!&ndash;Created&ndash;&gt;
-                    }
-                    @case (item?.status == 1) {
-                      <span class="badge rounded-pill bg-label-info">Принят</span>  &lt;!&ndash;In Line&ndash;&gt;
-                    }
-                    @case (item?.status == 2) {
-                      <span class="badge rounded-pill bg-label-warning">В процессе</span>  &lt;!&ndash;In Progress&ndash;&gt;
-                    }
-                    @case (item?.status == 3) {
-                      <span class="essp-table-info essp-status-active">Выполнен</span>  &lt;!&ndash;Completed&ndash;&gt;
-                    }
-                    @case (item?.status == 4) {
-                      <span class="badge rounded-pill bg-label-danger">Отменен</span>  &lt;!&ndash;Canceled&ndash;&gt;
-                    }
-                  }-->
-                </td>
-                <td class="px-4">
-                  <span class="essp-table-info">{{ item.amountPaid | currency: '':'' }}</span>
-                </td>
-                <!--<td class="px-4">
-                  <span class="essp-table-info">{{ item.totalPrice }}</span>
-                </td>-->
-                <!--<td class="px-4">
-                  <div class="essp-status-position">
-                    <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
-                  </div>
-                </td>-->
-                <td class="px-4">
-                  <div class="essp-table-actions">
+                    <!--@switch (item?.status) {
+                      @case (item?.status == 0) {
+                        <span class="badge rounded-pill bg-label-secondary">Создан</span>  &lt;!&ndash;Created&ndash;&gt;
+                      }
+                      @case (item?.status == 1) {
+                        <span class="badge rounded-pill bg-label-info">Принят</span>  &lt;!&ndash;In Line&ndash;&gt;
+                      }
+                      @case (item?.status == 2) {
+                        <span class="badge rounded-pill bg-label-warning">В процессе</span>  &lt;!&ndash;In Progress&ndash;&gt;
+                      }
+                      @case (item?.status == 3) {
+                        <span class="essp-table-info essp-status-active">Выполнен</span>  &lt;!&ndash;Completed&ndash;&gt;
+                      }
+                      @case (item?.status == 4) {
+                        <span class="badge rounded-pill bg-label-danger">Отменен</span>  &lt;!&ndash;Canceled&ndash;&gt;
+                      }
+                    }-->
+                  </td>
+                  <td class="px-4">
+                    <span class="essp-table-info">{{ item.amountPaid | currency: '':'' }}</span>
+                  </td>
+                  <!--<td class="px-4">
+                    <span class="essp-table-info">{{ item.totalPrice }}</span>
+                  </td>-->
+                  <!--<td class="px-4">
+                    <div class="essp-status-position">
+                      <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
+                    </div>
+                  </td>-->
+                  <td class="px-4">
+                    <div class="essp-table-actions">
                     <span class="cursor-pointer" title="Подробнее" (click)="detailRecord(item)"><i
                       class="bi bi-eye-fill"></i></span>
-                    <span class="cursor-pointer" (click)="editRecord(item)"><i
-                      class="bi bi-pencil-square text-warning"></i></span>
-                    <span class="cursor-pointer" (click)="deleteRecordInit(item)"><i
-                      class="bi bi-trash text-danger"></i></span>
-                  </div>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+                      <span class="cursor-pointer" (click)="editRecord(item)"><i
+                        class="bi bi-pencil-square text-warning"></i></span>
+                      <span class="cursor-pointer" (click)="deleteRecordInit(item)"><i
+                        class="bi bi-trash text-danger"></i></span>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
 
-      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"/>
+        <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"/>
+      }
 
     </div>
   </div>
