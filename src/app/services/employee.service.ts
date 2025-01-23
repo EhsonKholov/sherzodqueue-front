@@ -18,7 +18,7 @@ export class EmployeeService {
   }
 
   addEmployee(customer: any) {
-    return this.http.post(environment.URI + `api/employee`, customer)
+    return this.http.post(environment.URI + `api/employee/create`, customer)
   }
 
   editEmployee(id: number, customer: any) {
