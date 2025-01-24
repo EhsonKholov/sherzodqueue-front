@@ -54,7 +54,9 @@ export class CalendarComponent {
     },
     events: this.event,
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    timeZone: 'local',
+    locale: 'ru',
+    //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
@@ -69,6 +71,7 @@ export class CalendarComponent {
     eventRemove:
     */
   });
+
   currentEvents = signal<EventApi[]>([]);
   @Output() addRecord = new EventEmitter<any>();
 

@@ -105,15 +105,18 @@
       <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
         <div class="d-flex">
           <h3 class="m-0 me-4">Список записей</h3>
-
           <div class="btn-group btn-group-custom" role="group">
             <input type="radio" class="btn-check" (click)="isTableCalendarTabActive.set(true)"
                    name="tableTab" id="tableTab" autocomplete="off" [checked]="isTableCalendarTabActive()">
-            <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="tableTab"><i class="ri-table-line"></i></label>
+            <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="tableTab">
+              Таблица
+            </label>
 
             <input type="radio" class="btn-check" (click)="isTableCalendarTabActive.set(false)"
                    name="calendarTab" id="calendarTab" autocomplete="off" [checked]="!isTableCalendarTabActive()">
-            <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="calendarTab"><i class="ri-calendar-2-line"></i></label>
+            <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="calendarTab">
+              Календарь
+            </label>
           </div>
         </div>
         <div>
@@ -170,7 +173,7 @@
         </div>
 
         <div class="overflow-auto" style="min-height: 400px;">
-          <table class="table mb-4">
+          <table class="table app-table mb-4">
             <thead>
             <tr>
               <th scope="col" class="px-4 essp-th-spec-color">№</th>

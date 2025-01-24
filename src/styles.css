@@ -126,7 +126,7 @@ input, select, button, ul > li > a, span {
   transition: all .2s linear;
 }
 
-tr:hover > td {
+.app-table tr:hover > td {
   background-color: rgb(250, 250, 250);
 }
 
@@ -764,18 +764,6 @@ p-multiselect.p-multiselect {
   color: #666cff !important;
 }
 
-/*.fc-scrollgrid-section .fc-scrollgrid-section-body .fc-scrollgrid-section-liquid:hover > tr {
-  background: #ffffff !important;
-}*/
-
-/*.fc-scrollgrid.fc-scrollgrid-liquid tbody tr:hover {
-  background: #ffffff !important;
-}*/
-
-.fc table tbody tr:hover > td {
-  background-color: #ffffff !important;
-}
-
 .fc .fc-day-today:not(.fc-col-header-cell) {
   background-color: #f2f2f4 !important;
 }
@@ -803,7 +791,7 @@ p-multiselect.p-multiselect {
   padding-bottom: 8px !important;
 }
 
-a:not([href]) {
+.fc a:not([href]) {
   color: inherit !important;
   text-decoration: none;
 }
@@ -845,24 +833,74 @@ a:not([href]) {
   padding-top: .5rem;
 }
 
-.fc table.fc-scrollgrid td {
+/*.fc table.fc-scrollgrid td {
   border-color: #e5e6e8;
 }
+}*/
 
-.fc table.fc-scrollgrid td {
-  border-color: #e5e6e8;
-}
-
-.fc .fc-day-today:not(.fc-col-header-cell) {
-  background-color: #f2f2f4 !important;
-}
 
 .fc .fc-timegrid-slot {
   height: 4em !important;
 }
 
-
-
 /*----------------------------------------*/
 
+.form-check-danger .form-check-input:checked {
+  background-color: #ff4d49;
+  border-color: #ff4d49;
+}
 
+.form-check-secondary .form-check-input:checked {
+  background-color: #6d788d;
+  border-color: #6d788d;
+}
+
+.form-check-warning .form-check-input:checked {
+  background-color: #fdb528;
+  border-color: #fdb528;
+}
+
+.form-check-success .form-check-input:checked {
+  background-color: #72e128;
+  border-color: #72e128;
+}
+
+.form-check-info .form-check-input:checked {
+  background-color: #26c6f9;
+  border-color: #26c6f9;
+}
+
+
+/*.btn-group-custom label {
+  color: #0000008c;
+  border: none !important;
+  background-color: #ffffff !important;
+  transition: all .3s linear;
+}
+
+.btn-group-custom label:focus {
+  box-shadow: none;
+  border: none !important;
+}
+
+.btn-group-custom label:hover {
+  color: #0000008c;
+  border: none !important;
+}
+
+.btn-group-custom .btn-check:checked + .btn {
+  background-color: #f2f2f4 !important;
+  font-weight: 600;
+  color: #0000008c;
+  border: none !important;
+}*/
+
+.btn-group-custom label:first-child {
+  border-top-left-radius: .5rem !important;
+  border-bottom-left-radius: .5rem !important;
+}
+
+.btn-group-custom label:last-child {
+  border-top-right-radius: .5rem !important;
+  border-bottom-right-radius: .5rem !important;
+}
