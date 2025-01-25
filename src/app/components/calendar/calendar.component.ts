@@ -1,88 +1,133 @@
-import {Component, signal, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
+import {Component, signal, ChangeDetectorRef, Output, EventEmitter, Input, WritableSignal, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FullCalendarModule} from '@fullcalendar/angular';
+import {CalendarOptions, DateSelectArg, EventClickArg, EventApi} from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { INITIAL_EVENTS, createEventId } from './event-utils';
 import {CalendarModule} from 'primeng/calendar';
+import {Subject, takeUntil} from 'rxjs';
+import {RecordsService} from '../../services/records.service';
+import {ToastService} from '../../services/toast.service';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FullCalendarModule, CalendarModule],
+  imports: [CommonModule, FullCalendarModule, CalendarModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
 
-  event = [
-    {
-      id: createEventId(),
-      title: 'All-day event',
-      start: new Date('2025-01-13T00:00:00'),
-    },
-    {
-      id: createEventId(),
-      title: 'Timed event',
-      start: new Date('2025-01-01T00:00:00'),
-      end: new Date('2025-01-05T03:00:00'),
-    },
-    {
-      id: createEventId(),
-      title: 'Timed event',
-      start: new Date('2025-01-17T12:00:00'),
-      end: new Date('2025-01-18T03:15:00'),
-    }
-  ]
+  private destroy$ = new Subject<void>()
+
+  @Output() addEditRecord = new EventEmitter<any>();
+  @Input() records: WritableSignal<any[]> = signal([])
 
   calendarVisible = signal(true);
-  calendarOptions = signal<CalendarOptions>({
-    plugins: [
-      interactionPlugin,
-      dayGridPlugin,
-      timeGridPlugin,
-      listPlugin,
-    ],
-    headerToolbar: {
-      left: 'prev,next',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    },
-    events: this.event,
-    initialView: 'dayGridMonth',
-    timeZone: 'local',
-    locale: 'ru',
-    //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-    weekends: true,
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
-  });
+  calendarOptions: WritableSignal<CalendarOptions> = signal({});
 
-  currentEvents = signal<EventApi[]>([]);
-  @Output() addRecord = new EventEmitter<any>();
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(private changeDetector: ChangeDetectorRef, private recordService: RecordsService, private toastService: ToastService) {
+  }
+
+  ngOnInit() {
+    this.createCalendarOptions()
+  }
+
+  createCalendarOptions() {
+    this.calendarOptions = signal<CalendarOptions>({
+      plugins: [
+        interactionPlugin,
+        dayGridPlugin,
+        timeGridPlugin,
+        listPlugin,
+      ],
+      headerToolbar: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      },
+      events: this.records(),
+      eventDataTransform: (data: any) => {
+        console.log(data);
+        return {
+          title: `${data?.customer.name} ${data?.customer.surname}`, //- ${data.services.map(service => service.name).join(", ")}`,
+          start: data.recordingTime,
+          end: data.endTime || data.recordingTime, // Если endTime пустой, используем recordingTime как end
+          description: `Доктор: ${data.employee.name}`,
+          textColor: this.getTextColorByStatus(data?.status),
+          backgroundColor: this.getBgColorByStatus(data?.status),
+          extendedProps: {
+            customer: data.customer,
+            employee: data.employee,
+          }
+        };
+      },
+      eventDisplay: 'block',
+      stickyHeaderDates: true,
+      initialView: 'dayGridMonth',
+      timeZone: 'local',
+      locale: 'ru',
+      //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+      weekends: true,
+      editable: true,
+      selectable: true,
+      selectMirror: true,
+      dayMaxEvents: true,
+      select: this.handleDateSelect.bind(this),
+      eventClick: this.handleEventClick.bind(this),
+      eventsSet: this.handleEvents.bind(this)
+      /* you can update a remote database when these fire:
+      eventAdd:
+      eventChange:
+      eventRemove:
+      */
+    })
+  }
+
+  getTextColorByStatus(statusCode: number) {
+    switch (statusCode) {
+      case 0:
+        return '#fff'
+      case 1:
+        return '#fff'
+      case 2:
+        return '#fdb528'
+      case 3:
+        return '#72e128'
+      case 4:
+        return '#ff4d49'
+      default:
+        return ''
+    }
+  }
+
+  getBgColorByStatus(statusCode: number) {
+    switch (statusCode) {
+      case 0:
+        return '#000'
+      case 1:
+        return '#000'
+      case 2:
+        return '#fff3dd'
+      case 3:
+        return '#e8fadd'
+      case 4:
+        return '#ffe3e2'
+      default:
+        return ''
+    }
   }
 
   handleCalendarToggle() {
+    console.log('handleCalendarToggle')
     this.calendarVisible.update((bool) => !bool);
   }
 
   handleWeekendsToggle() {
+    console.log('handleWeekendsToggle')
     this.calendarOptions.update((options) => ({
       ...options,
       weekends: !options.weekends,
@@ -90,30 +135,24 @@ export class CalendarComponent {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
+    console.log('handleDateSelect')
 
+    const calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
 
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+    this.addEditRecord.emit(null)
   }
 
   handleEventClick(clickInfo: EventClickArg) {
+    console.log('handleEventClick')
     if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
     }
   }
 
   handleEvents(events: EventApi[]) {
-    this.currentEvents.set(events);
+    console.log('handleEvents')
+    console.log('events', events)
     this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
   }
 

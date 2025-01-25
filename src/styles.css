@@ -870,37 +870,34 @@ p-multiselect.p-multiselect {
   border-color: #26c6f9;
 }
 
-
-/*.btn-group-custom label {
-  color: #0000008c;
-  border: none !important;
-  background-color: #ffffff !important;
-  transition: all .3s linear;
-}
-
-.btn-group-custom label:focus {
-  box-shadow: none;
-  border: none !important;
-}
-
-.btn-group-custom label:hover {
-  color: #0000008c;
-  border: none !important;
-}
-
-.btn-group-custom .btn-check:checked + .btn {
-  background-color: #f2f2f4 !important;
-  font-weight: 600;
-  color: #0000008c;
-  border: none !important;
-}*/
-
-.btn-group-custom label:first-child {
-  border-top-left-radius: .5rem !important;
-  border-bottom-left-radius: .5rem !important;
+.btn-group-custom label {
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
 }
 
 .btn-group-custom label:last-child {
+  border-radius: 0;
   border-top-right-radius: .5rem !important;
   border-bottom-right-radius: .5rem !important;
+}
+
+.fc-event-time {
+  margin-right: 3px;
+}
+
+.fc-event-title {
+  flex-grow: 1;
+  flex-shrink: 1;
+  font-weight: 700;
+  min-width: 0px;
+  overflow: hidden;
+  font-weight: 400;
+}
+
+.fc-event-main {
+  display: flex;
+}
+
+.fc-event {
+  overflow: hidden;
 }

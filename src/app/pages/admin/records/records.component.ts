@@ -233,4 +233,37 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
     return selectedTooth;
   }
+
+  getClassNameByStatus(item: any): any {
+    switch (item.code) {
+      case 0:
+        return 'text-dark'
+      case 1:
+        return 'text-dark'
+      case 2:
+        return 'text-warning'
+      case 3:
+        return 'text-success'
+      case 4:
+        return 'text-danger'
+      default:
+        return ''
+    }
+  }
+
+  getClassBorderByStatus(item: any): any {
+    switch (item.status) {
+      case 0:
+      case 1:
+        return ''
+      case 2:
+        return 'border-warning'
+      case 3:
+        return 'border-success'
+      case 4:
+        return 'border-danger'
+      default:
+        return ''
+    }
+  }
 }

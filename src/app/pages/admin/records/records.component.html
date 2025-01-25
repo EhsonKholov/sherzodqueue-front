@@ -131,7 +131,7 @@
 
       @if (!isTableCalendarTabActive()) {
         <div [@fade]="!isTableCalendarTabActive()" class="ps-3">
-          <app-calendar (addRecord)="addRecord()"></app-calendar>
+          <app-calendar [records]="records" (addEditRecord)="addRecord()"></app-calendar>
         </div>
       }
 
@@ -231,9 +231,14 @@
                       [options]="statuses()"
                       [checkmark]="true"
                       optionLabel="text" />-->
-                    <select class="form-select form-select-sm" (change)="changeRecordStatus($event, item)">
+                    <select class="form-select form-select-sm {{getClassBorderByStatus(item)}}" (change)="changeRecordStatus($event, item)">
                       @for (status of statuses(); track $index) {
-                        <option [selected]="status.code == item.status" [value]="status.code">{{ status.text }}</option>
+                        <option
+                          [selected]="status.code == item.status"
+                          [value]="status.code"
+                          class="{{getClassNameByStatus(status)}}"
+                          style="cursor: pointer"
+                        >{{ status.text }}</option>
                       }
                     </select>
 

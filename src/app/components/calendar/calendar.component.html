@@ -4,7 +4,7 @@
       <div class="row g-2">
         <div class="col-3 app-calendar-sidebar" id="app-calendar-sidebar">
           <div class="pb-4 my-sm-0 text-center border-bottom">
-            <button (click)="addRecord.emit(null)" class="btn btn-success btn-toggle-sidebar w-75 waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
+            <button (click)="addEditRecord.emit(null)" class="btn btn-success btn-toggle-sidebar w-75 waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
               <i class="ri-add-line ri-16px me-1"></i>
               <span class="align-middle">Добавить запись</span>
             </button>
@@ -52,8 +52,8 @@
             <div class="pb-0">
               <full-calendar [options]='calendarOptions()'>
                 <ng-template #eventContent let-arg>
-                  <b>{{ arg.timeText }}</b>
-                  <i>{{ arg.event.title }}</i>
+                  <div class="fc-event-time">{{ arg.timeText }}</div>
+                  <div class="fc-event-title">{{ arg.event.title }}</div>
                 </ng-template>
               </full-calendar>
             </div>
