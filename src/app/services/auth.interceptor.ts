@@ -1,15 +1,13 @@
 import {
-  HttpClient,
   HttpErrorResponse,
-  HttpHandler,
   HttpInterceptorFn,
-  HttpRequest,
   HttpStatusCode
 } from '@angular/common/http';
 import {inject} from '@angular/core';
 import {AuthService} from './auth.service';
 import {LoadingService} from './loading.service';
-import {catchError, finalize, throwError} from 'rxjs';
+import {finalize, throwError} from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService)
@@ -22,19 +20,21 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(modifiedReq)
     .pipe(
-      // @ts-ignore
-      catchError((error: any) => {
-        if (error instanceof HttpErrorResponse && error.status === HttpStatusCode.Unauthorized && !modifiedReq.url.includes('/auth/login')) {
-          let refreshToken = authService.getRefreshToken()
-          if (refreshToken == null || refreshToken.trim() == '') {
-            authService.logout()
-            return throwError(error);
+      tap({
+        next: () => {},
+        error: (error: any) => {
+          if (error instanceof HttpErrorResponse && error.status === HttpStatusCode.Unauthorized && !modifiedReq.url.includes('/auth/login')) {
+            let refreshToken = authService.getRefreshToken()
+            if (!refreshToken) {
+              authService.logout()
+              return throwError(() => error);
+            }
+
+            return authService.handle401Error(modifiedReq, next)
           }
 
-          return authService.handle401Error(modifiedReq, next)
+          return throwError(() => error);
         }
-
-        return throwError(error);
       }),
 
       finalize(() => {
@@ -43,4 +43,3 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       })
     )
 };
-

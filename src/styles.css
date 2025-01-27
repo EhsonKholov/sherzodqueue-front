@@ -901,3 +901,31 @@ p-multiselect.p-multiselect {
 .fc-event {
   overflow: hidden;
 }
+
+.app-success-bg {
+  background-color: #e8fadd !important;
+}
+
+.app-warning-bg {
+  background-color: #fff3dd !important;
+}
+
+.app-danger-bg {
+  background-color: #ffe3e2 !important;
+}
+
+.app-success-color {
+  color: #72e128 !important;
+}
+
+.app-warning-color {
+  color: #fdb528 !important;
+}
+
+.app-danger-color {
+  background-color: #ff4d49 !important;
+}
+
+.p-calendar-pt-0 .p-datepicker {
+  padding-top: 0;
+}

@@ -206,7 +206,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
       chairId: record?.chair?.id,
       details: record?.details,
       status: event?.target?.value,
-      }
+    }
 
     this.recordService.editRecord(record.id, record_new)
       .pipe(takeUntil(this.destroy$))
@@ -234,34 +234,33 @@ export class RecordsComponent implements OnInit, OnDestroy {
     return selectedTooth;
   }
 
-  getClassNameByStatus(item: any): any {
-    switch (item.code) {
+  getClassBgByStatus(statusCode: any): any {
+    switch (statusCode) {
       case 0:
-        return 'text-dark'
       case 1:
-        return 'text-dark'
+        return ''
       case 2:
-        return 'text-warning'
+        return 'app-warning-bg'
       case 3:
-        return 'text-success'
+        return 'app-success-bg'
       case 4:
-        return 'text-danger'
+        return 'app-danger-bg'
       default:
         return ''
     }
   }
 
-  getClassBorderByStatus(item: any): any {
-    switch (item.status) {
+  getClassColorByStatus(statusCode: any): any {
+    switch (statusCode) {
       case 0:
       case 1:
         return ''
       case 2:
-        return 'border-warning'
+        return 'app-warning-color'
       case 3:
-        return 'border-success'
+        return 'app-success-color'
       case 4:
-        return 'border-danger'
+        return 'app-danger-color'
       default:
         return ''
     }

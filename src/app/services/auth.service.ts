@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {throwError} from 'rxjs';
 import {environment} from '../../environments/environments';
+import {throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,24 +34,25 @@ export class AuthService {
     return localStorage.getItem("refreshToken");
   }
 
+  handle401Error(req: HttpRequest<any>, next: HttpHandlerFn) {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.http.post<any>(environment.URI + 'api/auth/refresh-token', {refreshToken})
+      .subscribe({
+        next: (response) => {
+          console.log('1111111111')
+          this.storeTokens(response)
+          return next(this.addToken(req));
+        },
+        error: ((err) => {
+          this.logout();
+          return throwError(() => err);
+        })
+      })
+  }
+
   storeTokens(tokens: any) {
     localStorage.setItem('accessToken', tokens.accessToken);
     localStorage.setItem('refreshToken', tokens.refreshToken);
-  }
-
-  handle401Error(req: HttpRequest<any>, next: HttpHandlerFn) {
-    return this.http
-      .post(environment.URI + 'api/auth/refresh-token', {refreshToken: this.getRefreshToken()})
-      .subscribe({
-        next: (tokens: any) => {
-          this.storeTokens(tokens);
-          return next(this.addToken(req));
-        },
-        error: (err) => {
-          this.logout();
-          return throwError(err);
-        }
-      })
   }
 
   addToken(req: HttpRequest<unknown>) {

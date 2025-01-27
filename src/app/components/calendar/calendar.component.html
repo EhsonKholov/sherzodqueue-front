@@ -1,18 +1,26 @@
+@if (isAddEditRecord()) {
+  <app-add-edit-record-modal
+    (close)="closeAddEditRecordModal($event)"
+    [startDate]="startDate"
+    [endDate]="endDate"
+  />
+}
+
 <div class="app-calendar-wrapper">
   <div class="flex-grow-1 container-p-y">
     <div class="app-calendar-wrapper">
       <div class="row g-2">
         <div class="col-3 app-calendar-sidebar" id="app-calendar-sidebar">
-          <div class="pb-4 my-sm-0 text-center border-bottom">
+          <!--<div class="pb-4 my-sm-0 text-center border-bottom">
             <button (click)="addEditRecord.emit(null)" class="btn btn-success btn-toggle-sidebar w-75 waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#addEventSidebar" aria-controls="addEventSidebar">
               <i class="ri-add-line ri-16px me-1"></i>
               <span class="align-middle">Добавить запись</span>
             </button>
-          </div>
+          </div>-->
           <div class="">
             <div class="inline-calendar flatpickr-input" readonly="readonly"></div>
             <p-calendar
-              class="max-w-full p-calendar-border-none"
+              class="max-w-full p-calendar-pt-0 p-calendar-border-none pt-0"
               [inline]="true"
               [showWeek]="true" />
             <hr class="mb-5 mx-n4 mt-3">

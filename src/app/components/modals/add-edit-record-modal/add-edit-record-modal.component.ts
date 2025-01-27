@@ -41,6 +41,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<any>();
   @Output() getRecords: EventEmitter<any> = new EventEmitter<any>()
 
+  @Input() startDate!: WritableSignal<Date | null>;
+  @Input() endDate!: WritableSignal<Date | null>;
+
   activeToothCode: WritableSignal<any> = signal(null)
   selectedTooth: WritableSignal<any[]> = signal([])
 
@@ -96,6 +99,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     private serviceCategoryService: ServiceCategoryService,
     private chairsService: ChairsService,
     private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
   ) {
   }
 
@@ -139,7 +143,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerLastname: null,
         customerPhoneNumber: [null, Validators.required],
         employeeId: [null, Validators.required],
-        recordingTime: [null, Validators.required],
+        recordingTime: [this.startDate(), Validators.required],
+        endTime: [this.endDate(), Validators.required],
         amountPaid: 0,
         totalPrice: 0,
         techniqueAmount: 0,
@@ -158,7 +163,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerLastname: this.record?.customer?.lastname,
         customerPhoneNumber: [this.record?.customer?.phoneNumber, Validators.required],
         employeeId: [this.record?.employee, Validators.required],
-        recordingTime: [this.record?.recordingTime, Validators.required],
+        recordingTime: [this.datePipe.transform(this.record?.recordingTime, 'yyyy-MM-ddTHH:mm:ss'), Validators.required],
+        endTime: [new Date(this.record?.endTime), Validators.required],
         amountPaid: this.record?.amountPaid || 0,
         totalPrice: this.record?.totalPrice || 0,
         techniqueAmount: this.record?.techniqueAmount || 0,
@@ -167,8 +173,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         details: this.formBuilder.array(this.record?.details || []),
       })
 
-      console.log(this.addRecordFormGroup?.value)
-
       if (this.record?.details != null && this.record?.details.length > 0) {
         for (let detail of this.record?.details) {
           this.selectedTooth().push(detail?.toothId)
@@ -176,6 +180,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       }
       //this.getAvailableTimes()
     }
+
+    console.log(this.addRecordFormGroup?.value)
 
     this.selectedServices = this.record?.services
     this.selectedEmployees = [this.record?.employee]

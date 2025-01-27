@@ -102,30 +102,31 @@
 
     <div class="pt-4 mb-5 rounded-4 bg-white app-shadow overflow-hidden">
 
-      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
-        <div class="d-flex">
-          <h3 class="m-0 me-4">Список записей</h3>
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center w-100">
+        <div class="d-flex justify-content-between w-100">
+          <h3>Список записей</h3>
           <div class="btn-group btn-group-custom" role="group">
             <input type="radio" class="btn-check" (click)="isTableCalendarTabActive.set(true)"
                    name="tableTab" id="tableTab" autocomplete="off" [checked]="isTableCalendarTabActive()">
             <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="tableTab">
-              Таблица
+              <i class="ri-list-check"></i>
+              <span class="ms-2">Таблица</span>
             </label>
 
             <input type="radio" class="btn-check" (click)="isTableCalendarTabActive.set(false)"
                    name="calendarTab" id="calendarTab" autocomplete="off" [checked]="!isTableCalendarTabActive()">
             <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="calendarTab">
-              Календарь
+              <i class="ri-calendar-todo-line"></i>
+              <span class="ms-2">Календарь</span>
             </label>
           </div>
-        </div>
-        <div>
-          @if (isTableCalendarTabActive()) {
+
+          <div>
             <button type="button" class="btn btn-success" (click)="addRecord()">
               <i class="ri-add-line me-2"></i>
               <span>Добавить запись</span>
             </button>
-          }
+          </div>
         </div>
       </div>
 
@@ -231,14 +232,15 @@
                       [options]="statuses()"
                       [checkmark]="true"
                       optionLabel="text" />-->
-                    <select class="form-select form-select-sm {{getClassBorderByStatus(item)}}" (change)="changeRecordStatus($event, item)">
+                    <select class="form-select form-select-sm"
+                            (change)="changeRecordStatus($event, item)">
                       @for (status of statuses(); track $index) {
                         <option
                           [selected]="status.code == item.status"
                           [value]="status.code"
-                          class="{{getClassNameByStatus(status)}}"
                           style="cursor: pointer"
-                        >{{ status.text }}</option>
+                        >{{ status.text }}
+                        </option>
                       }
                     </select>
 
@@ -260,25 +262,19 @@
                       }
                     }-->
                   </td>
-                  <td class="px-4">
+                  <td>
                     <span class="essp-table-info">{{ item.amountPaid | currency: '':'' }}</span>
                   </td>
-                  <!--<td class="px-4">
-                    <span class="essp-table-info">{{ item.totalPrice }}</span>
-                  </td>-->
-                  <!--<td class="px-4">
-                    <div class="essp-status-position">
-                      <span>{{ item.dateCreated | date: 'yyyy.MM.dd HH:MM' }}</span>
-                    </div>
-                  </td>-->
+
+
                   <td class="px-4">
                     <div class="essp-table-actions">
                     <span class="cursor-pointer" title="Подробнее" (click)="detailRecord(item)"><i
                       class="bi bi-eye-fill"></i></span>
                       <span class="cursor-pointer" (click)="editRecord(item)"><i
                         class="bi bi-pencil-square text-warning"></i></span>
-                      <span class="cursor-pointer" (click)="deleteRecordInit(item)"><i
-                        class="bi bi-trash text-danger"></i></span>
+                      <!--<span class="cursor-pointer" (click)="deleteRecordInit(item)"><i
+                        class="bi bi-trash text-danger"></i></span>-->
                     </div>
                   </td>
                 </tr>

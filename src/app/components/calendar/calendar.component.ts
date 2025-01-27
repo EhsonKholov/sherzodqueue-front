@@ -10,11 +10,12 @@ import {CalendarModule} from 'primeng/calendar';
 import {Subject, takeUntil} from 'rxjs';
 import {RecordsService} from '../../services/records.service';
 import {ToastService} from '../../services/toast.service';
+import {AddEditRecordModalComponent} from '../modals/add-edit-record-modal/add-edit-record-modal.component';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, FullCalendarModule, CalendarModule],
+  imports: [CommonModule, FullCalendarModule, CalendarModule, AddEditRecordModalComponent],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })
@@ -22,12 +23,15 @@ export class CalendarComponent implements OnInit {
 
   private destroy$ = new Subject<void>()
 
-  @Output() addEditRecord = new EventEmitter<any>();
   @Input() records: WritableSignal<any[]> = signal([])
 
   calendarVisible = signal(true);
   calendarOptions: WritableSignal<CalendarOptions> = signal({});
 
+  startDate = signal<Date | null>(null)
+  endDate = signal<Date | null>(null)
+
+  isAddEditRecord = signal(false)
 
   constructor(private changeDetector: ChangeDetectorRef, private recordService: RecordsService, private toastService: ToastService) {
   }
@@ -51,7 +55,6 @@ export class CalendarComponent implements OnInit {
       },
       events: this.records(),
       eventDataTransform: (data: any) => {
-        console.log(data);
         return {
           title: `${data?.customer.name} ${data?.customer.surname}`, //- ${data.services.map(service => service.name).join(", ")}`,
           start: data.recordingTime,
@@ -85,6 +88,45 @@ export class CalendarComponent implements OnInit {
       eventRemove:
       */
     })
+  }
+
+  handleCalendarToggle() {
+    console.log('handleCalendarToggle')
+    this.calendarVisible.update((bool) => !bool);
+  }
+
+  handleWeekendsToggle() {
+    console.log('handleWeekendsToggle')
+    this.calendarOptions.update((options) => ({
+      ...options,
+      weekends: !options.weekends,
+    }));
+  }
+
+  handleDateSelect(selectInfo: DateSelectArg) {
+    console.log('handleDateSelect')
+    console.log(selectInfo)
+
+    this.startDate.set(selectInfo?.start)
+    this.endDate.set(selectInfo?.end)
+
+    this.isAddEditRecord.set(true)
+
+    const calendarApi = selectInfo.view.calendar;
+    calendarApi.unselect(); // clear date selection
+  }
+
+  handleEventClick(clickInfo: EventClickArg) {
+    console.log('handleEventClick')
+    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      clickInfo.event.remove();
+    }
+  }
+
+  handleEvents(events: EventApi[]) {
+    console.log('handleEvents')
+    console.log('events', events)
+    this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
   }
 
   getTextColorByStatus(statusCode: number) {
@@ -121,39 +163,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  handleCalendarToggle() {
-    console.log('handleCalendarToggle')
-    this.calendarVisible.update((bool) => !bool);
+  closeAddEditRecordModal(event: any) {
+    this.isAddEditRecord.set(false)
   }
-
-  handleWeekendsToggle() {
-    console.log('handleWeekendsToggle')
-    this.calendarOptions.update((options) => ({
-      ...options,
-      weekends: !options.weekends,
-    }));
-  }
-
-  handleDateSelect(selectInfo: DateSelectArg) {
-    console.log('handleDateSelect')
-
-    const calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect(); // clear date selection
-
-    this.addEditRecord.emit(null)
-  }
-
-  handleEventClick(clickInfo: EventClickArg) {
-    console.log('handleEventClick')
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
-  }
-
-  handleEvents(events: EventApi[]) {
-    console.log('handleEvents')
-    console.log('events', events)
-    this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
-  }
-
 }
