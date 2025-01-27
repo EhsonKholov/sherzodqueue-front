@@ -794,6 +794,7 @@ p-multiselect.p-multiselect {
 .fc a:not([href]) {
   color: inherit !important;
   text-decoration: none;
+  margin-left: 0.5rem;
 }
 
 .fc .fc-view-harness .fc-daygrid-body .fc-daygrid-day .fc-daygrid-day-top {

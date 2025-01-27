@@ -131,8 +131,8 @@
       </div>
 
       @if (!isTableCalendarTabActive()) {
-        <div [@fade]="!isTableCalendarTabActive()" class="ps-3">
-          <app-calendar [records]="records" (addEditRecord)="addRecord()"></app-calendar>
+        <div [@fade]="!isTableCalendarTabActive()">
+          <app-calendar></app-calendar>
         </div>
       }
 
@@ -232,8 +232,7 @@
                       [options]="statuses()"
                       [checkmark]="true"
                       optionLabel="text" />-->
-                    <select class="form-select form-select-sm"
-                            (change)="changeRecordStatus($event, item)">
+                    <select class="form-select form-select-sm" (change)="changeRecordStatus($event, item)">
                       @for (status of statuses(); track $index) {
                         <option
                           [selected]="status.code == item.status"

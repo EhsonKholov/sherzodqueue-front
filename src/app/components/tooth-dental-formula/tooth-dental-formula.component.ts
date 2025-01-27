@@ -1,4 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal} from '@angular/core';
+import {
+  Component, effect,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import $ from 'jquery';
 import {TooltipModule} from 'primeng/tooltip';
 
@@ -17,7 +25,7 @@ export class ToothDentalFormulaComponent implements OnInit {
   @Output() onDeselectTooth = new EventEmitter<any>();
 
   @Input('selectedTooth') selectedTooth: WritableSignal<any[]> = signal([])
-  currentTooth: WritableSignal<any> = signal(null)
+  currentTooth: WritableSignal<any> = signal(null) //computed((): any => this.currentTooth().length == 0 ? null : null);
   hoverTooth: any
   tooth = [
     {
@@ -247,6 +255,14 @@ export class ToothDentalFormulaComponent implements OnInit {
   ]
 
 
+  constructor() {
+    /*effect(() => {
+      if (this.selectedTooth().length == 0) this.currentTooth.update(_ => null)
+
+      if (!this.selectedTooth().includes(this.currentTooth())) this.currentTooth.update(_ => null)
+    }, {allowSignalWrites: true})*/
+  }
+
   getPathFromObj(item: any, i: number) {
     return item?.paths[i]
   }
@@ -299,6 +315,7 @@ export class ToothDentalFormulaComponent implements OnInit {
       this.selectedTooth().push(item.code)
     }
 
+    console.log('currentTooth 2222', this.currentTooth())
     this.onSelectedTooth.emit(item?.code)
   }
 
@@ -312,13 +329,13 @@ export class ToothDentalFormulaComponent implements OnInit {
 
   clearTooth() {
     let item = this.currentTooth()
-    this.currentTooth.set(null)
-    if (this.selectedTooth().includes(item.code)) {
-      let idx = this.selectedTooth().indexOf(item.code)
-      if(idx > -1)
-        this.selectedTooth().splice(idx, 1)
-    }
+    this.currentTooth.update(_ => null)
+    let idx = this.selectedTooth().indexOf(item)
+    if (idx > -1)
+      this.selectedTooth().splice(idx, 1)
 
-    this.onDeselectTooth.emit(item?.code)
+
+
+    this.onDeselectTooth.emit(item)
   }
 }

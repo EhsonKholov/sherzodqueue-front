@@ -23,7 +23,9 @@ export class CalendarComponent implements OnInit {
 
   private destroy$ = new Subject<void>()
 
-  @Input() records: WritableSignal<any[]> = signal([])
+  records: WritableSignal<any[]> = signal([])
+
+  record = signal<any>(null)
 
   calendarVisible = signal(true);
   calendarOptions: WritableSignal<CalendarOptions> = signal({});
@@ -38,6 +40,30 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.createCalendarOptions()
+    this.getRecordsList()
+  }
+
+  getRecordsList() {
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
+
+    let body = {
+      fromDate: firstDay,
+      toDate: lastDay,
+      includeDependencies: true
+    }
+
+    this.recordService.getRecordsList(body)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          this.records.set(res?.items)
+        }, error: (error: any) => {
+          if (error.status != 401) return
+          this.toastService.error('Ошибка получения данных!')
+        }
+      })
   }
 
   createCalendarOptions() {
@@ -56,6 +82,7 @@ export class CalendarComponent implements OnInit {
       events: this.records(),
       eventDataTransform: (data: any) => {
         return {
+          id: data.id,
           title: `${data?.customer.name} ${data?.customer.surname}`, //- ${data.services.map(service => service.name).join(", ")}`,
           start: data.recordingTime,
           end: data.endTime || data.recordingTime, // Если endTime пустой, используем recordingTime как end
@@ -118,14 +145,16 @@ export class CalendarComponent implements OnInit {
 
   handleEventClick(clickInfo: EventClickArg) {
     console.log('handleEventClick')
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
+    let idx = this.records().findIndex(r => r.id == clickInfo?.event?.id)
+    if (idx >= 0) {
+      this.record.set(this.records()[idx])
+      this.isAddEditRecord.set(true)
     }
+    //clickInfo.event.remove();
   }
 
   handleEvents(events: EventApi[]) {
     console.log('handleEvents')
-    console.log('events', events)
     this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
   }
 

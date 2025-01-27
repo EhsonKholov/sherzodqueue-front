@@ -41,8 +41,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<any>();
   @Output() getRecords: EventEmitter<any> = new EventEmitter<any>()
 
-  @Input() startDate!: WritableSignal<Date | null>;
-  @Input() endDate!: WritableSignal<Date | null>;
+  @Input() startDate!: any;
+  @Input() endDate!: any;
 
   activeToothCode: WritableSignal<any> = signal(null)
   selectedTooth: WritableSignal<any[]> = signal([])
@@ -90,6 +90,14 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   filteredCustomers: WritableSignal<any[]> = signal([]);
 
+  statuses = signal<any[]>([
+    /*{code: null, text: 'Все'},*/
+    {code: 0, text: 'Ожидается'},
+    {code: 1, text: 'Принят'},
+    {code: 2, text: 'В процессе'},
+    {code: 3, text: 'Завершен'},
+    {code: 4, text: 'Отменен'},
+  ]);
 
   constructor(
     private recordService: RecordsService,
@@ -99,35 +107,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     private serviceCategoryService: ServiceCategoryService,
     private chairsService: ChairsService,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe,
   ) {
   }
-
-  /*
-   {
-      "customerPhoneNumber": "string",
-      "customerName": "string",
-      "customerSurname": "string",
-      "customerLastname": "string",
-      "employeeId": 0,
-      "recordingTime": "2025-01-05T05:37:31.426Z",
-      "amountPaid": 0,
-      "totalPrice": 0,
-      "techniqueAmount": 0,
-      "employeeAmount": 0,
-      "chairId": 0,
-      "details": [
-        {
-          "recordId": 0,
-          "toothId": 0,
-          "details": "string",
-          "servicesId": [
-            0
-          ]
-        }
-      ]
-    }
-  */
 
   ngOnInit(): void {
     console.log(this.record)
@@ -143,8 +124,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerLastname: null,
         customerPhoneNumber: [null, Validators.required],
         employeeId: [null, Validators.required],
-        recordingTime: [this.startDate(), Validators.required],
-        endTime: [this.endDate(), Validators.required],
+        recordingTime: [new Date(this.startDate), Validators.required],
+        endTime: [new Date(this.endDate)],
         amountPaid: 0,
         totalPrice: 0,
         techniqueAmount: 0,
@@ -163,14 +144,15 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerLastname: this.record?.customer?.lastname,
         customerPhoneNumber: [this.record?.customer?.phoneNumber, Validators.required],
         employeeId: [this.record?.employee, Validators.required],
-        recordingTime: [this.datePipe.transform(this.record?.recordingTime, 'yyyy-MM-ddTHH:mm:ss'), Validators.required],
-        endTime: [new Date(this.record?.endTime), Validators.required],
+        recordingTime: [new Date(this.record?.recordingTime), Validators.required],
+        endTime: [this.record?.endTime == null ? null : new Date(this.record?.endTime)],
         amountPaid: this.record?.amountPaid || 0,
         totalPrice: this.record?.totalPrice || 0,
         techniqueAmount: this.record?.techniqueAmount || 0,
         employeeAmount: this.record?.employeeAmount || 0,
         chairId: this.record?.chair,
         details: this.formBuilder.array(this.record?.details || []),
+        status: this.record?.status,
       })
 
       if (this.record?.details != null && this.record?.details.length > 0) {
@@ -411,6 +393,10 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     if (idx > -1) {
       this.addRecordFormGroup.controls?.details?.removeAt(idx)
     }
+
+    idx = this.selectedTooth().indexOf(deselectedToothCode)
+    if(idx > -1) this.selectedTooth().splice(idx, 1)
+
     console.log(this.addRecordFormGroup.controls?.details?.value)
   }
 

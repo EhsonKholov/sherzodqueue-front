@@ -36,7 +36,7 @@
       @for (item of tooth; track item.code) {
         <g class="tooth" (mouseout)="setHoverTooth(item)" (mouseleave)="removeHoverTooth()"
            [class.active]="selectedTooth().includes(item.code)" (click)="selectTooth(item)"
-           [class.current]="currentTooth()?.code == item?.code"
+           [class.current]="currentTooth() == item?.code"
            data-title="{{item.code}}" pTooltip="{{item.code}}" tooltipPosition="top" tooltipEvent="hover">
           <path class="fil0" [attr.d]="getPathFromObj(item, 0)"/>
           <path class="fil1" [attr.d]="getPathFromObj(item, 1)"/>
@@ -50,7 +50,7 @@
       }
       @if (currentTooth() != null && hoverTooth == null) {
         <span (click)="clearTooth()" class="cancel-btn">&times;</span>
-        <span class="tooth-code">{{ currentTooth()?.code }}</span>
+        <span class="tooth-code">{{ currentTooth() }}</span>
       }
     </div>
   </div>

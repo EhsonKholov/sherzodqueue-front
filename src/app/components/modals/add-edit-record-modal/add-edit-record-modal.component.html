@@ -62,23 +62,24 @@
               <div class="col-6 mb-3">
                 <label for="recordingTime" class="form-label required w-100">Начала приема</label>
                 <input type="datetime-local" class="form-control" id="recordingTime"
-                       formControlName="recordingTime" value="{{this.record?.recordingTime | date: 'DD-MM-YYYY HH:SS'}}"
+                       formControlName="recordingTime"
+                       [value]="addRecordFormGroup?.controls?.recordingTime?.value | date: 'DD-MM-YYYY HH:SS'"
                        required>
               </div>
               <div class="col-6 mb-3">
-                <label for="endTime" class="form-label required w-100">Конец приема</label>
+                <label for="endTime" class="form-label w-100">Конец приема</label>
                 <input type="datetime-local" class="form-control" id="endTime"
-                       formControlName="endTime" value="{{this.record?.endTime | date: 'DD-MM-YYYY HH:SS'}}"
-                       required>
+                       formControlName="endTime"
+                       [value]="addRecordFormGroup?.controls?.endTime?.value | date: 'DD-MM-YYYY HH:SS'">
               </div>
-             <!-- <div class="col-12 mb-3">
-                <label for="recordingTime" class="form-label">Время записи</label>
-                <select class="form-select" id="recordingTime" formControlName="recordingTime">
-                  @for (item of availableTimes(); track $index) {
-                    <option [value]="item">{{ item }}</option>
-                  }
-                </select>
-              </div>-->
+              <!-- <div class="col-12 mb-3">
+                 <label for="recordingTime" class="form-label">Время записи</label>
+                 <select class="form-select" id="recordingTime" formControlName="recordingTime">
+                   @for (item of availableTimes(); track $index) {
+                     <option [value]="item">{{ item }}</option>
+                   }
+                 </select>
+               </div>-->
               <div class="col-6 mb-3">
                 <label class="form-label">Кресло</label>
                 <ng-multiselect-dropdown
@@ -93,6 +94,18 @@
                 >
                 </ng-multiselect-dropdown>
               </div>
+              @if (record != null) {
+                <div class="col-6 mb-3">
+                  <label for="amountPaid" class="form-label">Статус</label>
+                  <select class="form-select form-select-sm">
+                    @for (status of statuses(); track $index) {
+                      <option [selected]="status.code == record.status" [value]="status.code"
+                              style="cursor: pointer">{{ status.text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              }
               <div class="col-6 mb-3">
                 <label for="amountPaid" class="form-label">Предоплата</label>
                 <input type="number" class="form-control" id="amountPaid" formControlName="amountPaid">
@@ -143,7 +156,12 @@
 
             <div>
               @for (item of this.addRecordFormGroup.controls?.details?.value; track $index) {
-                <div class="mb-2 mt-3">Зуб: {{ item.toothId }}</div>
+                <div class="mb-2 mt-3 d-flex justify-content-between align-items-center">
+                  <span>Зуб: <strong>{{ item.toothId }}</strong></span>
+                  <span>
+                    <!--<button type="button" (click)="onDeselectTooth(item.toothId)" class="btn p-0"><i class="bi bi-x-lg text-danger"></i></button>-->
+                  </span>
+                </div>
                 <ul class="list-group list-group-flush border-bottom ms-3">
                   @for (service of item.services; track $index) {
                     <li class="list-group-item">{{ service?.name }}</li>
