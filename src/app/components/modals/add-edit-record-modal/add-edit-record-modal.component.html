@@ -63,14 +63,14 @@
                 <label for="recordingTime" class="form-label required w-100">Начала приема</label>
                 <input type="datetime-local" class="form-control" id="recordingTime"
                        formControlName="recordingTime"
-                       [value]="addRecordFormGroup?.controls?.recordingTime?.value | date: 'DD-MM-YYYY HH:SS'"
+                       [value]="addRecordFormGroup?.controls?.recordingTime?.value"
                        required>
               </div>
               <div class="col-6 mb-3">
                 <label for="endTime" class="form-label w-100">Конец приема</label>
                 <input type="datetime-local" class="form-control" id="endTime"
                        formControlName="endTime"
-                       [value]="addRecordFormGroup?.controls?.endTime?.value | date: 'DD-MM-YYYY HH:SS'">
+                       [value]="addRecordFormGroup?.controls?.endTime?.value">
               </div>
               <!-- <div class="col-12 mb-3">
                  <label for="recordingTime" class="form-label">Время записи</label>
@@ -94,10 +94,10 @@
                 >
                 </ng-multiselect-dropdown>
               </div>
-              @if (record != null) {
+              @if (!!record) {
                 <div class="col-6 mb-3">
-                  <label for="amountPaid" class="form-label">Статус</label>
-                  <select class="form-select form-select-sm">
+                  <label for="status" class="form-label">Статус</label>
+                  <select id="status" formControlName="status" class="form-select form-select-sm">
                     @for (status of statuses(); track $index) {
                       <option [selected]="status.code == record.status" [value]="status.code"
                               style="cursor: pointer">{{ status.text }}

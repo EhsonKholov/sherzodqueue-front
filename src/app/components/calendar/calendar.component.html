@@ -4,6 +4,7 @@
     [startDate]="startDate()"
     [endDate]="endDate()"
     [record]="record()"
+    (getRecords)="getRecordsList()"
   />
 }
 
@@ -59,10 +60,12 @@
         <div class="col-12 app-calendar-content">
           <div class="card shadow-none border-0 h-100">
             <div class="pb-0">
-              <full-calendar [options]='calendarOptions()' [events]="records()">
+              <full-calendar #calendar [options]='calendarOptions()' [events]="records()">
                 <ng-template #eventContent let-arg>
                   <div class="fc-event-time">{{ arg.timeText }}</div>
-                  <div class="fc-event-title">{{ arg.event.title }}</div>
+                  <div class="fc-event-title">
+                    <div>{{ arg.event.title }}</div>
+                  </div>
                 </ng-template>
               </full-calendar>
             </div>

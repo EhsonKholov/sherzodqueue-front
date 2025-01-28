@@ -39,7 +39,6 @@ export class AuthService {
     return this.http.post<any>(environment.URI + 'api/auth/refresh-token', {refreshToken})
       .subscribe({
         next: (response) => {
-          console.log('1111111111')
           this.storeTokens(response)
           return next(this.addToken(req));
         },

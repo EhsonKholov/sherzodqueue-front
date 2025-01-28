@@ -118,14 +118,17 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.getChairs()
 
     if (this.record == null) {
+      this.endDate = this.endDate == null ? null : new Date(this.endDate).toISOString().slice(0, -1)
+      this.startDate = this.startDate == null ? null : new Date(this.startDate).toISOString().slice(0, -1)
+
       this.addRecordFormGroup = this.formBuilder.group({
         customerSurname: [null, Validators.required],
         customerName: [null, Validators.required],
         customerLastname: null,
         customerPhoneNumber: [null, Validators.required],
         employeeId: [null, Validators.required],
-        recordingTime: [new Date(this.startDate), Validators.required],
-        endTime: [new Date(this.endDate)],
+        recordingTime: [this.startDate, Validators.required],
+        endTime: [this.endDate],
         amountPaid: 0,
         totalPrice: 0,
         techniqueAmount: 0,
@@ -134,8 +137,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         details: this.formBuilder.array([]),
       })
     } else {
-      let recordingDay = moment(this.record?.recordingTime).format('YYYY-MM-DD')
-      let recordingTime = moment(this.record?.recordingTime).format('HH:MM:SS')
+      let recordingTime = this.record?.recordingTime == null ? null : new Date(this.record?.recordingTime).toISOString().slice(0, -1)
+      let endTime = this.record?.endTime == null ? null : new Date(this.record?.endTime).toISOString().slice(0, -1)
 
       this.addRecordFormGroup = this.formBuilder.group({
         id: [this.record?.id, Validators.required],
@@ -144,8 +147,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         customerLastname: this.record?.customer?.lastname,
         customerPhoneNumber: [this.record?.customer?.phoneNumber, Validators.required],
         employeeId: [this.record?.employee, Validators.required],
-        recordingTime: [new Date(this.record?.recordingTime), Validators.required],
-        endTime: [this.record?.endTime == null ? null : new Date(this.record?.endTime)],
+        recordingTime: [recordingTime, Validators.required],
+        endTime: [endTime],
         amountPaid: this.record?.amountPaid || 0,
         totalPrice: this.record?.totalPrice || 0,
         techniqueAmount: this.record?.techniqueAmount || 0,
@@ -282,6 +285,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     }
 
     if (!!this.record) {
+      delete record.id
       this.recordService.editRecord(this.record.id, record)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -290,7 +294,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
             this.toastService.success('Клиент успешно записан!')
             this.closeModal()
           }, error: () => {
-            this.toastService.error('Не удалось сохранить запись клиента!')
+            this.toastService.error('Не удалось редактировать запись!')
           }
         })
     } else {
@@ -302,7 +306,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
             this.toastService.success('Данные клиента сохранены!')
             this.closeModal()
           }, error: () => {
-            this.toastService.error('Не удалось сохранить данные клиента!')
+            this.toastService.error('Не удалось записать клиента!')
           }
         })
     }

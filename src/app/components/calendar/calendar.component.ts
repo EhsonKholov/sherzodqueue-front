@@ -1,6 +1,15 @@
-import {Component, signal, ChangeDetectorRef, Output, EventEmitter, Input, WritableSignal, OnInit} from '@angular/core';
+import {
+  Component,
+  signal,
+  ChangeDetectorRef,
+  WritableSignal,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  Input
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FullCalendarModule} from '@fullcalendar/angular';
+import {FullCalendarComponent, FullCalendarModule} from '@fullcalendar/angular';
 import {CalendarOptions, DateSelectArg, EventClickArg, EventApi} from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -11,6 +20,7 @@ import {Subject, takeUntil} from 'rxjs';
 import {RecordsService} from '../../services/records.service';
 import {ToastService} from '../../services/toast.service';
 import {AddEditRecordModalComponent} from '../modals/add-edit-record-modal/add-edit-record-modal.component';
+import {UtilsService} from '../../services/utils.service';
 
 @Component({
   selector: 'app-calendar',
@@ -19,7 +29,7 @@ import {AddEditRecordModalComponent} from '../modals/add-edit-record-modal/add-e
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
 
   private destroy$ = new Subject<void>()
 
@@ -33,24 +43,35 @@ export class CalendarComponent implements OnInit {
   startDate = signal<Date | null>(null)
   endDate = signal<Date | null>(null)
 
-  isAddEditRecord = signal(false)
+  @Input() isAddEditRecord = signal(false)
 
-  constructor(private changeDetector: ChangeDetectorRef, private recordService: RecordsService, private toastService: ToastService) {
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent | any;
+
+  constructor(private changeDetector: ChangeDetectorRef, private recordService: RecordsService, private toastService: ToastService, private utils: UtilsService) {
   }
 
   ngOnInit() {
     this.createCalendarOptions()
+  }
+
+  ngAfterViewInit() {
     this.getRecordsList()
   }
 
   getRecordsList() {
-    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    var firstDay = new Date(y, m, 1);
-    var lastDay = new Date(y, m + 1, 0);
+    let date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    let firstDay = new Date(y, m, 1);
+    let lastDay = new Date(y, m + 1, 0);
+
+    let start = this.calendarComponent?.calendar?.currentData?.dateProfile?.activeRange?.start
+    let end = this.calendarComponent?.calendar?.currentData?.dateProfile?.activeRange?.end
+
+    let endDate = new Date(end)
+    endDate.setDate(endDate.getDate() - 1)
 
     let body = {
-      fromDate: firstDay,
-      toDate: lastDay,
+      fromDate: start,
+      toDate: endDate,
       includeDependencies: true
     }
 
@@ -95,6 +116,7 @@ export class CalendarComponent implements OnInit {
           }
         };
       },
+      fixedWeekCount: false,
       eventDisplay: 'block',
       stickyHeaderDates: true,
       initialView: 'dayGridMonth',
@@ -108,7 +130,8 @@ export class CalendarComponent implements OnInit {
       dayMaxEvents: true,
       select: this.handleDateSelect.bind(this),
       eventClick: this.handleEventClick.bind(this),
-      eventsSet: this.handleEvents.bind(this)
+      datesSet: this.handleDatesSet.bind(this)
+      //eventsSet: this.handleEvents.bind(this)
       /* you can update a remote database when these fire:
       eventAdd:
       eventChange:
@@ -130,12 +153,21 @@ export class CalendarComponent implements OnInit {
     }));
   }
 
+  handleDatesSet(event: any) {
+    console.log('handleDatesSet')
+    this.getRecordsList()
+  }
+
   handleDateSelect(selectInfo: DateSelectArg) {
     console.log('handleDateSelect')
-    console.log(selectInfo)
 
-    this.startDate.set(selectInfo?.start)
+    let start = new Date(selectInfo?.start)
+    start.setDate(start.getDate() + 1)
+
+    this.startDate.set(start)
     this.endDate.set(selectInfo?.end)
+
+    this.record.update(_ => null)
 
     this.isAddEditRecord.set(true)
 
@@ -155,15 +187,15 @@ export class CalendarComponent implements OnInit {
 
   handleEvents(events: EventApi[]) {
     console.log('handleEvents')
+
     this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
   }
 
   getTextColorByStatus(statusCode: number) {
     switch (statusCode) {
       case 0:
-        return '#fff'
       case 1:
-        return '#fff'
+        return '#3b3b3b'
       case 2:
         return '#fdb528'
       case 3:
@@ -178,9 +210,8 @@ export class CalendarComponent implements OnInit {
   getBgColorByStatus(statusCode: number) {
     switch (statusCode) {
       case 0:
-        return '#000'
       case 1:
-        return '#000'
+        return '#c7c7c7'
       case 2:
         return '#fff3dd'
       case 3:
@@ -193,6 +224,7 @@ export class CalendarComponent implements OnInit {
   }
 
   closeAddEditRecordModal(event: any) {
+    this.record.update(_ => null)
     this.isAddEditRecord.set(false)
   }
 }

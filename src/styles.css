@@ -895,6 +895,14 @@ p-multiselect.p-multiselect {
   font-weight: 400;
 }
 
+.fc-event-title span {
+  bottom: 0;
+  max-height: 100%;
+  overflow: hidden;
+  top: 0;
+  position: sticky;
+}
+
 .fc-event-main {
   display: flex;
 }
@@ -930,3 +938,4 @@ p-multiselect.p-multiselect {
 .p-calendar-pt-0 .p-datepicker {
   padding-top: 0;
 }
+
