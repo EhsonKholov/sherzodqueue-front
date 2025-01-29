@@ -31,6 +31,7 @@ export class RecordsComponent implements OnInit {
   tabActive = signal(TabActiveEnum.Table)
 
   ngOnInit(): void {
+    localStorage.setItem('recTabActive', String(TabActiveEnum.Table))
   }
 }
 

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FullCalendarComponent, FullCalendarModule} from '@fullcalendar/angular';
-import {CalendarOptions, DateSelectArg, EventClickArg, EventApi} from '@fullcalendar/core';
+import {CalendarOptions, DateSelectArg, EventClickArg, EventApi, EventDropArg} from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -21,6 +21,7 @@ import {RecordsService} from '../../services/records.service';
 import {ToastService} from '../../services/toast.service';
 import {AddEditRecordModalComponent} from '../modals/add-edit-record-modal/add-edit-record-modal.component';
 import {UtilsService} from '../../services/utils.service';
+import {Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-calendar',
@@ -47,8 +48,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent | any;
 
-  constructor(private changeDetector: ChangeDetectorRef, private recordService: RecordsService, private toastService: ToastService, private utils: UtilsService) {
-  }
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private recordService: RecordsService,
+    private toastService: ToastService,
+    private utils: UtilsService,
+  ) {}
 
   ngOnInit() {
     this.createCalendarOptions()
@@ -130,7 +135,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       dayMaxEvents: true,
       select: this.handleDateSelect.bind(this),
       eventClick: this.handleEventClick.bind(this),
-      datesSet: this.handleDatesSet.bind(this)
+      datesSet: this.handleDatesSet.bind(this),
+      eventDrop: this.handleEventDrop.bind(this)
       //eventsSet: this.handleEvents.bind(this)
       /* you can update a remote database when these fire:
       eventAdd:
@@ -183,6 +189,48 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       this.isAddEditRecord.set(true)
     }
     //clickInfo.event.remove();
+  }
+
+  handleEventDrop(event: EventDropArg) {
+    let idx = this.records().findIndex((r: any) => r.id = event?.event?.id)
+    if (idx < 0) return
+
+    let record = this.records()[idx]
+
+    if (record?.details !== null) {
+      record?.details.forEach((d: any) => {
+        d.servicesId = d?.services.map((s: any) => s?.id)
+      })
+    }
+
+    let id = record?.id
+    record = {
+      ...record,
+      customerSurname: record?.customer?.surname,
+      customerName: record?.customer?.name,
+      customerLastname: record?.customer?.lastname,
+      customerPhoneNumber: record?.customer?.phoneNumber,
+      employeeId: record?.employee?.id,
+      chairId: record?.chair?.id || null,
+      details: record?.details || [],
+      status: record.status,
+      recordingTime: event?.event?.start,
+      endTime: event?.event?.end,
+    }
+
+    console.log(record)
+
+    this.recordService.editRecord(id, record)
+      .subscribe({
+        next: (res: any) => {
+          this.records()[idx] = res
+
+          this.toastService.success('Запись успешно редактирована!')
+        },
+        error: () => {
+          this.toastService.error('Неудалось редактировать запись!')
+        },
+      })
   }
 
   handleEvents(events: EventApi[]) {

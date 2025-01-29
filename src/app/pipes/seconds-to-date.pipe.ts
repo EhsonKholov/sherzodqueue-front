@@ -43,7 +43,7 @@ export class SecondsToDatePipe implements PipeTransform {
           day: 'numeric',
           hour: 'numeric',
           minute: 'numeric',
-          second: 'numeric'
+          //second: 'numeric'
         }
       }
     } catch (e: any) {}
