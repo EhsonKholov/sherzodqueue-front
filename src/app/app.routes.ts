@@ -11,6 +11,7 @@ import {ChairsComponent} from './pages/admin/chairs/chairs.component';
 import {EmployeeSalaryComponent} from './pages/admin/employee-salary/employee-salary.component';
 import {DashboardComponent} from './pages/admin/dashboard/dashboard.component';
 import {TotalIncomeComponent} from './pages/admin/total-income/total-income.component';
+import {UsersComponent} from './pages/admin/users/users.component';
 
 export const routes: Routes = [
   {path: '', title: 'Главная', redirectTo: '/admin/dashboard', /*component: HomeComponent,*/pathMatch: 'full'},
@@ -29,6 +30,7 @@ export const routes: Routes = [
       {path: 'chairs', title: 'Кресла', component: ChairsComponent},
       {path: 'employee-salary', title: 'Зарплата сотрудников', component: EmployeeSalaryComponent},
       {path: 'total-income', title: 'Общий доход', component: TotalIncomeComponent},
+      {path: 'users', title: 'Пользователи', component: UsersComponent},
     ]
   },
   {

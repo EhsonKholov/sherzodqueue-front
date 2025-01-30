@@ -1,0 +1,101 @@
+@if (addEditModalShow()) {
+  <app-add-edit-user-modal
+    (close)="closeAddEditModal($event)"
+    (getUsers)="getUsers()"
+    [user]="user"
+  />
+}
+
+<div class="app-padding-left">
+  <div class="container-fluid px-3 mb-4">
+
+    <div class="pt-4 pb-1 mb-5 rounded-4 bg-white app-shadow">
+
+      <div class="px-4 mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="m-0">Список пользователей</h3>
+        <div>
+          <button type="button" class="btn btn-success" (click)="addEmployee()">
+            <i class="ri-add-line me-2"></i>
+            <span>Добавить пользователя</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="px-4 mb-4">
+        <form class="needs-validation" [formGroup]="filter" (ngSubmit)="getUsers()">
+          <div class="row g-3">
+
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Username" id="userName" formControlName="userName"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" placeholder="Телефон" id="phoneNumber" formControlName="phoneNumber"/>
+            </div>
+
+            <div class="col d-flex align-items-center">
+              <button type="submit" class="btn btn-light me-3">
+                <i class="ri-search-line me-2"></i>
+                <span>Поиск</span>
+              </button>
+              <!--<div class="vr h-75 mx-3 align-self-auto"></div>
+              <button type="button" class="btn btn-light">
+                <i class="ri-upload-2-line me-2"></i>
+                <span>Экспорт</span>
+              </button>-->
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="overflow-auto">
+        <table class="table app-table mb-4">
+          <thead>
+          <tr>
+            <th scope="col" class="px-4 essp-th-spec-color">ID</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Сотрудник</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Username</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Телефон</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Эл.почта</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Роль</th>
+            <th scope="col" class="px-4 essp-th-spec-color"></th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of users(); track $index) {
+              <tr class="align-middle">
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.id }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item?.employee?.surname }} {{ item?.employee?.name }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.userName }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.employee?.phoneNumber }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.email }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.role }}</span>
+                </td>
+                <td class="px-4">
+                  <div class="essp-table-actions justify-content-end">
+                    <span class="cursor-pointer" (click)="editUser(item)">
+                      <i class="bi bi-pencil-square text-warning" title="Изменить"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <app-pagination [total_pages]="total_pages" (pageChange)="onPageChange($event)"></app-pagination>
+    </div>
+  </div>
+</div>

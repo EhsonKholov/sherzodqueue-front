@@ -1,0 +1,66 @@
+<!-- Modal -->
+<div class="modal fade show d-block" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="addUserModalLabel" style="background: rgba(0, 0, 0, .7);">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header p-4">
+        <h1 class="modal-title fs-5" id="addUserModalLabel">{{ !!this.user ? 'Изменить' : 'Добавить' }}</h1>
+        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <form [formGroup]="addEditUserFormGroup" (submit)="addEditUser()">
+        <div class="modal-body row p-4">
+          <div class="col-12">
+            <div class="row m-0">
+              <div class="col-6 mb-3">
+                <label class="form-label required">Сотрудник</label>
+                <select formControlName="employeeId" class="form-select">
+                  @for (item of employees(); track $index) {
+                    <option [value]="item" [selected]="item?.id == addEditUserFormGroup?.controls?.employeeId?.value?.id">
+                      {{ item?.surname + ' ' + item?.name + ' ' + (item?.lastname || '') }}
+                    </option>
+                  }
+                </select>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="userName" class="form-label required">Username</label>
+                <input type="text" class="form-control" id="userName" formControlName="userName" required>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="email" class="form-label required">Эл. почта</label>
+                <input type="text" class="form-control" id="email" formControlName="email" required>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="password" class="form-label">Пароль</label>
+                <div class="position-relative">
+                  <input type="{{togglePassword() ? 'text' : 'password'}}" placeholder="Пароль"
+                         class="form-control" id="password" formControlName="password">
+                  <span class="toggle-password text-black" (click)="togglePassword.set(!togglePassword())">
+                    @if (togglePassword()) {
+                      <i class="ri-eye-line"></i>
+                    } @else {
+                      <i class="ri-eye-off-line"></i>
+                    }
+                  </span>
+                </div>
+              </div>
+              <div class="col-6 mb-3">
+                <label for="status" class="form-label required">Роль</label>
+                <select id="status" formControlName="role" class="form-select form-select-sm" required>
+                  @for (role of roles(); track $index) {
+                    <option [value]="role" style="cursor: pointer">{{ role }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer p-4">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary" [disabled]="addEditUserFormGroup.invalid">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
