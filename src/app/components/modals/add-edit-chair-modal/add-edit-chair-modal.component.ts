@@ -89,7 +89,7 @@ export class AddEditChairModalComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
-            this.toastService.success('Запись успешно изменен')
+            this.toastService.success('Запись успешно изменена')
             this.closeModal()
             this.getChair.emit()
           }, error: (err: any) => {
@@ -101,7 +101,7 @@ export class AddEditChairModalComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
-            this.toastService.success('Запись успешно добавлен')
+            this.toastService.success('Запись успешно добавлена')
             this.closeModal()
             this.getChair.emit()
           }, error: (err: any) => {

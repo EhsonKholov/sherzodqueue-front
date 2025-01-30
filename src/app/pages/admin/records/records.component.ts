@@ -6,7 +6,6 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CalendarComponent} from '../../../components/calendar/calendar.component';
 import {fadeAnimation} from '../../../animations/fade.animation';
 import {RecordsTableComponent} from './records-table/records-table.component';
-import {isNumberObject} from 'node:util/types';
 
 @Component({
   selector: 'app-records',
