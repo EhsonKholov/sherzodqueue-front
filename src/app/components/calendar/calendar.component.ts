@@ -195,6 +195,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     let idx = this.records().findIndex((r: any) => r.id = event?.event?.id)
     if (idx < 0) return
 
+    console.log('111111111', this.records())
+
     let record = this.records()[idx]
 
     if (record?.details !== null) {
@@ -213,12 +215,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       employeeId: record?.employee?.id,
       chairId: record?.chair?.id || null,
       details: record?.details || [],
-      status: record.status,
+      status: record?.status,
       recordingTime: event?.event?.start,
       endTime: event?.event?.end,
     }
 
-    console.log(record)
+    console.log('handleEventDrop', record)
 
     this.recordService.editRecord(id, record)
       .subscribe({

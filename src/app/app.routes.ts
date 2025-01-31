@@ -12,25 +12,26 @@ import {EmployeeSalaryComponent} from './pages/admin/employee-salary/employee-sa
 import {DashboardComponent} from './pages/admin/dashboard/dashboard.component';
 import {TotalIncomeComponent} from './pages/admin/total-income/total-income.component';
 import {UsersComponent} from './pages/admin/users/users.component';
+import {RoleGuard} from './services/guard/role.guard';
 
 export const routes: Routes = [
-  {path: '', title: 'Главная', redirectTo: '/admin/dashboard', /*component: HomeComponent,*/pathMatch: 'full'},
+  {path: '', title: 'Главная', redirectTo: '/admin/records', /*component: HomeComponent,*/pathMatch: 'full'},
   {
     path: 'admin', loadComponent: () => import('./pages/admin/admin/admin.component').then(m => m.AdminComponent),
     canActivate: [authGuard],
     children: [
-      {path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'},
-      {path: 'dashboard', title: 'Записи', component: DashboardComponent},
-      {path: 'records', title: 'Записи', component: RecordsComponent},
-      {path: 'records-history', title: 'История записей', component: RecordsHistoryComponent},
-      {path: 'customers', title: 'Клиенты', component: CustomersComponent},
-      {path: 'employees', title: 'Сотрудники', component: EmployeeComponent},
-      {path: 'services', title: 'Услуги', component: ServicesComponent},
-      {path: 'services/category', title: 'Категории услуг', component: ServiceCategoryComponent},
-      {path: 'chairs', title: 'Кресла', component: ChairsComponent},
-      {path: 'employee-salary', title: 'Зарплата сотрудников', component: EmployeeSalaryComponent},
-      {path: 'total-income', title: 'Общий доход', component: TotalIncomeComponent},
-      {path: 'users', title: 'Пользователи', component: UsersComponent},
+      {path: '', redirectTo: '/admin/records', pathMatch: 'full', canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'dashboard', title: 'Dashboard', component: DashboardComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'records', title: 'Записи', component: RecordsComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN','Employee']}},
+      {path: 'records-history', title: 'История записей', component: RecordsHistoryComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN','Employee']}},
+      {path: 'customers', title: 'Клиенты', component: CustomersComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'employees', title: 'Сотрудники', component: EmployeeComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'services', title: 'Услуги', component: ServicesComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'services/category', title: 'Категории услуг', component: ServiceCategoryComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'chairs', title: 'Кресла', component: ChairsComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'employee-salary', title: 'Зарплата сотрудников', component: EmployeeSalaryComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'total-income', title: 'Общий доход', component: TotalIncomeComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'users', title: 'Пользователи', component: UsersComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
     ]
   },
   {
