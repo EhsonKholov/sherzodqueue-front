@@ -138,10 +138,10 @@
 
       @switch (tabActive()) {
         @case (TabActiveEnum.Table) {
-          <app-records-table [addRecord]="addRecord()"></app-records-table>
+          <app-records-table [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-records-table>
         }
         @case (TabActiveEnum.Calendar) {
-          <app-calendar [addRecord]="addRecord()"></app-calendar>
+          <app-calendar [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-calendar>
         }
       }
 

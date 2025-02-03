@@ -95,4 +95,7 @@ export class UsersComponent implements OnInit {
     this.user.set(null)
   }
 
+  resetPassword(item: any) {
+    
+  }
 }

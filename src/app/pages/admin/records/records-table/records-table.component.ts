@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
 import {DropdownModule} from 'primeng/dropdown';
 import {PaginationComponent} from '../../../../components/pagination/pagination.component';
@@ -68,6 +68,7 @@ export class RecordsTableComponent implements OnInit {
     chairId: new FormControl(),
     status: new FormControl(),
   })
+  @Output() closeAddRecord = new EventEmitter<any>();
 
 
   constructor(private recordService: RecordsService, private toastService: ToastService, private utilsService: UtilsService) {
@@ -135,6 +136,7 @@ export class RecordsTableComponent implements OnInit {
 
   closeAddRecordModal(event: any) {
     this.addRecordModalShow.set(event)
+    this.closeAddRecord.emit()
     this.record = null
   }
 

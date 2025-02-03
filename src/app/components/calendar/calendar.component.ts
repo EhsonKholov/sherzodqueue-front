@@ -6,7 +6,7 @@ import {
   OnInit,
   AfterViewInit,
   ViewChild,
-  Input
+  Input, Output, EventEmitter
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FullCalendarComponent, FullCalendarModule} from '@fullcalendar/angular';
@@ -51,6 +51,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   isAddEditRecord = signal(false)
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent | any;
+  @Output() closeAddRecord = new EventEmitter<any>();
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -285,5 +286,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   closeAddEditRecordModal(event: any) {
     this.record.update(_ => null)
     this.isAddEditRecord.set(false)
+    this.closeAddRecord.emit()
   }
 }

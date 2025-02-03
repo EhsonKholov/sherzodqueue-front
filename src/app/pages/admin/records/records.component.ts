@@ -45,6 +45,10 @@ export class RecordsComponent implements OnInit {
     this.tabActive.set(tab)
     localStorage.setItem('recTabActive', this.tabActive().toString())
   }
+
+  closeAddRecord() {
+    this.addRecord.set(false)
+  }
 }
 
 export enum TabActiveEnum {
