@@ -1,1 +1,308 @@
-<p>profile works!</p>
+<div class="component-content">
+  <div class="box-container">
+
+    <div class="table-block bg-white rounded-2 p-2 mt-1 w-100">
+      <div class="table-content p-4">
+        <div class="profile-header d-flex">
+          <div class="profile-icon">
+            <span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path
+                d="M19 6.5h-1.28l-.32-1a3 3 0 0 0-2.84-2H9.44A3 3 0 0 0 6.6 5.55l-.32 1H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-8a3.002 3.002 0 0 0-3-3.05Zm1 11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h2a1 1 0 0 0 1-.68l.54-1.64a1 1 0 0 1 .95-.68h5.12a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .9.68h2a1 1 0 0 1 1 1v8Zm-8-9a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
+                fill="currentColor"></path></svg>
+            </span>
+          </div>
+          <div>
+            <div class="profile-header-fio">{{ employee?.surname }} {{ employee?.name }} {{ employee?.lastname }}</div>
+            <div class="profile-header-email">{{ employee?.email }}</div>
+          </div>
+        </div>
+        <div class="profile-content">
+          <ul class="nav nav-tabs mb-4">
+            <li class="nav-item" (click)="infoTabItemClick()">
+              <a class="nav-link" [class.active]="infoNavTabs">Информация</a>
+            </li>
+            <li class="nav-item" (click)="securTabItemClick()">
+              <a class="nav-link" [class.active]="!infoNavTabs">Безопасность</a>
+            </li>
+          </ul>
+
+          <div class="nav-tabs-pages mt-2">
+            @if (infoNavTabs) {
+              <div class="info-nav-nab-page">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <h5><strong>Управление</strong></h5>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="d-flex align-items-center pt-2 pb-2">
+                      <div class="profile-item-icon">
+                        <i class="bi bi-person-circle"></i>
+                      </div>
+                      <div class="profile-item-content">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div>
+                            <div class="fw-bold">Личные данные</div>
+                            <div style="font-size: 0.9rem;">{{ employee?.secondName }} {{ employee?.firstName }}</div>
+                          </div>
+                          <div>
+                            <div class="form-check form-switch">
+                              <button (click)="showEmployeeDataModal()" class="btn btn-success btn-sm">Посмотреть</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="d-flex align-items-center pt-2 pb-2">
+                      <div class="profile-item-icon">
+                        <i class="bi bi-lock"></i>
+                      </div>
+                      <div class="profile-item-content">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div>
+                            <div class="fw-bold">Пароль</div>
+                            <div style="font-size: 0.9rem;">Рекомендуем периодически менять пароль</div>
+                          </div>
+                          <div>
+                            <div class="form-check form-switch">
+                              <button (click)="changePasswordInit()" class="btn btn-success btn-sm">Изменить</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item"></li>
+                </ul>
+              </div>
+            } @else if (!infoNavTabs) {
+              <div class="info-nav-nab-page">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <h5><strong>Управление</strong></h5>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="d-flex align-items-center pt-2 pb-2">
+                      <div class="profile-item-icon">
+                        <i class="bi bi-phone"></i>
+                        <i class="bi bi-unlock-fill"
+                           style="font-size: 0.75rem !important; margin-left: -5px; margin-bottom: -5px; z-index: 1000;"></i>
+                      </div>
+                      <div class="profile-item-content">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div>Двухфакторная аутентификация</div>
+                          <div>
+                            <div class="form-check form-switch">
+                              <input class="form-check-input cursor-pointer" type="checkbox" [(ngModel)]="twoFactorAuth"
+                                     [ngModelOptions]="{standalone: true}"
+                                     [checked]="twoFactorAuth" (click)="twoFactorAuthFn()">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item"></li>
+                </ul>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="modal" style="background: rgba(0,0,0,.7)" [class.show]="modalChangePassword">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <form [formGroup]="passChangeFormGroup" (submit)="passChange()">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Изменить пароль</h1>
+          <button (click)="modalChangePassword=false" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row ms-0 me-0 gy-3">
+            <div class="form-group">
+              <label class="form-label required mb-0" for="oldPassword">Старрый пароль</label>
+              <div class="position-relative">
+                <input formControlName="oldPassword" id="oldPassword" type="{{passwordShow ? 'text' : 'password'}}" class="form-control" required>
+                <span class="toggle-password text-black" (click)="passwordShow=!passwordShow">
+                  @if (passwordShow) {
+                    <span class="password-show-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                           class="icon--IPrBt"><path
+                        d="M21.92 11.6C19.9 6.91 16.1 4 12 4s-7.9 2.91-9.92 7.6a1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20s7.9-2.91 9.92-7.6a1.001 1.001 0 0 0 0-.8ZM12 18c-3.17 0-6.17-2.29-7.9-6C5.83 8.29 8.83 6 12 6s6.17 2.29 7.9 6c-1.73 3.71-4.73 6-7.9 6Zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
+                        fill="currentColor"></path></svg>
+                    </span>
+                  } @else {
+                    <span class="password-hide-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                           class="icon--IPrBt"><path
+                        d="M10.94 6.08c.35-.054.705-.08 1.06-.08 3.18 0 6.17 2.29 7.91 6a15.23 15.23 0 0 1-.9 1.64 1 1 0 0 0 .05 1.152 1 1 0 0 0 1.65-.102c.466-.732.87-1.501 1.21-2.3a1 1 0 0 0 0-.79C19.9 6.91 16.1 4 12 4a7.77 7.77 0 0 0-1.4.12 1.014 1.014 0 1 0 .34 2v-.04ZM3.71 2.29a1.004 1.004 0 1 0-1.42 1.42l3.1 3.09a14.62 14.62 0 0 0-3.31 4.8 1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20a9.26 9.26 0 0 0 5.05-1.54l3.24 3.25a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095l-18-18Zm6.36 9.19 2.45 2.45a2 2 0 0 1-2.45-2.45ZM12 18c-3.18 0-6.17-2.29-7.9-6a12.09 12.09 0 0 1 2.7-3.79L8.57 10A4 4 0 0 0 14 15.43L15.59 17A7.24 7.24 0 0 1 12 18Z"
+                        fill="currentColor"></path></svg>
+                    </span>
+                  }
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required mb-0" for="newPassword">Новый пароль</label>
+              <div class="position-relative">
+                <input formControlName="newPassword" id="newPassword" type="{{passwordShow2 ? 'text' : 'password'}}"
+                       class="form-control"
+                       [class.border-danger]="passChangeFormGroup?.controls?.newPassword?.touched && passChangeFormGroup.controls.newPassword.dirty && !isValidPassword(passChangeFormGroup.controls.newPassword.value)"
+                       required>
+                <span class="toggle-password text-black" (click)="passwordShow2=!passwordShow2">
+                  @if (passwordShow2) {
+                    <span class="password-show-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                           class="icon--IPrBt"><path
+                        d="M21.92 11.6C19.9 6.91 16.1 4 12 4s-7.9 2.91-9.92 7.6a1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20s7.9-2.91 9.92-7.6a1.001 1.001 0 0 0 0-.8ZM12 18c-3.17 0-6.17-2.29-7.9-6C5.83 8.29 8.83 6 12 6s6.17 2.29 7.9 6c-1.73 3.71-4.73 6-7.9 6Zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
+                        fill="currentColor"></path></svg>
+                    </span>
+                  } @else {
+                    <span class="password-hide-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                           class="icon--IPrBt"><path
+                        d="M10.94 6.08c.35-.054.705-.08 1.06-.08 3.18 0 6.17 2.29 7.91 6a15.23 15.23 0 0 1-.9 1.64 1 1 0 0 0 .05 1.152 1 1 0 0 0 1.65-.102c.466-.732.87-1.501 1.21-2.3a1 1 0 0 0 0-.79C19.9 6.91 16.1 4 12 4a7.77 7.77 0 0 0-1.4.12 1.014 1.014 0 1 0 .34 2v-.04ZM3.71 2.29a1.004 1.004 0 1 0-1.42 1.42l3.1 3.09a14.62 14.62 0 0 0-3.31 4.8 1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20a9.26 9.26 0 0 0 5.05-1.54l3.24 3.25a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095l-18-18Zm6.36 9.19 2.45 2.45a2 2 0 0 1-2.45-2.45ZM12 18c-3.18 0-6.17-2.29-7.9-6a12.09 12.09 0 0 1 2.7-3.79L8.57 10A4 4 0 0 0 14 15.43L15.59 17A7.24 7.24 0 0 1 12 18Z"
+                        fill="currentColor"></path></svg>
+                    </span>
+                  }
+                </span>
+              </div>
+              <div class="invalid-feedback"
+                   [class.show]="passChangeFormGroup.controls?.newPassword?.touched && passChangeFormGroup.controls.newPassword.dirty && !isValidPassword(passChangeFormGroup.controls.newPassword.value)">
+                От 5 до 25 символов, цифры и латинские буквы
+              </div>
+              <div class="invalid-feedback"
+                   [class.show]="passChangeFormGroup.controls.newPassword.value === passChangeFormGroup.controls.oldPassword.value && passChangeFormGroup.controls?.newPassword?.touched && passChangeFormGroup.controls.newPassword.dirty">
+                Новый пароль не должен совпадать со старым паролем
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required mb-0" for="confirmPassword">Подтверждение пароля</label>
+              <div class="position-relative">
+                <input formControlName="confirmPassword" id="confirmPassword" type="{{passwordShow3 ? 'text' : 'password'}}"
+                       class="form-control"
+                       [class.border-danger]="passChangeFormGroup.controls?.confirmPassword?.touched && passChangeFormGroup.controls.confirmPassword.dirty && passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value"
+                       required>
+                <span class="toggle-password text-black" (click)="passwordShow3=!passwordShow3">
+                  @if (passwordShow3) {
+                    <span class="password-show-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                           class="icon--IPrBt"><path
+                        d="M21.92 11.6C19.9 6.91 16.1 4 12 4s-7.9 2.91-9.92 7.6a1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20s7.9-2.91 9.92-7.6a1.001 1.001 0 0 0 0-.8ZM12 18c-3.17 0-6.17-2.29-7.9-6C5.83 8.29 8.83 6 12 6s6.17 2.29 7.9 6c-1.73 3.71-4.73 6-7.9 6Zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
+                        fill="currentColor"></path></svg>
+                    </span>
+                  } @else {
+                    <span class="password-hide-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                           class="icon--IPrBt"><path
+                        d="M10.94 6.08c.35-.054.705-.08 1.06-.08 3.18 0 6.17 2.29 7.91 6a15.23 15.23 0 0 1-.9 1.64 1 1 0 0 0 .05 1.152 1 1 0 0 0 1.65-.102c.466-.732.87-1.501 1.21-2.3a1 1 0 0 0 0-.79C19.9 6.91 16.1 4 12 4a7.77 7.77 0 0 0-1.4.12 1.014 1.014 0 1 0 .34 2v-.04ZM3.71 2.29a1.004 1.004 0 1 0-1.42 1.42l3.1 3.09a14.62 14.62 0 0 0-3.31 4.8 1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20a9.26 9.26 0 0 0 5.05-1.54l3.24 3.25a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095l-18-18Zm6.36 9.19 2.45 2.45a2 2 0 0 1-2.45-2.45ZM12 18c-3.18 0-6.17-2.29-7.9-6a12.09 12.09 0 0 1 2.7-3.79L8.57 10A4 4 0 0 0 14 15.43L15.59 17A7.24 7.24 0 0 1 12 18Z"
+                        fill="currentColor"></path></svg>
+                    </span>
+                  }
+                </span>
+              </div>
+              <div class="invalid-feedback"
+                   [class.show]="passChangeFormGroup.controls?.confirmPassword?.touched && passChangeFormGroup.controls.confirmPassword.dirty && passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value">
+                Пароли не совпадают
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="modalChangePassword=false" type="button" class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal">Отмена
+          </button>
+          <button type="submit"
+                  [disabled]="passChangeFormGroup.invalid || passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value || passChangeFormGroup.controls.newPassword.value === passChangeFormGroup.controls.oldPassword.value"
+                  class="btn btn-success">Сохранить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<p-dialog class="right-full-p-modal" header="Подробная информация" [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [draggable]="false" [dismissableMask]="true" [modal]="true" [(visible)]="additionalInformationModalShow" [position]="'right'" [style]="{ width: '40%' }">
+  <div class="p-4 pt-2 border-top">
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Фамилия</label>
+      <div class="text-dark">{{ employee?.surname || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Имя</label>
+      <div class="text-dark">{{ employee?.name || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Отчество</label>
+      <div class="text-dark">{{ employee?.lastname || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Телефон</label>
+      <div class="text-dark">{{ employee?.phoneNumber || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Должность</label>
+      <div class="text-dark">{{ employee?.position || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Процент</label>
+      <div class="text-dark">{{ employee?.interestRate || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Документ</label>
+      <div class="text-dark">{{ employee?.docNo || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">ИНН</label>
+      <div class="text-dark">{{ employee?.taxId || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Статус</label>
+      <div class="text-dark">
+        <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.enabled ? 'Активен' : 'Неактивен' }}</span>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Доступность</label>
+      <div class="text-dark">
+        <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.available ? 'Доступен' : 'Недоступен' }}</span>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Будет доступен</label>
+      <div class="text-dark">{{ employee?.willBeAvailable | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">ИНН</label>
+      <div class="text-dark">{{ employee?.taxId || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Адрес</label>
+      <div class="text-dark">{{ employee?.address || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Пол</label>
+      <div class="text-dark">{{ employee?.gender == 'M' ? 'Мужской' : 'Женский' || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Создан</label>
+      <div class="text-dark">{{ employee?.dateCreated | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Описание</label>
+      <div class="text-dark">{{ employee?.details || '—' }}</div>
+    </div>
+  </div>
+</p-dialog>
