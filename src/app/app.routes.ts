@@ -13,6 +13,7 @@ import {DashboardComponent} from './pages/admin/dashboard/dashboard.component';
 import {TotalIncomeComponent} from './pages/admin/total-income/total-income.component';
 import {UsersComponent} from './pages/admin/users/users.component';
 import {RoleGuard} from './services/guard/role.guard';
+import {ProfileComponent} from './pages/admin/profile/profile.component';
 
 export const routes: Routes = [
   {path: '', title: 'Главная', redirectTo: '/admin/records', /*component: HomeComponent,*/pathMatch: 'full'},
@@ -20,7 +21,7 @@ export const routes: Routes = [
     path: 'admin', loadComponent: () => import('./pages/admin/admin/admin.component').then(m => m.AdminComponent),
     canActivate: [authGuard],
     children: [
-      {path: '', redirectTo: '/admin/records', pathMatch: 'full', canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: '', redirectTo: '/admin/records', pathMatch: 'full'},
       {path: 'dashboard', title: 'Dashboard', component: DashboardComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
       {path: 'records', title: 'Записи', component: RecordsComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN','Employee']}},
       {path: 'records-history', title: 'История записей', component: RecordsHistoryComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN','Employee']}},
@@ -32,6 +33,7 @@ export const routes: Routes = [
       {path: 'employee-salary', title: 'Зарплата сотрудников', component: EmployeeSalaryComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
       {path: 'total-income', title: 'Общий доход', component: TotalIncomeComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
       {path: 'users', title: 'Пользователи', component: UsersComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN']}},
+      {path: 'profile', title: 'Профиль', component: ProfileComponent, canActivate: [authGuard, RoleGuard], data: {roles: ['ADMIN','Employee']}},
     ]
   },
   {

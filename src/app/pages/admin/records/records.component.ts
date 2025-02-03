@@ -6,6 +6,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CalendarComponent} from '../../../components/calendar/calendar.component';
 import {fadeAnimation} from '../../../animations/fade.animation';
 import {RecordsTableComponent} from './records-table/records-table.component';
+import {Ripple} from 'primeng/ripple';
 
 @Component({
   selector: 'app-records',
@@ -17,6 +18,7 @@ import {RecordsTableComponent} from './records-table/records-table.component';
     DropdownModule,
     CalendarComponent,
     RecordsTableComponent,
+    Ripple,
   ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css',

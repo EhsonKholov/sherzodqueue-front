@@ -11,7 +11,7 @@ export class DropdownDirective implements OnChanges {
   constructor(private _renderer: Renderer2, private _elem: ElementRef) {}
 
   ngOnChanges() {
-    const elem = this._elem.nativeElement.querySelector(".options");
+    const elem = this._elem.nativeElement.querySelector(".custom-dropdown-menu");
     if (this.open) {
       this._renderer.addClass(elem, "show");
     } else {

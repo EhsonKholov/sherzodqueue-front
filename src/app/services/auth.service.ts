@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   getEmployee() {
-    return localStorage.getItem('employee')
+    return JSON.parse(localStorage.getItem('employee') || '')
   }
 
   isLoggedIn(): boolean {

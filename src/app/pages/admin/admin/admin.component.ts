@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ToastComponent} from '../../../components/toast/toast.component';
 import {LoadingComponent} from '../../../components/layouts/loading/loading.component';
@@ -21,4 +21,9 @@ export class AdminComponent {
   bgImages = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','bg6.jpg','bg7.jpg']
   randomIdx = Math.floor(Math.random() * (this.bgImages.length - 1) + 1)
 
+  isActiveMenu = signal(true)
+
+  toggleMenu(event: any) {
+    this.isActiveMenu.set(event)
+  }
 }

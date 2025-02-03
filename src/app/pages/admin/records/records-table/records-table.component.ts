@@ -53,7 +53,11 @@ export class RecordsTableComponent implements OnInit {
     {code: 4, text: 'Отменен'},
   ]);
 
-  @Input() addRecordModalShow = signal(false)
+  addRecordModalShow = signal(false)
+
+  @Input() set addRecord(arg: boolean) {
+    this.addRecordFn(arg)
+  }
 
 
   filter = new FormGroup({
@@ -131,6 +135,7 @@ export class RecordsTableComponent implements OnInit {
 
   closeAddRecordModal(event: any) {
     this.addRecordModalShow.set(event)
+    this.record = null
   }
 
   editRecord(item: any) {
@@ -138,8 +143,8 @@ export class RecordsTableComponent implements OnInit {
     this.record = item
   }
 
-  addRecord() {
-    this.addRecordModalShow.set(true)
+  addRecordFn(arg: boolean) {
+    this.addRecordModalShow.set(arg)
     this.record = null
   }
 

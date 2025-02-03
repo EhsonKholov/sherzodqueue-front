@@ -1,4 +1,4 @@
-<div class="app-padding-left">
+<div>
   <div class="container-fluid px-3">
     <!--<div class="row g-4 mb-4">
 
@@ -96,7 +96,22 @@
       <div class="px-4 mb-4 d-flex justify-content-between align-items-center w-100">
         <div class="d-flex justify-content-between w-100">
           <h3>Список записей</h3>
-          <div class="btn-group btn-group-custom" role="group">
+          <div class="button-toggle">
+            <div class="tabs">
+              <input type="radio" id="radio-1" name="tabs" (click)="changeTab(TabActiveEnum.Table)" [checked]="tabActive() == TabActiveEnum.Table"/>
+              <label class="tab" for="radio-1">
+                <i class="ri-list-check"></i>
+                <span class="ms-2">Таблица</span>
+              </label>
+              <input type="radio" id="radio-2" name="tabs" (click)="changeTab(TabActiveEnum.Calendar)" [checked]="tabActive() == TabActiveEnum.Calendar"/>
+              <label class="tab" for="radio-2">
+                <i class="ri-calendar-todo-line"></i>
+                <span class="ms-2">Календарь</span>
+              </label>
+              <span class="glider"></span>
+            </div>
+          </div>
+          <!--<div class="btn-group btn-group-custom" role="group">
             <input type="radio" class="btn-check" (click)="changeTab(TabActiveEnum.Table)"
                    name="tableTab" id="tableTab" autocomplete="off" [checked]="tabActive() == TabActiveEnum.Table">
             <label class="btn btn-sm btn-outline-secondary d-flex align-items-center" for="tableTab">
@@ -110,7 +125,7 @@
               <i class="ri-calendar-todo-line"></i>
               <span class="ms-2">Календарь</span>
             </label>
-          </div>
+          </div>-->
 
           <div>
             <button type="button" class="btn btn-success" (click)="addRecord.set(true)">
@@ -123,10 +138,10 @@
 
       @switch (tabActive()) {
         @case (TabActiveEnum.Table) {
-          <app-records-table [addRecordModalShow]="addRecord"></app-records-table>
+          <app-records-table [addRecord]="addRecord()"></app-records-table>
         }
         @case (TabActiveEnum.Calendar) {
-          <app-calendar [isAddEditRecord]="addRecord"></app-calendar>
+          <app-calendar [addRecord]="addRecord()"></app-calendar>
         }
       }
 

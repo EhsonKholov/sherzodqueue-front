@@ -1,7 +1,7 @@
 <section>
-  <app-header/>
+  <app-header (toggleMenuEmit)="toggleMenu($event)"/>
 
-  <div class="pt-2">
+  <div class="pt-2" [class.app-padding-left]="isActiveMenu()">
     <router-outlet/>
   </div>
 

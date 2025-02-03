@@ -1,4 +1,4 @@
-<aside class="essp-aside pt-1">
+<aside class="essp-aside pt-1" [class.essp-aside-hide]="!isActiveMenuBar()">
 
   <div class="app-brand">
     <a href="/" class="app-brand-link">
@@ -102,30 +102,44 @@
       </a>
     </li>
   </ul>
-
-  <ul class="essp-main-menu p-1 m-0 text-center position-absolute bottom-0" style="background: #2f324f">
-    <li class="px-2 py-2 rounded mb-1 d-flex justify-content-center">
-      <a pRipple (click)="logout()" class="text-decoration-underline">
-        <span>Выход</span>
-      </a>
-    </li>
-  </ul>
 </aside>
 
-<!--<div class="pt-3 app-padding-left">
-  <div class="container-fluid px-3 mb-4">
-    <div class="rounded-4 bg-white p-4 d-flex justify-content-between align-items-center app-shadow">
-      <div><input type="text" class="form-control border-0 app-background" placeholder="Поиск"></div>
-      <div class="essp-table-ico">
-        <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" alt="" height="32">
+<div [class.app-padding-left]="isActiveMenuBar()">
+  <div>
+    <div class="px-3 mb-4 bg-white p-2 d-flex justify-content-between align-items-center app-shadow">
+      <!--<div><input type="text" class="form-control border-0 app-background" placeholder="Поиск"></div>-->
+      <div class="menu-btn px-1" (click)="toggleMenuFn()">
+        <span>
+          <i class="ri-menu-line fs-3"></i>
+        </span>
+      </div>
+      <div dropdown [open]="isMenuProfile()" (clickOutside)="isMenuProfile.set(false)" (click)="toggleMenuProfile()"
+           class="essp-table-ico cursor-pointer position-relative">
+        <div class="border bg-light me-2 rounded-5 d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
+          <span class="fw-bold">{{ getFirstLatterEmployeeName() }}</span>
+        </div>
         <div>
-          <span>Даврон Саидов</span>
+          <span>{{ employee?.name + ' ' + employee?.surname }}</span>
           <small>Администратор</small>
+        </div>
+
+        <div class="menu-panel custom-dropdown-menu d-none" [class.show]="isMenuProfile()">
+          <div class="menu-content">
+            <div pRipple class="menu-item" routerLink="/admin/profile">
+              <span><i class="ri-user-line"></i></span>
+              <span>Профиль</span>
+            </div>
+            <hr >
+            <div pRipple class="menu-item" (click)="logout()">
+              <span><i class="ri-logout-box-r-line"></i></span>
+              <span>Выход</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>-->
+</div>
 
 <!--
 <nav class="navbar navbar-expand-xl fixed-top shadow-sm" style="background-color: #ffffff; z-index: 1090;">

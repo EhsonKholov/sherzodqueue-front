@@ -44,7 +44,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   startDate = signal<Date | null>(null)
   endDate = signal<Date | null>(null)
 
-  @Input() isAddEditRecord = signal(false)
+  @Input() set addRecord(arg: boolean) {
+    this.addRecordFn(arg)
+  }
+
+  isAddEditRecord = signal(false)
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent | any;
 
@@ -239,6 +243,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     console.log('handleEvents')
 
     this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
+  }
+
+  addRecordFn(arg: any) {
+    this.isAddEditRecord.set(arg)
+    this.record.set(null)
   }
 
   getTextColorByStatus(statusCode: number) {

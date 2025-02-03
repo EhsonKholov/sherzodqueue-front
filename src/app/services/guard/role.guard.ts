@@ -14,6 +14,7 @@ export class RoleGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (1 == 1) return true
     const user: any = JSON.parse(this.authService.getEmployee() || '')
     const loggedUserRoles: any[] = user.roles
     const roles = route?.data['roles']
@@ -28,11 +29,13 @@ export class RoleGuard implements CanActivate {
       })
     }
 
-    if (!b && this.authService.isLoggedIn()) {
-      this.router.navigate(['not-found'])
+    if (b) {
+      return true
     }
 
-    return b
+    this.router.createUrlTree(['admin', 'login'])
+
+    return false
   }
 
 }

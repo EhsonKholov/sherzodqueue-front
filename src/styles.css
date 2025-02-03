@@ -4,6 +4,11 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -152,6 +157,10 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
+}
+
+.essp-aside-hide {
+  left: -280px;
 }
 
 .essp-main-menu {
@@ -449,13 +458,12 @@ p-multiselect.p-multiselect {
 }
 
 .p-multiSelect-customize .p-multiselect-label {
-  padding: 0.4rem !important;
+  padding: 0.2rem !important;
 }
 
 .p-multiSelect-customize .p-multiselect-label .p-multiselect-token {
-  padding-top: 0.1rem !important;
-  padding-bottom: 0.1rem !important;
   border-radius: 8px !important;
+  padding: 0.25rem 0.25rem !important;
 }
 
 .p-multiSelect-customize .p-multiselect-header .p-multiselect-filter-container input {
@@ -949,4 +957,136 @@ p-multiselect.p-multiselect {
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
 }
+
+.usr-btn:hover i {
+  color: #000 !important;
+}
+
+.menu-btn {
+  cursor: pointer;
+}
+
+.menu-btn:hover {
+  background-color: rgba(148, 163, 184, .12);
+}
+
+.menu-content {
+  position: absolute;
+  background-color: #ffffff;
+  padding: 0.25rem;
+  box-shadow: 0 1px 10px #cccccc;
+  top: 50px;
+  right: -0.8rem;
+  border-radius: 3px;
+  transform-origin: right top;
+  min-width: 200px;
+}
+
+.menu-content .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.menu-content .menu-item span:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  /*border: 1px solid #cccccc;
+  border-radius: 50%;*/
+}
+
+.menu-content .menu-item span:first-child i {
+  font-size: 1.2rem;
+}
+
+.menu-content .menu-item:hover {
+  background-color: rgba(0, 0, 0, .04)
+}
+
+.show {
+  display: block !important;
+}
+
+
+/*-----------Tab-------------*/
+
+:root {
+  --primary-color: #185ee0;
+  --secondary-color: #e6eef9;
+}
+
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: #fff;
+}
+.tabs * {
+  z-index: 2;
+}
+input[type="radio"] {
+  display: none;
+}
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 150px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  transition: 0.15s ease-in;
+}
+input[type="radio"]:checked + label {
+  color: var(--primary-color);
+}
+input[type="radio"]:checked + label > .notification {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+input[id="radio-1"]:checked ~ .glider {
+  transform: translateX(0);
+}
+input[id="radio-2"]:checked ~ .glider {
+  transform: translateX(100%);
+}
+input[id="radio-3"]:checked ~ .glider {
+  transform: translateX(200%);
+}
+.glider {
+  position: absolute;
+  display: flex;
+  height: 40px;
+  width: 150px;
+  background-color: var(--secondary-color);
+  z-index: 1;
+  border-radius: 99px;
+  transition: 0.25s ease-out;
+}
+@media (max-width: 700px) {
+  .tabs {
+    transform: scale(0.6);
+  }
+}
+
+
+/*-----------Tab-------------*/
 
