@@ -77,11 +77,11 @@ export class ProfileComponent implements OnInit {
     }
     this.profileService.changePassword(passChange)
       .subscribe({
-        next: (res: any) => {
+        next: () => {
           this.toastService.success('Пароль успешно изменён!')
           this.authService.logout()
         },
-        error: (err: any) => {
+        error: () => {
           this.toastService.error('Неизвестная ошибка!')
         }
       })

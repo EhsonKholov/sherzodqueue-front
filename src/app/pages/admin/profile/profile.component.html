@@ -12,8 +12,8 @@
             </span>
           </div>
           <div>
-            <div class="profile-header-fio">{{ employee?.surname }} {{ employee?.name }} {{ employee?.lastname }}</div>
-            <div class="profile-header-email">{{ employee?.email }}</div>
+            <div class="profile-header-fio">{{ employee.surname }} {{ employee.name }} {{ employee.lastname }}</div>
+            <div class="profile-header-email">{{ employee.email }}</div>
           </div>
         </div>
         <div class="profile-content">
@@ -42,7 +42,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                           <div>
                             <div class="fw-bold">Личные данные</div>
-                            <div style="font-size: 0.9rem;">{{ employee?.secondName }} {{ employee?.firstName }}</div>
+                            <div style="font-size: 0.9rem;">{{ employee.secondName }} {{ employee.firstName }}</div>
                           </div>
                           <div>
                             <div class="form-check form-switch">
@@ -156,7 +156,7 @@
               <div class="position-relative">
                 <input formControlName="newPassword" id="newPassword" type="{{passwordShow2 ? 'text' : 'password'}}"
                        class="form-control"
-                       [class.border-danger]="passChangeFormGroup?.controls?.newPassword?.touched && passChangeFormGroup.controls.newPassword.dirty && !isValidPassword(passChangeFormGroup.controls.newPassword.value)"
+                       [class.border-danger]="passChangeFormGroup.controls.newPassword.touched && passChangeFormGroup.controls.newPassword.dirty && !isValidPassword(passChangeFormGroup.controls.newPassword.value)"
                        required>
                 <span class="toggle-password text-black" (click)="passwordShow2=!passwordShow2">
                   @if (passwordShow2) {
@@ -177,11 +177,11 @@
                 </span>
               </div>
               <div class="invalid-feedback"
-                   [class.show]="passChangeFormGroup.controls?.newPassword?.touched && passChangeFormGroup.controls.newPassword.dirty && !isValidPassword(passChangeFormGroup.controls.newPassword.value)">
+                   [class.show]="passChangeFormGroup.controls.newPassword.touched && passChangeFormGroup.controls.newPassword.dirty && !isValidPassword(passChangeFormGroup.controls.newPassword.value)">
                 От 5 до 25 символов, цифры и латинские буквы
               </div>
               <div class="invalid-feedback"
-                   [class.show]="passChangeFormGroup.controls.newPassword.value === passChangeFormGroup.controls.oldPassword.value && passChangeFormGroup.controls?.newPassword?.touched && passChangeFormGroup.controls.newPassword.dirty">
+                   [class.show]="passChangeFormGroup.controls.newPassword.value === passChangeFormGroup.controls.oldPassword.value && passChangeFormGroup.controls.newPassword.touched && passChangeFormGroup.controls.newPassword.dirty">
                 Новый пароль не должен совпадать со старым паролем
               </div>
             </div>
@@ -191,7 +191,7 @@
               <div class="position-relative">
                 <input formControlName="confirmPassword" id="confirmPassword" type="{{passwordShow3 ? 'text' : 'password'}}"
                        class="form-control"
-                       [class.border-danger]="passChangeFormGroup.controls?.confirmPassword?.touched && passChangeFormGroup.controls.confirmPassword.dirty && passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value"
+                       [class.border-danger]="passChangeFormGroup.controls.confirmPassword.touched && passChangeFormGroup.controls.confirmPassword.dirty && passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value"
                        required>
                 <span class="toggle-password text-black" (click)="passwordShow3=!passwordShow3">
                   @if (passwordShow3) {
@@ -212,7 +212,7 @@
                 </span>
               </div>
               <div class="invalid-feedback"
-                   [class.show]="passChangeFormGroup.controls?.confirmPassword?.touched && passChangeFormGroup.controls.confirmPassword.dirty && passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value">
+                   [class.show]="passChangeFormGroup.controls.confirmPassword.touched && passChangeFormGroup.controls.confirmPassword.dirty && passChangeFormGroup.controls.confirmPassword.value!=passChangeFormGroup.controls.newPassword.value">
                 Пароли не совпадают
               </div>
             </div>
@@ -238,71 +238,71 @@
   <div class="p-4 pt-2 border-top">
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Фамилия</label>
-      <div class="text-dark">{{ employee?.surname || '—' }}</div>
+      <div class="text-dark">{{ employee.surname || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Имя</label>
-      <div class="text-dark">{{ employee?.name || '—' }}</div>
+      <div class="text-dark">{{ employee.name || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Отчество</label>
-      <div class="text-dark">{{ employee?.lastname || '—' }}</div>
+      <div class="text-dark">{{ employee.lastname || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Телефон</label>
-      <div class="text-dark">{{ employee?.phoneNumber || '—' }}</div>
+      <div class="text-dark">{{ employee.phoneNumber || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Должность</label>
-      <div class="text-dark">{{ employee?.position || '—' }}</div>
+      <div class="text-dark">{{ employee.position || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Процент</label>
-      <div class="text-dark">{{ employee?.interestRate || '—' }}</div>
+      <div class="text-dark">{{ employee.interestRate || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Документ</label>
-      <div class="text-dark">{{ employee?.docNo || '—' }}</div>
+      <div class="text-dark">{{ employee.docNo || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">ИНН</label>
-      <div class="text-dark">{{ employee?.taxId || '—' }}</div>
+      <div class="text-dark">{{ employee.taxId || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Статус</label>
       <div class="text-dark">
-        <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.enabled ? 'Активен' : 'Неактивен' }}</span>
+        <span class="{{ employee.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee.enabled ? 'Активен' : 'Неактивен' }}</span>
       </div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Доступность</label>
       <div class="text-dark">
-        <span class="{{ employee?.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee?.available ? 'Доступен' : 'Недоступен' }}</span>
+        <span class="{{ employee.available ? 'essp-status-active' : 'essp-status-inactive' }}">{{ employee.available ? 'Доступен' : 'Недоступен' }}</span>
       </div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Будет доступен</label>
-      <div class="text-dark">{{ employee?.willBeAvailable | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+      <div class="text-dark">{{ employee.willBeAvailable | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">ИНН</label>
-      <div class="text-dark">{{ employee?.taxId || '—' }}</div>
+      <div class="text-dark">{{ employee.taxId || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Адрес</label>
-      <div class="text-dark">{{ employee?.address || '—' }}</div>
+      <div class="text-dark">{{ employee.address || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Пол</label>
-      <div class="text-dark">{{ employee?.gender == 'M' ? 'Мужской' : 'Женский' || '—' }}</div>
+      <div class="text-dark">{{ employee.gender == 'M' ? 'Мужской' : 'Женский' || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Создан</label>
-      <div class="text-dark">{{ employee?.dateCreated | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+      <div class="text-dark">{{ employee.dateCreated | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
     </div>
     <div class="form-group mb-3">
       <label class="text-muted fw-light">Описание</label>
-      <div class="text-dark">{{ employee?.details || '—' }}</div>
+      <div class="text-dark">{{ employee.details || '—' }}</div>
     </div>
   </div>
 </p-dialog>

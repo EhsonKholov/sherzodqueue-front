@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {DialogModule} from 'primeng/dialog';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AddEditUserModalComponent} from '../../../components/modals/add-edit-user-modal/add-edit-user-modal.component';
 import {UserService} from '../../../services/users.service';
 import {Subject, takeUntil} from 'rxjs';
@@ -31,8 +31,6 @@ export class UsersComponent implements OnInit {
   total_pages: any = 0;
   user = signal<any>(null);
 
-  deleteModalShow = signal<boolean>(false);
-
 
   filter = new FormGroup({
     userName: new FormControl(),
@@ -40,16 +38,23 @@ export class UsersComponent implements OnInit {
     includeDependencies: new FormControl<any>(true),
   });
 
+  passResetFormGroup: any
+
+  passwordPattern = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&.+-]).+$/)
 
   constructor(
     private userService: UserService,
     private toastService: ToastService,
-    private rolesService: RolesService
+    private fb: FormBuilder,
   ) {
   }
 
 
   ngOnInit() {
+    this.passResetFormGroup = this.fb.group({
+      password: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(this.passwordPattern)]]
+    })
+
     this.getUsers()
   }
 
@@ -95,7 +100,29 @@ export class UsersComponent implements OnInit {
     this.user.set(null)
   }
 
-  resetPassword(item: any) {
-    
+  isResetPassModal = signal(false)
+  passwordShow = signal(false)
+
+  resetPasswordInit(item: any) {
+    this.user.set(item)
+    this.passResetFormGroup.reset()
+    this.isResetPassModal.set(true)
+  }
+
+  resetPassword() {
+    let body = {
+      userId: this.user()?.employee?.id,
+      newPassword: this.passResetFormGroup.controls.password.value
+    }
+
+    this.userService.userResetPassword(body)
+      .subscribe({
+        next: (res: any) => {
+          this.toastService.success('Пароль пользователя успешно изменен')
+        },
+        error: (err: any) => {
+          this.toastService.error('Не удалось изменить пароль пользователя')
+        }
+      })
   }
 }
