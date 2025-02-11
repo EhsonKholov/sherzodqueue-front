@@ -36,15 +36,15 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
         surname: new FormControl(null, [Validators.required]),
         lastname: new FormControl(null),
         phoneNumber: new FormControl(null, [Validators.required]),
-        address: new FormControl(null, [Validators.required]),
-        docNo: new FormControl(null, [Validators.required]),
-        taxId: new FormControl(null, [Validators.required]),
+        address: new FormControl(null),
+        docNo: new FormControl(null),
+        taxId: new FormControl(null),
         position: new FormControl(null, [Validators.required]),
         interestRate: new FormControl(0, [Validators.required]),
         enabled: new FormControl(true),
         available: new FormControl(true),
-        willBeAvailable: new FormControl(null, [Validators.required]),
-        details: new FormControl(null, [Validators.required]),
+        willBeAvailable: new FormControl(null),
+        details: new FormControl(null),
       })
     } else {
       this.addEmployeeFormGroup = new FormGroup({
@@ -53,15 +53,15 @@ export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
         surname: new FormControl(this.employee.surname, [Validators.required]),
         lastname: new FormControl(this.employee.lastname),
         phoneNumber: new FormControl(this.employee.phoneNumber, [Validators.required]),
-        address: new FormControl(this.employee.address, [Validators.required]),
-        docNo: new FormControl(this.employee.docNo, [Validators.required]),
-        taxId: new FormControl(this.employee.taxId, [Validators.required]),
+        address: new FormControl(this.employee.address),
+        docNo: new FormControl(this.employee.docNo),
+        taxId: new FormControl(this.employee.taxId),
         position: new FormControl(this.employee.position, [Validators.required]),
         interestRate: new FormControl(this.employee.interestRate, [Validators.required]),
         enabled: new FormControl(this.employee.enabled),
         available: new FormControl(this.employee.available),
-        willBeAvailable: new FormControl(this.employee.willBeAvailable, [Validators.required]),
-        details: new FormControl(this.employee.details, [Validators.required]),
+        willBeAvailable: new FormControl(this.employee.willBeAvailable),
+        details: new FormControl(this.employee.details),
       })
     }
   }

@@ -157,10 +157,16 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
+
+  transition: all 200ms linear;
 }
 
 .essp-aside-hide {
   left: -280px;
+}
+
+.app-content {
+  transition: all 200ms linear;
 }
 
 .essp-main-menu {
@@ -353,6 +359,13 @@ table {
 
 .app-padding-left {
   padding-left: 280px !important;
+  transition: padding-left 200ms linear;
+}
+
+.navbar-header {
+  padding-left: 0;
+
+  transition: padding-left 200ms linear;
 }
 
 .app-background {
@@ -968,6 +981,7 @@ p-multiselect.p-multiselect {
 
 .menu-btn:hover {
   background-color: rgba(148, 163, 184, .12);
+  color: #1a80f8;
 }
 
 .menu-content {

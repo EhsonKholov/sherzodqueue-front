@@ -30,10 +30,10 @@ export class HeaderComponent implements OnInit {
     this.employee = this.authService.getEmployee()
   }
 
-  getFirstLatterEmployeeName() {
+  getFirstAndLastLatterEmployeeName() {
     let employee: any = this.authService?.getEmployee() || null
 
-    return employee == null ? '?' : employee?.name?.substring(0, 1)
+    return employee == null ? '?' : employee?.name?.substring(0, 1) +''+ employee?.lastname?.substring(0, 1)
   }
 
   logout() {

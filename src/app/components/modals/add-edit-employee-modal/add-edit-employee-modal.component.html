@@ -27,19 +27,27 @@
             <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" required>
           </div>
           <div class="mb-3 col-6">
-            <label for="docNo" class="form-label required">№ документа</label>
-            <input type="text" class="form-control" id="docNo" formControlName="docNo" required>
+            <label for="position" class="form-label required">Должность</label>
+            <input type="text" class="form-control" id="position" formControlName="position" required>
           </div>
           <div class="mb-3 col-6">
-            <label for="taxId" class="form-label required">ИНН</label>
-            <input type="text" class="form-control" id="taxId" formControlName="taxId" required>
+            <label for="interestRate" class="form-label required">Процентная ставка</label>
+            <input type="number" class="form-control" id="interestRate" formControlName="interestRate" required>
           </div>
           <div class="mb-3 col-6">
-            <label for="address" class="form-label required"> Адрес</label>
-            <input type="text" class="form-control" id="address" formControlName="address" required>
+            <label for="docNo" class="form-label">№ документа</label>
+            <input type="text" class="form-control" id="docNo" formControlName="docNo">
           </div>
           <div class="mb-3 col-6">
-            <label for="enabled" class="form-label required">Активность клиента</label>
+            <label for="taxId" class="form-label">ИНН</label>
+            <input type="text" class="form-control" id="taxId" formControlName="taxId">
+          </div>
+          <div class="mb-3 col-6">
+            <label for="address" class="form-label"> Адрес</label>
+            <input type="text" class="form-control" id="address" formControlName="address">
+          </div>
+          <div class="mb-3 col-6">
+            <label for="enabled" class="form-label">Активность клиента</label>
             <div class="form-control">
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="enabled" formControlName="enabled">
@@ -47,24 +55,16 @@
               </div>
             </div>
           </div>
-          <div class="mb-3 col-6">
-            <label for="position" class="form-label required">Должность</label>
-            <input type="text" class="form-control" id="position" formControlName="position" required>
-          </div>
-          <div class="mb-3 col-6">
-            <label for="interestRate" class="form-label required">Процентная ставка</label>
-            <input type="text" class="form-control" id="interestRate" formControlName="interestRate" required>
-          </div>
           <!--<div class="mb-3 col-6">
             <label for="roomNumber" class="form-label required">Кабинет</label>
             <input type="text" class="form-control" id="roomNumber" formControlName="roomNumber">
           </div>-->
           <div class="mb-3 col-6">
-            <label for="willBeAvailable" class="form-label required">Будет доступен</label>
+            <label for="willBeAvailable" class="form-label">Будет доступен</label>
             <input type="datetime-local" class="form-control" id="willBeAvailable" formControlName="willBeAvailable">
           </div>
           <div class="mb-3 pt-2 col-6">
-            <label for="available" class="form-label required">Доступность</label>
+            <label for="available" class="form-label">Доступность</label>
             <div class="form-control">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="available" formControlName="available">
@@ -75,8 +75,8 @@
             </div>
           </div>
           <div class="mb-3 col-6">
-            <label for="details" class="form-label required">Подробнее</label>
-            <textarea type="text" cols="3" class="form-control" id="details" formControlName="details" required></textarea>
+            <label for="details" class="form-label">Подробнее</label>
+            <textarea type="text" cols="3" class="form-control" id="details" formControlName="details"></textarea>
           </div>
         </div>
         <div class="modal-footer p-4">
