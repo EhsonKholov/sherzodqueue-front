@@ -975,12 +975,37 @@ p-multiselect.p-multiselect {
   color: #000 !important;
 }
 
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid gray;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
 .menu-btn {
   cursor: pointer;
+  background: rgba(148, 163, 184, .12);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 200ms linear;
+}
+
+.menu-btn:active {
+  transform: scale(0.9);
 }
 
 .menu-btn:hover {
-  background-color: rgba(148, 163, 184, .12);
   color: #1a80f8;
 }
 

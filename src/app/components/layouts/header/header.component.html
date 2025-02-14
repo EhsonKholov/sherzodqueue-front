@@ -110,14 +110,12 @@
       <!--<div><input type="text" class="form-control border-0 app-background" placeholder="Поиск"></div>-->
       <div class="menu-btn px-1" (click)="toggleMenuFn()">
         <span>
-          <i class="ri-menu-line fs-4"></i>
+          <i class="ri-menu-line fs-5"></i>
         </span>
       </div>
       <div dropdown [open]="isMenuProfile()" (clickOutside)="isMenuProfile.set(false)" (click)="toggleMenuProfile()"
            class="essp-table-ico cursor-pointer position-relative">
-        <div class="border bg-light me-2 rounded-5 d-flex justify-content-center align-items-center" style="width: 36px; height: 36px;">
-          <span class="fw-bold">{{ getFirstAndLastLatterEmployeeName() }}</span>
-        </div>
+        <app-colored-circle [text]="getFirstAndLastLatterEmployeeName()" />
         <div>
           <span>{{ employee?.name + ' ' + employee?.surname }}</span>
           <small>Администратор</small>

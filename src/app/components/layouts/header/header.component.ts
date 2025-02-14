@@ -3,6 +3,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 import {Ripple} from 'primeng/ripple';
 import {AuthService} from '../../../services/auth.service';
 import {DropdownDirective} from '../../../directives/dropdown.directive';
+import {ColoredCircleComponent} from '../../colored-circle/colored-circle.component';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,8 @@ import {DropdownDirective} from '../../../directives/dropdown.directive';
     RouterLink,
     RouterLinkActive,
     Ripple,
-    DropdownDirective
+    DropdownDirective,
+    ColoredCircleComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
