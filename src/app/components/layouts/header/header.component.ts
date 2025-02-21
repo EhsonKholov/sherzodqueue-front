@@ -29,6 +29,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    let menuBar = localStorage.getItem('menuBar')
+    if (menuBar != null && menuBar.trim() != '' && menuBar.trim() == '0') {
+      this.toggleMenuFn(false)
+    } else {
+      this.toggleMenuFn(true)
+    }
+
     this.employee = this.authService.getEmployee()
   }
 
@@ -42,9 +49,10 @@ export class HeaderComponent implements OnInit {
     this.authService.logout()
   }
 
-  toggleMenuFn() {
-    this.isActiveMenuBar.update(t => !t)
-    this.toggleMenuEmit.emit(this.isActiveMenuBar())
+  toggleMenuFn(b: boolean) {
+    this.isActiveMenuBar.update(_ => b)
+    this.toggleMenuEmit.emit(b)
+    localStorage.setItem('menuBar', b ? '1' : '0')
   }
 
   toggleMenuProfile() {

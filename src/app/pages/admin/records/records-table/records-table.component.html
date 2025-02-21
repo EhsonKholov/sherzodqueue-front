@@ -42,17 +42,17 @@
   </form>
 </div>
 
-<div class="overflow-auto" style="min-height: 400px;" >
+<div class="overflow-auto" style="min-height: 400px;">
   <table class="table app-table mb-4">
     <thead>
     <tr>
       <th scope="col" class="px-4 essp-th-spec-color">№</th>
       <th scope="col" class="px-4 essp-th-spec-color">Пациент</th>
-      <th scope="col" class="px-4 essp-th-spec-color">Телефона</th>
-      <th scope="col" class="px-4 essp-th-spec-color">Врач</th>
+      <th scope="col" class="px-4 essp-th-spec-color">Номер телефона</th>
+      <th scope="col" class="px-4 essp-th-spec-color">Лечащий врач</th>
       <!--<th scope="col" class="px-4 essp-th-spec-color">Кресло</th>-->
       <!--<th scope="col" class="px-4 essp-th-spec-color">Лечение</th>-->
-      <th scope="col" class="px-4 essp-th-spec-color">Начала записи</th>
+      <th scope="col" class="px-4 essp-th-spec-color">Время записи</th>
       <th scope="col" class="px-4 essp-th-spec-color">Статус</th>
       <!--<th scope="col" class="px-4 essp-th-spec-color">Конец</th>-->
       <th scope="col" class="px-4 essp-th-spec-color">Предоплата</th>
@@ -137,8 +137,8 @@
 
           <td class="px-4">
             <div class="essp-table-actions">
-                    <span class="cursor-pointer" title="Подробнее" (click)="detailRecord(item)"><i
-                      class="bi bi-eye-fill"></i></span>
+              <span class="cursor-pointer" title="Подробнее" (click)="detailRecord(item)"><i
+                class="bi bi-eye-fill"></i></span>
               <span class="cursor-pointer" (click)="editRecord(item)"><i
                 class="bi bi-pencil-square text-warning"></i></span>
               <!--<span class="cursor-pointer" (click)="deleteRecordInit(item)"><i
@@ -193,11 +193,11 @@
           </div>
         </div>
         <div class="form-group mb-3">
-          <label class="text-muted fw-light">Телефон</label>
+          <label class="text-muted fw-light">Номер телефона</label>
           <div class="text-dark">{{ record?.customer?.phoneNumber || '—' }}</div>
         </div>
         <div class="form-group mb-3">
-          <label class="text-muted fw-light">Врач</label>
+          <label class="text-muted fw-light">Лечащий врач</label>
           <div
             class="text-dark">{{ record?.customer?.surname }} {{ record?.customer?.name }} {{ record?.customer?.lastname }}
           </div>

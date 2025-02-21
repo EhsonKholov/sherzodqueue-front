@@ -308,6 +308,7 @@ li:has(>.essp-rout-active) {
 .essp-table-actions {
   display: flex;
   gap: 1em;
+  justify-content: flex-end;
   font-size: 1.2em;
 }
 

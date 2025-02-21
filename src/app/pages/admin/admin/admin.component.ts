@@ -3,6 +3,7 @@ import {RouterOutlet} from '@angular/router';
 import {ToastComponent} from '../../../components/toast/toast.component';
 import {LoadingComponent} from '../../../components/layouts/loading/loading.component';
 import {HeaderComponent} from '../../../components/layouts/header/header.component';
+import {FooterComponent} from '../../../components/layouts/footer/footer.component';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +12,8 @@ import {HeaderComponent} from '../../../components/layouts/header/header.compone
     RouterOutlet,
     ToastComponent,
     LoadingComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
