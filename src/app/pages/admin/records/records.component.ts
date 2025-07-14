@@ -1,12 +1,12 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarComponent} from '../../../components/calendar/calendar.component';
-import {fadeAnimation} from '../../../animations/fade.animation';
 import {RecordsTableComponent} from './records-table/records-table.component';
 import {Ripple} from 'primeng/ripple';
+import {RecordsListComponent} from './records-list/records-list.component';
+import {fadeAnimation} from '../../../animations/fade.animation';
 
 @Component({
   selector: 'app-records',
@@ -18,11 +18,13 @@ import {Ripple} from 'primeng/ripple';
     DropdownModule,
     CalendarComponent,
     RecordsTableComponent,
-    Ripple,
+    RecordsListComponent,
   ],
   templateUrl: './records.component.html',
   styleUrl: './records.component.css',
-  animations: [slideLeftMargin, fadeAnimation],
+  animations: [
+    fadeAnimation
+  ]
 })
 export class RecordsComponent implements OnInit {
 
@@ -30,7 +32,7 @@ export class RecordsComponent implements OnInit {
 
   addRecord = signal<boolean>(false);
 
-  tabActive = signal(TabActiveEnum.Table)
+  tabActive = signal(TabActiveEnum.List)
 
   ngOnInit(): void {
     let recTabActive = localStorage.getItem('recTabActive')
@@ -52,6 +54,7 @@ export class RecordsComponent implements OnInit {
 }
 
 export enum TabActiveEnum {
-  Table = 0,
-  Calendar = 1,
+  List = 0,
+  Table = 1,
+  Calendar = 2,
 }

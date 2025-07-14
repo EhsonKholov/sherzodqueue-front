@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://94.241.142.207:6099/",
+    "target": "http://5.129.222.58:6099",
     "secure": false,
     "logLevel": "debug"
   }

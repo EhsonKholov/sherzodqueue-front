@@ -2,17 +2,8 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
 
 export const fadeAnimation =
   trigger('fade', [
-    state(
-      'default',
-      style({
-        opacity: 1,
-      })
-    ),
-    state(
-      'disabled',
-      style({
-        opacity: 0,
-      })
-    ),
-    transition('* => *', animate('100ms linear')),
+    state('void', style({ opacity: 0 })),
+    state('*', style({ opacity: 1 })),
+    transition(':enter', animate('500ms ease-out')),
+    transition(':leave', animate('500ms ease-in')),
   ])

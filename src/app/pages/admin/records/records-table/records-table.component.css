@@ -1,0 +1,8 @@
+
+.tab {
+  transition: all 200ms linear;
+}
+
+.tab:hover {
+  background-color: #f0f0f0;
+}

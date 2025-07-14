@@ -1,0 +1,56 @@
+@if (addRecordModalShow()) {
+  <app-add-edit-record-modal
+    (close)="closeAddRecordModal($event)"
+    (getRecords)="getRecords()"
+    [record]="record()"
+  />
+}
+
+<div class="scheduler">
+  <!-- Левая колонка с временной шкалой -->
+  <div class="time-axis">
+    <div class="header-cell"></div> <!-- Пустая ячейка над временем -->
+    <div class="time-slots-container" [style.height.px]="totalRows * rowHeight">
+      @for (time of timeSlots; track $index) {
+        <div class="time-slot" [style.height.px]="rowHeight">
+          {{ time }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Контейнер для колонок сотрудников -->
+  <div class="content-area">
+    <!-- Ряд с именами сотрудников -->
+    <div class="headers-row">
+      @for (employee of employees(); track $index) {
+        <div class="header-cell employee-header">
+          {{ employee.name }}
+        </div>
+      }
+    </div>
+
+    <!-- Ряд с колонками для записей -->
+    <div class="columns-row">
+      <!-- Колонка для каждого сотрудника -->
+      @for (employee of employees(); track $index) {
+        <div class="employee-column">
+          <!-- Контейнер-полотно для записей -->
+          <div class="appointments-canvas" [style.height.px]="totalRows * rowHeight">
+            <!-- Каждая запись позиционируется абсолютно -->
+            @for (app of employee.records; track $index) {
+              <div class="appointment-block {{ app.color || 'green' }}"
+                   [style.top]="getAppointmentStyle(app).top"
+                   [style.height]="getAppointmentStyle(app).height">
+                <strong>{{ app.patientName }}</strong>
+                @if (app.notes) {
+                  <p>{{ app.notes }}</p>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {LoadingService} from '../../../services/loading.service';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {fadeAnimation} from '../../../animations/fade.animation';
 
 @Component({
   selector: 'app-loading',
@@ -9,7 +10,10 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     ProgressSpinnerModule
   ],
   templateUrl: './loading.component.html',
-  styleUrl: './loading.component.css'
+  styleUrl: './loading.component.css',
+  animations: [
+    fadeAnimation
+  ]
 })
 export class LoadingComponent {
 

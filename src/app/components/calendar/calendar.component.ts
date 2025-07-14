@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     let end = this.calendarComponent?.calendar?.currentData?.dateProfile?.activeRange?.end
 
     let endDate = new Date(end)
-    endDate.setDate(endDate.getDate() - 1)
+    endDate.setDate(endDate.getDate() + 1)
 
     let body = {
       fromDate: start,

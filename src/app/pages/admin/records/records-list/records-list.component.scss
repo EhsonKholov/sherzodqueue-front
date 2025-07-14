@@ -1,0 +1,131 @@
+// Переменные для удобства
+$time-axis-width: 80px;
+$border-color: #e0e0e0;
+$header-bg: #f7f9fc;
+
+// Основной контейнер
+.scheduler {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+// Левая колонка с временем
+.time-axis {
+  flex-shrink: 0;
+  width: $time-axis-width;
+  border-right: 1px solid $border-color;
+
+  .time-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid $border-color;
+    box-sizing: border-box;
+    &:first-child {
+      border-top: none;
+    }
+  }
+}
+
+// Правая область с контентом
+.content-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+// Ряд с заголовками (имена врачей)
+.headers-row {
+  display: flex;
+}
+
+.header-cell {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $header-bg;
+  font-weight: 600;
+  color: #333;
+}
+
+.employee-header {
+  flex: 1; // Равномерно делит ширину
+  border-left: 1px solid $border-color;
+  &:first-child {
+    border-left: none;
+  }
+}
+
+// Ряд с колонками для записей
+.columns-row {
+  display: flex;
+  flex-grow: 1;
+}
+
+.employee-column {
+  flex: 1;
+  border-left: 1px solid $border-color;
+  &:first-child {
+    border-left: none;
+  }
+}
+
+// "Полотно" для рисования записей
+.appointments-canvas {
+  position: relative;
+  // Рисуем фоновые линии сетки
+  background-image: linear-gradient(to bottom, $border-color 1px, transparent 1px);
+  background-size: 100% 40px; // Шаг линии равен высоте строки
+}
+
+// Блок с записью
+.appointment-block {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  color: white;
+
+  strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  // Вариации цветов
+  &.green {
+    background: linear-gradient(135deg, #43a047, #66bb6a);
+    border-left: 4px solid #388e3c;
+  }
+  &.pink {
+    background: linear-gradient(135deg, #d81b60, #ec407a);
+    border-left: 4px solid #c2185b;
+  }
+  &.purple {
+    background: linear-gradient(135deg, #8e24aa, #ab47bc);
+    border-left: 4px solid #7b1fa2;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+}

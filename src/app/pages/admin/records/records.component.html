@@ -98,13 +98,18 @@
           <h3>Список записей</h3>
           <div class="button-toggle">
             <div class="tabs">
-              <input type="radio" id="radio-1" name="tabs" (click)="changeTab(TabActiveEnum.Table)" [checked]="tabActive() == TabActiveEnum.Table"/>
-              <label class="tab" for="radio-1">
+              <input type="radio" id="radio-1" name="tabs" (click)="changeTab(TabActiveEnum.List)" [checked]="tabActive() == TabActiveEnum.List"/>
+              <label for="radio-1" class="tab {{ tabActive() == TabActiveEnum.List ? 'tab-active' : '' }}">
+                <i class="ri-file-list-line"></i>
+                <span class="ms-2">Список</span>
+              </label>
+              <input type="radio" id="radio-2" name="tabs" (click)="changeTab(TabActiveEnum.Table)" [checked]="tabActive() == TabActiveEnum.Table"/>
+              <label for="radio-2" class="tab {{ tabActive() == TabActiveEnum.Table ? 'tab-active' : '' }}">
                 <i class="ri-list-check"></i>
                 <span class="ms-2">Таблица</span>
               </label>
-              <input type="radio" id="radio-2" name="tabs" (click)="changeTab(TabActiveEnum.Calendar)" [checked]="tabActive() == TabActiveEnum.Calendar"/>
-              <label class="tab" for="radio-2">
+              <input type="radio" id="radio-3" name="tabs" (click)="changeTab(TabActiveEnum.Calendar)" [checked]="tabActive() == TabActiveEnum.Calendar"/>
+              <label for="radio-3" class="tab {{ tabActive() == TabActiveEnum.Calendar ? 'tab-active' : '' }}">
                 <i class="ri-calendar-todo-line"></i>
                 <span class="ms-2">Календарь</span>
               </label>
@@ -137,11 +142,14 @@
       </div>
 
       @switch (tabActive()) {
+        @case (TabActiveEnum.List) {
+          <app-records-list @fade [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-records-list>
+        }
         @case (TabActiveEnum.Table) {
-          <app-records-table [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-records-table>
+          <app-records-table @fade [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-records-table>
         }
         @case (TabActiveEnum.Calendar) {
-          <app-calendar [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-calendar>
+          <app-calendar @fade [addRecord]="addRecord()" (closeAddRecord)="closeAddRecord()"></app-calendar>
         }
       }
 

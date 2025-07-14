@@ -1,0 +1,8 @@
+.tab:not(.tab-active):hover {
+  background-color: #f0f0f0;
+}
+
+.tabs {
+  border: 1px solid #f0f0f0;
+  border-radius: 99px;
+}

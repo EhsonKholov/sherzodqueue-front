@@ -12,10 +12,10 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import moment from 'moment';
-import {DatePipe} from '@angular/common';
 import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dental-formula.component';
 import {ServiceCategoryService} from '../../../services/service-category.service';
 import {HttpHeaders} from '@angular/common/http';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -28,11 +28,13 @@ import {HttpHeaders} from '@angular/common/http';
     AutoCompleteModule,
     CalendarModule,
     DropdownModule,
-    DatePipe,
     ToothDentalFormulaComponent,
   ],
   templateUrl: './add-edit-record-modal.component.html',
-  styleUrl: './add-edit-record-modal.component.css'
+  styleUrl: './add-edit-record-modal.component.css',
+  animations: [
+    openCloseAnimation
+  ]
 })
 export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
