@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, output, Output, signal, WritableSignal} from '@angular/core';
+import {Component, Input, OnInit, output, signal, WritableSignal} from '@angular/core';
 import {RecordsService} from '../../../../services/records.service';
 import {ToastService} from '../../../../services/toast.service';
 import {UtilsService} from '../../../../services/utils.service';
@@ -14,6 +14,9 @@ import {AddEditRecordModalComponent} from '../../../../components/modals/add-edi
   ],
   templateUrl: './records-list.component.html',
   styleUrl: './records-list.component.scss',
+  animations: [
+
+  ]
 })
 export class RecordsListComponent implements OnInit {
 
@@ -42,7 +45,7 @@ export class RecordsListComponent implements OnInit {
 
   // Параметры сетки
   public startHour = 8;
-  public endHour = 18;
+  public endHour = 19;
   public timeIntervalMinutes = 30; // интервал в минутах
 
   // Высота одной строки в пикселях (важно, чтобы совпадало с CSS)
@@ -73,9 +76,11 @@ export class RecordsListComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
-          console.log(res?.items)
           this.records.set(res?.items)
           this.groupedRecords.set(this.groupDataByEmployee(res?.items))
+
+          console.log('groupedRecords', this.groupedRecords())
+
           this.page_num = res?.page
           this.page_size = res?.pageSize
           this.totalElements = res?.totalCount
@@ -107,14 +112,11 @@ export class RecordsListComponent implements OnInit {
       const employeeId = record.employee.id;
 
       if (!acc[employeeId]) {
-        acc[employeeId] = {
-          employee: record.employee,
-          //records: []
-        };
+        acc[employeeId] = record.employee
       }
 
-      acc[employeeId].employee.records = []
-      acc[employeeId].employee.records.push(record);
+      acc[employeeId].records = []
+      acc[employeeId].records.push(record);
 
       return acc;
     }, {} as { [key: number]: any });
@@ -142,15 +144,13 @@ export class RecordsListComponent implements OnInit {
       const hour = Math.floor(totalMinutes / 60);
       const minute = totalMinutes % 60;
       this.timeSlots.push(`${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`);
-
-      console.log('timeSlots', this.timeSlots)
     }
   }
 
   // Ключевая функция для позиционирования записи
-  getAppointmentStyle(appointment: any) {
-    const startTime = new Date(appointment.startTime);
-    const endTime = new Date(appointment.endTime);
+  getAppointmentStyle(record: any) {
+    const startTime = new Date(record.recordingTime);
+    const endTime = new Date(record.endTime || record.recordingTime);
 
     const startMinutes = (startTime.getHours() - this.startHour) * 60 + startTime.getMinutes();
     const durationMinutes = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
@@ -160,8 +160,34 @@ export class RecordsListComponent implements OnInit {
 
     return {
       top: `${top}px`,
-      height: `${height}px`
+      height: height <= 0 ? 'auto' : `${height}px`
     };
   }
 
+  getRecordByTime(time: string, employee: any) {
+    let idx = employee?.records?.findIndex((r: any) => {
+      // 1. Получаем время из полной даты
+      const dateObj = new Date(r?.recordingTime);
+      const minutesFromDate = dateObj.getHours() * 60 + dateObj.getMinutes(); // 0 * 60 + 0 = 0
+
+      // 2. Получаем время из строки HH:mm
+      const [hours, minutes] = time.split(':').map(Number);
+      const minutesTime = hours * 60 + minutes; // 8 * 60 + 0 = 480
+      const minutesTimeNext = hours * 60 + minutes + 30; // 8 * 60 + 0 = 480
+
+      // 3. Сравниваем числа
+      return minutesFromDate >= minutesTime && minutesFromDate <= minutesTimeNext
+    })
+
+    if (idx > -1) {
+      return employee?.records[idx]
+    }
+
+    return null;
+  }
+
+  editRecord(record: any) {
+    this.record.set(record)
+    this.addRecordModalShow.set(true)
+  }
 }

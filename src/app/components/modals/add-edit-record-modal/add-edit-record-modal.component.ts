@@ -139,8 +139,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         details: this.formBuilder.array([]),
       })
     } else {
-      let recordingTime = this.record?.recordingTime == null ? null : new Date(this.record?.recordingTime).toISOString().slice(0, -1)
-      let endTime = this.record?.endTime == null ? null : new Date(this.record?.endTime).toISOString().slice(0, -1)
+      let recordingTime = this.record?.recordingTime == null ? null : new Date(this.record?.recordingTime)//.toISOString().slice(0, -1)
+      let endTime = this.record?.endTime == null ? null : new Date(this.record?.endTime)//.toISOString().slice(0, -1)
 
       this.addRecordFormGroup = this.formBuilder.group({
         id: [this.record?.id, Validators.required],
@@ -277,14 +277,20 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   addEditRecord() {
     let record = this.addRecordFormGroup.value
+
+    console.log('record', record)
+
     record.employeeId = this.addRecordFormGroup.controls.employeeId.value.id
     record.chairId = this.addRecordFormGroup.controls.chairId?.value?.id
+    record.recordingTime = new Date(record.recordingTime || new Date())
 
     if (record?.details !== null) {
       record?.details.forEach((d: any) => {
         d.servicesId = d?.services.map((s: any) => s?.id)
       })
     }
+
+    console.log('record 2', record)
 
     if (!!this.record) {
       delete record.id
@@ -447,5 +453,9 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.addRecordFormGroup.controls?.totalPrice.setValue(totalPrice)
     this.addRecordFormGroup.controls?.techniqueAmount.setValue(techniqueAmount)
     this.addRecordFormGroup.controls?.employeeAmount.setValue(employeeAmount)
+  }
+
+  testFn() {
+    console.log(this.addRecordFormGroup)
   }
 }

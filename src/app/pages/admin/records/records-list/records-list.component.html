@@ -22,35 +22,68 @@
   <!-- Контейнер для колонок сотрудников -->
   <div class="content-area">
     <!-- Ряд с именами сотрудников -->
-    <div class="headers-row">
+    <!--<div class="headers-row">
       @for (employee of employees(); track $index) {
         <div class="header-cell employee-header">
           {{ employee.name }}
         </div>
       }
-    </div>
+    </div>-->
 
     <!-- Ряд с колонками для записей -->
     <div class="columns-row">
       <!-- Колонка для каждого сотрудника -->
-      @for (employee of employees(); track $index) {
+      @for (employee of groupedRecords(); track $index) {
         <div class="employee-column">
+          <div class="header-cell employee-header">
+            {{ employee.name }}
+          </div>
+
           <!-- Контейнер-полотно для записей -->
           <div class="appointments-canvas" [style.height.px]="totalRows * rowHeight">
             <!-- Каждая запись позиционируется абсолютно -->
-            @for (app of employee.records; track $index) {
-              <div class="appointment-block {{ app.color || 'green' }}"
-                   [style.top]="getAppointmentStyle(app).top"
-                   [style.height]="getAppointmentStyle(app).height">
-                <strong>{{ app.patientName }}</strong>
-                @if (app.notes) {
-                  <p>{{ app.notes }}</p>
-                }
-              </div>
+            @for (time of timeSlots; track $index) {
+              @if (getRecordByTime(time, employee) != null) {
+                <div (click)="editRecord(getRecordByTime(time, employee))"
+                     class="appointment-block green cursor-pointer text-center"
+                     [style.top]="getAppointmentStyle(getRecordByTime(time, employee)).top"
+                >
+                     <!--[style.height]="getAppointmentStyle(getRecordByTime(time, employee)).height"-->
+                  <strong>
+                    {{ getRecordByTime(time, employee).employee?.surname }}
+                    {{ getRecordByTime(time, employee).employee?.name }}
+                  </strong>
+                  <p class="appointment-times">
+                    {{ getRecordByTime(time, employee).recordingTime.split('T')[1] }} —
+                    {{ getRecordByTime(time, employee).endTime.split('T')[1] }}
+                  </p>
+                </div>
+              }
             }
           </div>
         </div>
       }
     </div>
+
+    <!--&lt;!&ndash; Ряд с колонками для записей &ndash;&gt;
+    <div class="columns-row">
+      &lt;!&ndash; Колонка для каждого сотрудника &ndash;&gt;
+      @for (employee of groupedRecords(); track $index) {
+        <div class="employee-column">
+          &lt;!&ndash; Контейнер-полотно для записей &ndash;&gt;
+          <div class="appointments-canvas" [style.height.px]="totalRows * rowHeight">
+            &lt;!&ndash; Каждая запись позиционируется абсолютно &ndash;&gt;
+            @for (record of employee?.records; track $index) {
+              <div class="appointment-block green" [style.top]="getAppointmentStyle(record).top" [style.height]="getAppointmentStyle(record).height">
+                <strong>{{ record.customer?.surname }} {{ record.customer?.name }}</strong>
+                &lt;!&ndash;@if (record.notes) {
+                  <p>{{ record.notes }}</p>
+                }&ndash;&gt;
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>-->
   </div>
 </div>
