@@ -16,6 +16,7 @@ import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dent
 import {ServiceCategoryService} from '../../../services/service-category.service';
 import {HttpHeaders} from '@angular/common/http';
 import {openCloseAnimation} from '../../../animations/openClose.animation';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -120,8 +121,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.getChairs()
 
     if (this.record == null) {
-      this.endDate = this.endDate == null ? null : new Date(this.endDate).toISOString().slice(0, -1)
-      this.startDate = this.startDate == null ? null : new Date(this.startDate).toISOString().slice(0, -1)
+      this.startDate = this.startDate == null ? null : moment(new Date(this.startDate)).format('YYYY-MM-DDTHH:mm')
+      this.endDate = this.endDate == null ? null : moment(new Date(this.endDate)).format('YYYY-MM-DDTHH:mm')
 
       this.addRecordFormGroup = this.formBuilder.group({
         customerSurname: [null, Validators.required],
@@ -139,8 +140,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         details: this.formBuilder.array([]),
       })
     } else {
-      let recordingTime = this.record?.recordingTime == null ? null : new Date(this.record?.recordingTime)//.toISOString().slice(0, -1)
-      let endTime = this.record?.endTime == null ? null : new Date(this.record?.endTime)//.toISOString().slice(0, -1)
+      let recordingTime = this.record?.recordingTime == null ? null : moment(new Date(this.record?.recordingTime)).format('YYYY-MM-DDTHH:mm')
+      let endTime = this.record?.endTime == null ? null : moment(new Date(this.record?.endTime)).format('YYYY-MM-DDTHH:mm')
 
       this.addRecordFormGroup = this.formBuilder.group({
         id: [this.record?.id, Validators.required],
@@ -167,8 +168,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       }
       //this.getAvailableTimes()
     }
-
-    console.log(this.addRecordFormGroup?.value)
 
     this.selectedServices = this.record?.services
     this.selectedEmployees = [this.record?.employee]

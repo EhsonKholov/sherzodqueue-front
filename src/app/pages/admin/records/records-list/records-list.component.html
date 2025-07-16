@@ -44,7 +44,7 @@
               @for (time of timeSlots; track $index) {
                 @if (getRecordByTime(time, employee) != null) {
                   <div (click)="editRecord(getRecordByTime(time, employee))"
-                       class="appointment-block green cursor-pointer text-center"
+                       class="appointment-block user-select-none green cursor-pointer text-center"
                        [style.top]="getAppointmentStyle(getRecordByTime(time, employee)).top"
                        [style.height]="getAppointmentStyle(getRecordByTime(time, employee)).height"
                   >
@@ -53,12 +53,19 @@
                       {{ getRecordByTime(time, employee).employee?.name }}
                     </strong>
                     <p class="appointment-times" [class.d-block]="manyBlocksTake(getRecordByTime(time, employee))">
-                      {{ getRecordByTime(time, employee).recordingTime.split('T')[1] }}
-                      @if (!!getRecordByTime(time, employee).endTime) { — }
-                      {{ getRecordByTime(time, employee).endTime?.split('T')[1] }}
+                      {{ moment(getRecordByTime(time, employee).recordingTime).format('HH:mm') }}
+                      @if (!!getRecordByTime(time, employee).endTime) {
+                        —
+                        {{ moment(getRecordByTime(time, employee).endTime).format('HH:mm') }}
+                      }
                     </p>
                   </div>
-                }
+                }<!-- @else {
+                  <div (click)="createRecord()" class="appointment-block-empty user-select-none cursor-pointer text-center"
+                       [style.top]="getAppointmentStyleByTime(time).top">
+                    <strong> </strong>
+                  </div>
+                }-->
               }
             </div>
           </div>

@@ -5,6 +5,7 @@ import {Subject, takeUntil} from 'rxjs';
 import {AddEditRecordModalComponent} from '../../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
 import {CalendarModule} from 'primeng/calendar';
 import {PrimeNGConfig} from 'primeng/api';
+import moment from 'moment';
 
 @Component({
   selector: 'app-records-list',
@@ -81,19 +82,13 @@ export class RecordsListComponent implements OnInit {
   }
 
   getRecords() {
-    let fromDate = new Date(this.selectedDate().toString())
-    fromDate.setHours(0, 0, 0, 0);
-    let toDate = this.selectedDate()
-    toDate.setHours(23, 59, 59, 999);
-
-    console.log('selectedDate', this.selectedDate())
-    console.log('fromDate', fromDate)
-    console.log('toDate', toDate)
+    let fromDate = moment(this.selectedDate()).startOf('day')
+    let toDate = moment(this.selectedDate()).endOf('day')
 
     let body = {
       includeDependencies: true,
-      fromDate: fromDate,
-      toDate: toDate
+      fromDate: fromDate.format(),
+      toDate: toDate.format()
     }
 
     this.recordService.getRecordsList(body)
@@ -122,9 +117,9 @@ export class RecordsListComponent implements OnInit {
 
       if (!acc[employeeId]) {
         acc[employeeId] = record.employee
+        acc[employeeId].records = []
       }
 
-      acc[employeeId].records = []
       acc[employeeId].records.push(record);
 
       return acc;
@@ -173,6 +168,17 @@ export class RecordsListComponent implements OnInit {
     };
   }
 
+  getAppointmentStyleByTime(time: string) {
+    const [startTime, endTime] = time.split(':')
+
+    const startMinutes = (Number.parseInt(startTime) - this.startHour) * 60 + Number.parseInt(endTime);
+    const top = (startMinutes / this.timeIntervalMinutes) * this.rowHeight;
+
+    return {
+      top: `${top}px`
+    };
+  }
+
   manyBlocksTake(record: any) {
     const startTime = new Date(record.recordingTime);
     const endTime = new Date(record.endTime || record.recordingTime);
@@ -205,6 +211,7 @@ export class RecordsListComponent implements OnInit {
   }
 
   editRecord(record: any) {
+    console.log('record', record)
     this.record.set(record)
     this.addRecordModalShow.set(true)
   }
@@ -215,4 +222,11 @@ export class RecordsListComponent implements OnInit {
   }
 
   protected readonly Array = Array;
+
+  createRecord() {
+    this.record.set(null)
+    this.addRecordModalShow.set(true)
+  }
+
+  protected readonly moment = moment;
 }

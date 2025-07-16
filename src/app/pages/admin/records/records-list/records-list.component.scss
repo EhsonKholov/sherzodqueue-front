@@ -144,3 +144,30 @@ $header-bg: #f7f9fc;
   }
 }
 
+.appointment-block-empty {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  color: white;
+
+  strong {
+    font-weight: 600;
+    display: block;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    display: none;
+    transition: all 0.2s ease;
+  }
+
+  &:hover p {
+    display: block;
+  }
+}
