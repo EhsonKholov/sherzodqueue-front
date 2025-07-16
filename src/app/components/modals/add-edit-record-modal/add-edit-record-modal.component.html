@@ -61,17 +61,16 @@
               </div>
               <div class="col-6 mb-3">
                 <label class="form-label required w-100">Начало приема</label>
-                <p-calendar [iconDisplay]="'input'" [inputStyleClass]="'form-control'" inputId="recordingTime" formControlName="recordingTime" [showTime]="true" [hourFormat]="'24'" />
+                <p-calendar [iconDisplay]="'input'" [inputStyleClass]="'form-control'" inputId="recordingTime" formControlName="recordingTime" [showTime]="true" [hourFormat]="'24'" dateFormat="dd.mm.yy" />
                 <!--<input type="datetime-local" class="form-control" id="recordingTime"
                        formControlName="recordingTime"
                        [value]="addRecordFormGroup?.controls?.recordingTime?.value"
                        required>-->
               </div>
               <div class="col-6 mb-3">
-                <label for="endTime" class="form-label w-100">Конец приема</label>
-                <input type="datetime-local" class="form-control" id="endTime"
-                       formControlName="endTime"
-                       [value]="addRecordFormGroup?.controls?.endTime?.value">
+                <label class="form-label w-100">Конец приема</label>
+                <p-calendar [iconDisplay]="'input'" [inputStyleClass]="'form-control'" inputId="recordingTime" formControlName="endTime" [showTime]="true" [hourFormat]="'24'" dateFormat="dd.mm.yy" />
+                <!--<input type="datetime-local" class="form-control" id="endTime" formControlName="endTime" [value]="addRecordFormGroup?.controls?.endTime?.value">-->
               </div>
               <!-- <div class="col-12 mb-3">
                  <label for="recordingTime" class="form-label">Время записи</label>
@@ -174,7 +173,6 @@
         </div>
         <div class="modal-footer p-4">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
-          <button type="button" class="btn btn-secondary" (click)="testFn()">Отмена</button>
           <button type="submit" class="btn btn-primary" [disabled]="addRecordFormGroup.invalid">Сохранить</button>
         </div>
       </form>

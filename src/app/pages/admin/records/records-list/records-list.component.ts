@@ -1,16 +1,17 @@
 import {Component, Input, OnInit, output, signal, WritableSignal} from '@angular/core';
 import {RecordsService} from '../../../../services/records.service';
 import {ToastService} from '../../../../services/toast.service';
-import {UtilsService} from '../../../../services/utils.service';
 import {Subject, takeUntil} from 'rxjs';
-import {EmployeeService} from '../../../../services/employee.service';
 import {AddEditRecordModalComponent} from '../../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
+import {CalendarModule} from 'primeng/calendar';
+import {PrimeNGConfig} from 'primeng/api';
 
 @Component({
   selector: 'app-records-list',
   standalone: true,
   imports: [
-    AddEditRecordModalComponent
+    AddEditRecordModalComponent,
+    CalendarModule
   ],
   templateUrl: './records-list.component.html',
   styleUrl: './records-list.component.scss',
@@ -37,6 +38,7 @@ export class RecordsListComponent implements OnInit {
   record = signal(null)
 
   closeAddRecord = output<any>()
+  selectedDate = signal(new Date())
 
 
 
@@ -56,20 +58,42 @@ export class RecordsListComponent implements OnInit {
   constructor(
     private recordService: RecordsService,
     private toastService: ToastService,
-    private utilsService: UtilsService,
-    private employeeService: EmployeeService
+    private primengConfig: PrimeNGConfig,
   ) {
   }
 
   ngOnInit() {
     this.getRecords()
-    this.getEmployees()
     this.generateTimeSlots()
+
+    this.primengConfig.setTranslation(
+      {
+        firstDayOfWeek: 1,
+        dayNames: ['Воскресенье', 'Понедельник', 'Вторники', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+        dayNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноя', 'Дек'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+          monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        //monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+        today: 'Сегодня',
+        clear: 'Очистить',
+      }
+    );
   }
 
   getRecords() {
+    let fromDate = new Date(this.selectedDate().toString())
+    fromDate.setHours(0, 0, 0, 0);
+    let toDate = this.selectedDate()
+    toDate.setHours(23, 59, 59, 999);
+
+    console.log('selectedDate', this.selectedDate())
+    console.log('fromDate', fromDate)
+    console.log('toDate', toDate)
+
     let body = {
-      includeDependencies: true
+      includeDependencies: true,
+      fromDate: fromDate,
+      toDate: toDate
     }
 
     this.recordService.getRecordsList(body)
@@ -88,21 +112,6 @@ export class RecordsListComponent implements OnInit {
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')
-        }
-      })
-  }
-
-  getEmployees() {
-    let body = {
-      enabled: true,
-      available: true,
-    }
-
-    this.employeeService.getEmployeesList(body)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (res: any) => {
-          this.employees.set(res?.items)
         }
       })
   }
@@ -164,16 +173,25 @@ export class RecordsListComponent implements OnInit {
     };
   }
 
+  manyBlocksTake(record: any) {
+    const startTime = new Date(record.recordingTime);
+    const endTime = new Date(record.endTime || record.recordingTime);
+
+    const durationMinutes = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
+
+    return durationMinutes > 20
+  }
+
   getRecordByTime(time: string, employee: any) {
     let idx = employee?.records?.findIndex((r: any) => {
       // 1. Получаем время из полной даты
       const dateObj = new Date(r?.recordingTime);
-      const minutesFromDate = dateObj.getHours() * 60 + dateObj.getMinutes(); // 0 * 60 + 0 = 0
+      const minutesFromDate = dateObj.getHours() * 60 + (dateObj.getMinutes()); // 0 * 60 + 0 = 0
 
       // 2. Получаем время из строки HH:mm
       const [hours, minutes] = time.split(':').map(Number);
       const minutesTime = hours * 60 + minutes; // 8 * 60 + 0 = 480
-      const minutesTimeNext = hours * 60 + minutes + 30; // 8 * 60 + 0 = 480
+      const minutesTimeNext = hours * 60 + minutes + 30; // 8 * 60 + 30 = 510
 
       // 3. Сравниваем числа
       return minutesFromDate >= minutesTime && minutesFromDate <= minutesTimeNext
@@ -190,4 +208,11 @@ export class RecordsListComponent implements OnInit {
     this.record.set(record)
     this.addRecordModalShow.set(true)
   }
+
+  selectDate(date: Date) {
+    this.selectedDate.set(date)
+    this.getRecords()
+  }
+
+  protected readonly Array = Array;
 }

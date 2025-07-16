@@ -3,6 +3,10 @@ $time-axis-width: 80px;
 $border-color: #e0e0e0;
 $header-bg: #f7f9fc;
 
+.scheduler-sector {
+  display: flex;
+}
+
 // Основной контейнер
 .scheduler {
   display: flex;
@@ -38,6 +42,7 @@ $header-bg: #f7f9fc;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow-x: auto;
 }
 
 // Ряд с заголовками (имена врачей)
@@ -72,8 +77,13 @@ $header-bg: #f7f9fc;
 .employee-column {
   flex: 1;
   border-left: 1px solid $border-color;
+  max-width: 300px;
+  min-width: 300px;
   &:first-child {
     border-left: none;
+  }
+  &:last-child {
+    border-right: 1px solid $border-color;
   }
 }
 
@@ -106,12 +116,10 @@ $header-bg: #f7f9fc;
     margin: 0;
     font-size: 12px;
     display: none;
-    opacity: 0;
     transition: all 0.2s ease;
   }
 
   &:hover p {
-    opacity: 1;
     display: block;
   }
 
