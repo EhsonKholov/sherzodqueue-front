@@ -289,8 +289,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
       })
     }
 
-    console.log('record 2', record)
-
     if (!!this.record) {
       delete record.id
       this.recordService.editRecord(this.record.id, record)

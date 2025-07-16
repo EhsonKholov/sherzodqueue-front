@@ -185,7 +185,7 @@ export class RecordsListComponent implements OnInit {
 
     const durationMinutes = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
 
-    return durationMinutes > 20
+    return durationMinutes > 40
   }
 
   getRecordByTime(time: string, employee: any) {
@@ -211,7 +211,6 @@ export class RecordsListComponent implements OnInit {
   }
 
   editRecord(record: any) {
-    console.log('record', record)
     this.record.set(record)
     this.addRecordModalShow.set(true)
   }
