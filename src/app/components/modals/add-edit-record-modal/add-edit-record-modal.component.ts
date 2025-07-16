@@ -326,6 +326,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   //----------------------Services----------------------------------
   onSelectService(items: any) {
+    console.log(items)
     if (items == null)
       this.selectedServices = []
     else
@@ -334,6 +335,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     let idx = this.getIndexFromAddRecordFormGroupByToothCode(this.activeToothCode())
     if (idx > -1) {
       this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.services.setValue(this.selectedServices)
+      console.log('selectedServices', this.selectedServices)
+      console.log('addRecordFormGroup', this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.services)
     }
 
     this.calculateAmounts()

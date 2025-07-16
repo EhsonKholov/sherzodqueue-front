@@ -164,7 +164,10 @@
                 </div>
                 <ul class="list-group list-group-flush border-bottom ms-3">
                   @for (service of item.services; track $index) {
-                    <li class="list-group-item">{{ service?.name }}</li>
+                    <li class="list-group-item d-flex flex-column">
+                      <span>{{ service?.name }}</span>
+                      <span class="small ps-1 pt-1" style="color: #4b5563ab;">Сумма: <strong>{{ service?.price }}</strong></span>
+                    </li>
                   }
                 </ul>
               }

@@ -315,7 +315,6 @@ export class ToothDentalFormulaComponent implements OnInit {
       this.selectedTooth().push(item.code)
     }
 
-    console.log('currentTooth 2222', this.currentTooth())
     this.onSelectedTooth.emit(item?.code)
   }
 
