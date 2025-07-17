@@ -16,7 +16,6 @@ import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dent
 import {ServiceCategoryService} from '../../../services/service-category.service';
 import {HttpHeaders} from '@angular/common/http';
 import {openCloseAnimation} from '../../../animations/openClose.animation';
-import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -142,6 +141,14 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     } else {
       let recordingTime = this.record?.recordingTime == null ? null : moment(new Date(this.record?.recordingTime)).format('YYYY-MM-DDTHH:mm')
       let endTime = this.record?.endTime == null ? null : moment(new Date(this.record?.endTime)).format('YYYY-MM-DDTHH:mm')
+      let details: any = []
+      this.record?.details?.forEach((d: any) => {
+        details.push(new FormGroup({
+          toothId: new FormControl(d?.toothId),
+          details: new FormControl(''),
+          services: new FormControl(d?.services)
+        }))
+      })
 
       this.addRecordFormGroup = this.formBuilder.group({
         id: [this.record?.id, Validators.required],
@@ -157,7 +164,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
         techniqueAmount: this.record?.techniqueAmount || 0,
         employeeAmount: this.record?.employeeAmount || 0,
         chairId: this.record?.chair,
-        details: this.formBuilder.array(this.record?.details || []),
+        details: this.formBuilder.array(details || []),
         status: this.record?.status,
       })
 
@@ -277,8 +284,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
   addEditRecord() {
     let record = this.addRecordFormGroup.value
 
-    console.log('record', record)
-
     record.employeeId = this.addRecordFormGroup.controls.employeeId.value.id
     record.chairId = this.addRecordFormGroup.controls.chairId?.value?.id
     //record.recordingTime = new Date(record.recordingTime || new Date())
@@ -323,7 +328,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   //----------------------Services----------------------------------
   onSelectService(items: any) {
-    console.log(items)
     if (items == null)
       this.selectedServices = []
     else
@@ -332,8 +336,6 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     let idx = this.getIndexFromAddRecordFormGroupByToothCode(this.activeToothCode())
     if (idx > -1) {
       this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.services.setValue(this.selectedServices)
-      console.log('selectedServices', this.selectedServices)
-      console.log('addRecordFormGroup', this.addRecordFormGroup.controls?.details?.controls[idx]?.controls?.services)
     }
 
     this.calculateAmounts()
@@ -391,7 +393,7 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
       this.selectedServices = []
     } else {
-      this.selectedServices = this.selectedServices = this.addRecordFormGroup.controls?.details?.controls[idx]?.value?.services
+      this.selectedServices = this.addRecordFormGroup.controls?.details?.controls[idx]?.value?.services
     }
   }
 
