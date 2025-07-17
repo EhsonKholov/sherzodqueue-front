@@ -4,7 +4,6 @@ import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarComponent} from '../../../components/calendar/calendar.component';
 import {RecordsTableComponent} from './records-table/records-table.component';
-import {Ripple} from 'primeng/ripple';
 import {RecordsListComponent} from './records-list/records-list.component';
 import {fadeAnimation} from '../../../animations/fade.animation';
 

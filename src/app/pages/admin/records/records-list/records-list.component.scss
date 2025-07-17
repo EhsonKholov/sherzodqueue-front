@@ -15,6 +15,7 @@ $header-bg: #f7f9fc;
   border-radius: 8px;
   overflow: hidden;
   background-color: #fff;
+  position: relative;
 }
 
 // Левая колонка с временем
@@ -137,6 +138,26 @@ $header-bg: #f7f9fc;
     border-left: 4px solid #7b1fa2;
   }
 
+  &.bg-label-secondary {
+    border-left: 4px solid #6d788d;
+  }
+
+  &.bg-label-info {
+    border-left: 4px solid #26c6f9;
+  }
+
+  &.bg-label-warning {
+    border-left: 4px solid #fdb54a;
+  }
+
+  &.essp-status-active {
+    border-left: 4px solid #75e374;
+  }
+
+  &.bg-label-danger {
+    border-left: 4px solid #ff4d49;
+  }
+
   &:hover {
     transform: scale(1.02);
     z-index: 10;
@@ -170,4 +191,38 @@ $header-bg: #f7f9fc;
   &:hover p {
     display: block;
   }
+}
+
+.employee-columns-container {
+  position: relative;
+  display: flex;
+}
+
+.current-time-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+
+  pointer-events: none;
+}
+
+.current-time-indicator .time-marker {
+  width: 10px;
+  height: 10px;
+  background-color: #ff3b30;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  transform: translateX(-50%);
+  z-index: 11;
+}
+
+.current-time-indicator::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ff3b30;
 }

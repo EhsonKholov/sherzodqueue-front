@@ -318,7 +318,7 @@ li:has(>.essp-rout-active) {
 
 .essp-status-active {
   background-color: #e8fadd;
-  color: #72e128;
+  color: #72e128 !important;
   border-radius: 50rem;
   padding: 0.2em 1em;
   font-weight: 500;

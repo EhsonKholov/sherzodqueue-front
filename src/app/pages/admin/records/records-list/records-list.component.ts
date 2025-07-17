@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, output, signal, WritableSignal} from '@angular/core';
+import {Component, computed, Input, OnInit, output, signal, WritableSignal} from '@angular/core';
 import {RecordsService} from '../../../../services/records.service';
 import {ToastService} from '../../../../services/toast.service';
-import {Subject, takeUntil} from 'rxjs';
+import {Subject, Subscription, takeUntil} from 'rxjs';
 import {AddEditRecordModalComponent} from '../../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
 import {CalendarModule} from 'primeng/calendar';
 import {PrimeNGConfig} from 'primeng/api';
@@ -40,8 +40,14 @@ export class RecordsListComponent implements OnInit {
 
   closeAddRecord = output<any>()
   selectedDate = signal(new Date())
+  currentTime = signal(new Date());
+  private timeSubscription?: Subscription;
 
-
+  isToday = computed(() => {
+    const today = new Date();
+    const displayed = this.selectedDate();
+    return today.toDateString() === displayed.toDateString();
+  });
 
   // Массив для отображения временной шкалы
   public timeSlots: string[] = [];
@@ -151,6 +157,12 @@ export class RecordsListComponent implements OnInit {
     }
   }
 
+  calculateTop(startTime: Date): number {
+    console.log(startTime)
+    const startMinutes = (startTime.getHours() - this.startHour) * 60 + startTime.getMinutes();
+    return (startMinutes / this.timeIntervalMinutes) * this.rowHeight + 50; //header-cell: 50px;
+  }
+
   // Ключевая функция для позиционирования записи
   getAppointmentStyle(record: any) {
     const startTime = new Date(record.recordingTime);
@@ -228,4 +240,21 @@ export class RecordsListComponent implements OnInit {
   }
 
   protected readonly moment = moment;
+
+  getClassNameByRecordStatus(record: any) {
+    switch (record?.status) {
+      case 0:
+        return 'bg-label-secondary'
+      case 1:
+        return 'bg-label-info'
+      case 2:
+        return 'bg-label-warning'
+      case 3:
+        return 'essp-status-active'
+      case 4:
+        return 'bg-label-danger'
+    }
+
+    return "";
+  }
 }
