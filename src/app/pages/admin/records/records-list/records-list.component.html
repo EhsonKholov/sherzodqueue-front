@@ -15,8 +15,8 @@
   </div>
 
   <div class="scheduler">
-    @if (isToday()) {
-      <div class="current-time-indicator" [style.top.px]="calculateTop(currentTime())">
+    @if (isToday() && isIndicatorLive(currentTime())) {
+      <div class="current-time-indicator" [style.top.px]="calculateTopForIndicator(currentTime())">
         <div class="time-marker"></div>
       </div>
     }

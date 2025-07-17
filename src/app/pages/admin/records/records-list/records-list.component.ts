@@ -157,8 +157,11 @@ export class RecordsListComponent implements OnInit {
     }
   }
 
-  calculateTop(startTime: Date): number {
-    console.log(startTime)
+  isIndicatorLive(startTime: Date) {
+    return startTime.getHours() >= this.startHour || startTime.getHours() <= this.endHour;
+  }
+
+  calculateTopForIndicator(startTime: Date): number {
     const startMinutes = (startTime.getHours() - this.startHour) * 60 + startTime.getMinutes();
     return (startMinutes / this.timeIntervalMinutes) * this.rowHeight + 50; //header-cell: 50px;
   }
@@ -177,17 +180,6 @@ export class RecordsListComponent implements OnInit {
     return {
       top: `${top}px`,
       height: height <= 0 ? 'auto' : `${height}px`
-    };
-  }
-
-  getAppointmentStyleByTime(time: string) {
-    const [startTime, endTime] = time.split(':')
-
-    const startMinutes = (Number.parseInt(startTime) - this.startHour) * 60 + Number.parseInt(endTime);
-    const top = (startMinutes / this.timeIntervalMinutes) * this.rowHeight;
-
-    return {
-      top: `${top}px`
     };
   }
 
