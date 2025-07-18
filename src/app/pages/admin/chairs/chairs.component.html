@@ -80,8 +80,8 @@
               </td>
               <td class="px-4">
                 <div class="essp-table-actions justify-content-end">
-                  <span class="cursor-pointer" (click)="editChair(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
-                  <span class="cursor-pointer" (click)="deleteChairInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
+                  <span class="btn-icon cursor-pointer" (click)="editChair(item)"><i class="bi bi-pencil-square text-warning" title="Изменить"></i></span>
+                  <span class="btn-icon cursor-pointer" (click)="deleteChairInit(item)"><i class="bi bi-trash text-danger" title="Удалить"></i></span>
                 </div>
               </td>
             </tr>
@@ -99,7 +99,7 @@
   <!-- Modal -->
   <div class="modal fade show d-block" style="background: rgba(0,0,0,.7)" id="deleteChairConfirm"
        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteChairConfirmLabel">
-    <div class="modal-dialog modal-dialog-centered">
+    <div @openClose class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="deleteChairConfirmLabel">Удаление кресло</h1>

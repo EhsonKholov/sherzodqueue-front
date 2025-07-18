@@ -4,12 +4,15 @@ import {CustomersService} from '../../../services/customers.service';
 import {DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
-import {AddCustomerModalComponent} from '../../../components/modals/add-customer-modal/add-customer-modal.component';
+import {AddCustomerModalComponent} from './add-customer-modal/add-customer-modal.component';
 import {ToastService} from '../../../services/toast.service';
 import {Subject, takeUntil} from 'rxjs';
 import {DialogModule} from 'primeng/dialog';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 import {FloatLabelModule} from 'primeng/floatlabel';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
+import {CustomerHistoryComponent} from './customer-history/customer-history.component';
+import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 
 @Component({
   selector: 'app-customers',
@@ -22,11 +25,15 @@ import {FloatLabelModule} from 'primeng/floatlabel';
     AddCustomerModalComponent,
     DialogModule,
     SecondsToDatePipe,
-    FloatLabelModule
+    FloatLabelModule,
+    CustomerHistoryComponent,
+    CustomerDetailComponent
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css',
-  animations: [slideLeftMargin],
+  animations: [
+    slideLeftMargin, openCloseAnimation
+  ],
 })
 export class CustomersComponent implements OnInit, OnDestroy {
 
@@ -39,11 +46,12 @@ export class CustomersComponent implements OnInit, OnDestroy {
   addCustomerModalShow: WritableSignal<boolean> = signal(false)
   deleteCustomerModalShow: WritableSignal<boolean> = signal(false)
   isCustEdit = false
-  customer: any = {}
+  customer = signal<any>(null)
+
+  customerHistoryShow: WritableSignal<boolean> = signal(false)
+  customerDetailShow = signal<boolean>(false);
 
   filter: any
-
-  additionalInformationModalShow = signal<boolean>(false);
 
   constructor(
     private customerService: CustomersService,
@@ -108,22 +116,22 @@ export class CustomersComponent implements OnInit, OnDestroy {
   editCustomer(item: any) {
     this.addCustomerModalShow.set(true)
     this.isCustEdit = true
-    this.customer = item
+    this.customer.set(item)
   }
 
   addCustomer() {
     this.addCustomerModalShow.set(true)
-    this.customer = null
+    this.customer.set(null)
     this.isCustEdit = false
   }
 
   deleteCustomerInit(item: any) {
-    this.customer = item
+    this.customer.set(item)
     this.deleteCustomerModalShow.set(true)
   }
 
   deleteCustomer() {
-    this.customerService.deleteCustomer(this.customer.id)
+    this.customerService.deleteCustomer(this.customer()?.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -137,7 +145,20 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   detailCustomer(item: any) {
-    this.customer = item
-    this.additionalInformationModalShow.set(true)
+    this.customer.set(item)
+    this.customerDetailShow.set(true)
+  }
+
+  customerDetailHide($event: any) {
+    this.customerDetailShow.set(false)
+  }
+
+  customerHistory(customer: any) {
+    this.customer.set(customer)
+    this.customerHistoryShow.set(true)
+  }
+
+  customerHistoryHide($event: any) {
+    this.customerHistoryShow.set(false)
   }
 }

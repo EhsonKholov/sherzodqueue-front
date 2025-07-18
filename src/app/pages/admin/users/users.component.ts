@@ -2,11 +2,12 @@ import {Component, OnInit, signal} from '@angular/core';
 import {DialogModule} from 'primeng/dialog';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AddEditUserModalComponent} from '../../../components/modals/add-edit-user-modal/add-edit-user-modal.component';
+import {AddEditUserModalComponent} from './add-edit-user-modal/add-edit-user-modal.component';
 import {UserService} from '../../../services/users.service';
 import {Subject, takeUntil} from 'rxjs';
 import {ToastService} from '../../../services/toast.service';
 import {RolesService} from '../../../services/roles.service';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +19,8 @@ import {RolesService} from '../../../services/roles.service';
     AddEditUserModalComponent
   ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrl: './users.component.css',
+  animations: [openCloseAnimation]
 })
 export class UsersComponent implements OnInit {
   private destroy$ = new Subject<void>()

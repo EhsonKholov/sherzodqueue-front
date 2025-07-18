@@ -2,7 +2,7 @@ import {Component, computed, Input, OnInit, output, signal, WritableSignal} from
 import {RecordsService} from '../../../../services/records.service';
 import {ToastService} from '../../../../services/toast.service';
 import {Subject, Subscription, takeUntil} from 'rxjs';
-import {AddEditRecordModalComponent} from '../../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
+import {AddEditRecordModalComponent} from '../add-edit-record-modal/add-edit-record-modal.component';
 import {CalendarModule} from 'primeng/calendar';
 import {PrimeNGConfig} from 'primeng/api';
 import moment from 'moment';

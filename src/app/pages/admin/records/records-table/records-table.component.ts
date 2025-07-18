@@ -13,7 +13,7 @@ import {DialogModule} from 'primeng/dialog';
 import {ToothDentalFormulaComponent} from '../../../../components/tooth-dental-formula/tooth-dental-formula.component';
 import {
   AddEditRecordModalComponent
-} from '../../../../components/modals/add-edit-record-modal/add-edit-record-modal.component';
+} from '../add-edit-record-modal/add-edit-record-modal.component';
 
 @Component({
   selector: 'app-records-table',

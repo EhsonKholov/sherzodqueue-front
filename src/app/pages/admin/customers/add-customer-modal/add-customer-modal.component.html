@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div @openClose class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header p-4">
         <h1 class="modal-title fs-5"
@@ -37,30 +37,15 @@
             <input type="text" class="form-control" id="docNumber" formControlName="docNumber">
           </div>
           <div class="mb-3 col-6">
-            <label for="address" class="form-label">Клиент</label>
-            <div class="form-control">
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="enabled" formControlName="enabled">
-                <label class="form-check-label" for="enabled">{{ addCustomerFormGroup.controls.enabled.value ? 'Активен' : 'Неактивен' }}</label>
-              </div>
-            </div>
-          </div>
-          <div class="mb-3 col-6">
             <label for="birhday" class="form-label required">Год рождения</label>
             <input type="date" class="form-control" id="birhday" formControlName="birhday" required>
           </div>
           <div class="mb-3 col-6">
             <label for="birhday" class="form-label required">Пол</label>
-            <div class="form-control">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="gender" [value]="'M'" formControlName="gender" required>
-                <label class="form-check-label" for="gender">Мужской</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="gender2" [value]="'F'" formControlName="gender" required>
-                <label class="form-check-label" for="gender2">Женский</label>
-              </div>
-            </div>
+            <select class="form-select" formControlName="gender">
+              <option value="M">Мужской</option>
+              <option value="F">Женский</option>
+            </select>
           </div>
           <div class="mb-3 col-6">
             <label for="address" class="form-label required">Адрес</label>

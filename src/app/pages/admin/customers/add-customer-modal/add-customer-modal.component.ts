@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {CustomersService} from '../../../services/customers.service';
-import {ToastService} from '../../../services/toast.service';
+import {CustomersService} from '../../../../services/customers.service';
+import {ToastService} from '../../../../services/toast.service';
 import {Subject, takeUntil} from 'rxjs';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-customer-modal',
@@ -12,7 +13,10 @@ import {Subject, takeUntil} from 'rxjs';
     ReactiveFormsModule
   ],
   templateUrl: './add-customer-modal.component.html',
-  styleUrl: './add-customer-modal.component.css'
+  styleUrl: './add-customer-modal.component.css',
+  animations: [
+    openCloseAnimation
+  ]
 })
 export class AddCustomerModalComponent implements OnInit, OnDestroy {
 
@@ -29,7 +33,6 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
     email: new FormControl(null),
     phoneNumber: new FormControl(null, [Validators.required]),
     docNumber: new FormControl(null),
-    enabled: new FormControl(true),
     birhday: new FormControl(null, [Validators.required]),
     gender: new FormControl(null, [Validators.required]),
     address: new FormControl(null, [Validators.required]),
@@ -47,24 +50,8 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.edit) {
-      this.addCustomerFormGroup.setValue({
-        surname: this.customer.surname,
-        name: this.customer.name,
-        lastname: this.customer.lastname,
-        phoneNumber: this.customer.phoneNumber,
-        enabled: this.customer.enabled,
-        address: this.customer.address,
-        city: this.customer.city,
-        street: this.customer.street,
-        homeNumber: this.customer.homeNumber,
-        birhday: this.customer.birhday,
-        gender: this.customer.gender,
-        details: this.customer.details,
-        docNumber: this.customer.docNumber,
-        email: this.customer.email,
-      })
-
-      console.log(this.addCustomerFormGroup)
+      console.log(this.customer)
+      this.addCustomerFormGroup.patchValue(this.customer)
     }
   }
 

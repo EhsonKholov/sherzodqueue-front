@@ -1,0 +1,155 @@
+<p-dialog class="right-full-p-modal" header="История болезни"
+          [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [dismissableMask]="true" [draggable]="false"
+          [modal]="true" [position]="'right'" [(visible)]="modalShow" [style]="{ width: '90%', zIndex: 2 }" (onHide)="closeModal()">
+  <div class="p-4 pt-2 border-top">
+
+    <h4 class="pt-1 pb-1">
+      <span class="border-bottom">{{ customer()?.surname }} {{ customer()?.name }} {{ customer()?.lastname }}</span>
+    </h4>
+
+    <div class="border rounded-1 pt-4 pb-3">
+      <form [formGroup]="filterFG" (submit)="getRecords()">
+        <div class="row m-0">
+          <div class="col-2">
+            <div>
+              <input placeholder="С" type="date" formControlName="fromDate" class="form-control">
+            </div>
+          </div>
+          <div class="col-2">
+            <div>
+              <input placeholder="По" type="date" formControlName="toDate" class="form-control">
+            </div>
+          </div>
+          <div class="col-2">
+            <div>
+              <select formControlName="employeeId" class="form-select">
+                <option [value]="null" [selected]="true">Врач</option>
+                @for (item of employees(); track $index) {
+                  <option [value]="item?.id">
+                    {{ item?.surname + ' ' + item?.name + ' ' + (item?.lastname || '') }}
+                  </option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="col-2">
+            <div>
+              <select id="status" formControlName="status" class="form-select">
+                <option [value]="null" [selected]="true">Статус</option>
+                @for (status of statuses(); track $index) {
+                  <option [value]="status.code" style="cursor: pointer">{{ status.text }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="col d-flex align-items-center">
+            <button type="submit" class="btn btn-light me-3">
+              <i class="ri-search-line me-2"></i>
+              <span>Поиск</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="mt-3">
+      <div class="overflow-auto" style="min-height: 400px;">
+        <table class="table app-table mb-4">
+          <thead>
+          <tr>
+            <th scope="col" class="px-4 essp-th-spec-color">№</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Номер телефона</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Лечащий врач</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Начало записи</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Конец записи</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Статус</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Предоплата</th>
+            <th scope="col" class="px-4 essp-th-spec-color">Общая сумма</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of records(); track $index) {
+              <tr class="align-middle cursor-pointer" (click)="toothDentalFormulaShowFn(item)">
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.id }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item?.customer?.phoneNumber }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item?.employee?.surname }} {{ item?.employee?.name }} {{ item?.employee?.lastname }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.recordingTime | secondsToDate }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.endTime | secondsToDate }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">
+                    <div class="text-dark">
+                      @switch (item?.status) {
+                        @case (0) {
+                          <span class="badge rounded-pill bg-label-secondary">Создан</span>  <!--Created-->
+                        }
+                        @case (1) {
+                          <span class="badge rounded-pill bg-label-info">Принят</span>  <!--In Line-->
+                        }
+                        @case (2) {
+                          <span class="badge rounded-pill bg-label-warning">В процессе</span>  <!--In Progress-->
+                        }
+                        @case (3) {
+                          <span class="essp-table-info essp-status-active">Выполнен</span>  <!--Completed-->
+                        }
+                        @case (4) {
+                          <span class="badge rounded-pill bg-label-danger">Отменен</span>  <!--Canceled-->
+                        }
+                      }
+                    </div>
+                  </span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.amountPaid | currency: '':'' }}</span>
+                </td>
+                <td class="px-4">
+                  <span class="essp-table-info">{{ item.totalPrice | currency: '':'' }}</span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+
+<p-dialog class="right-full-p-modal" header="Подробная информация"
+          [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [dismissableMask]="true" [draggable]="false"
+          [modal]="true" [position]="'right'" [(visible)]="toothDentalFormulaShow" [style]="{ width: '70%', zIndex: 2 }" (onHide)="toothDentalFormulaHide()">
+  <div class="p-4 pt-2 border-top h-100">
+    <div class="row m-0 h-100">
+      <div class="col-6 border-end">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          Зубная формула
+        </div>
+        <app-tooth-dental-formula [selectedTooth]="getSelectedToothFromRecordAsSignal(this.record())"/>
+      </div>
+
+      <div class="col-6">
+        <div class="text-center">Услуги</div>
+
+        <div>
+          @for (item of this.record()?.details; track $index) {
+            <div class="mb-2 mt-3">Зуб: {{ item.toothId }}</div>
+            <ul class="list-group list-group-flush border-bottom ms-3">
+              @for (service of item.services; track $index) {
+                <li class="list-group-item">{{ service?.name }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

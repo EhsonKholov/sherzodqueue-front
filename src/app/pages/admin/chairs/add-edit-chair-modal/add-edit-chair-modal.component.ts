@@ -6,8 +6,9 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {PaginatorModule} from 'primeng/paginator';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Subject, takeUntil} from 'rxjs';
-import {ToastService} from '../../../services/toast.service';
-import {ChairsService} from '../../../services/chairs.service';
+import {ToastService} from '../../../../services/toast.service';
+import {ChairsService} from '../../../../services/chairs.service';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-chair-modal',
@@ -20,7 +21,8 @@ import {ChairsService} from '../../../services/chairs.service';
     ReactiveFormsModule
   ],
   templateUrl: './add-edit-chair-modal.component.html',
-  styleUrl: './add-edit-chair-modal.component.css'
+  styleUrl: './add-edit-chair-modal.component.css',
+  animations: [openCloseAnimation]
 })
 export class AddEditChairModalComponent implements OnInit, OnDestroy {
 

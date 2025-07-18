@@ -1,21 +1,21 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ToastService} from '../../../services/toast.service';
-import {RecordsService} from '../../../services/records.service';
+import {ToastService} from '../../../../services/toast.service';
+import {RecordsService} from '../../../../services/records.service';
 import {Subject, takeUntil} from 'rxjs';
-import {EmployeeService} from '../../../services/employee.service';
-import {CustomersService} from '../../../services/customers.service';
-import {ChairsService} from '../../../services/chairs.service';
+import {EmployeeService} from '../../../../services/employee.service';
+import {CustomersService} from '../../../../services/customers.service';
+import {ChairsService} from '../../../../services/chairs.service';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import moment from 'moment';
-import {ToothDentalFormulaComponent} from '../../tooth-dental-formula/tooth-dental-formula.component';
-import {ServiceCategoryService} from '../../../services/service-category.service';
+import {ToothDentalFormulaComponent} from '../../../../components/tooth-dental-formula/tooth-dental-formula.component';
+import {ServiceCategoryService} from '../../../../services/service-category.service';
 import {HttpHeaders} from '@angular/common/http';
-import {openCloseAnimation} from '../../../animations/openClose.animation';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-record-modal',

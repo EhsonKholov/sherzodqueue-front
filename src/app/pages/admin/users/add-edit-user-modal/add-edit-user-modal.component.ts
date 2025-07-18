@@ -1,14 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal} from '@angular/core';
-import {UserService} from '../../../services/users.service';
+import {UserService} from '../../../../services/users.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {PaginatorModule} from 'primeng/paginator';
-import {RolesService} from '../../../services/roles.service';
+import {RolesService} from '../../../../services/roles.service';
 import {Subject, takeUntil} from 'rxjs';
-import {EmployeeService} from '../../../services/employee.service';
-import {ToastService} from '../../../services/toast.service';
+import {EmployeeService} from '../../../../services/employee.service';
+import {ToastService} from '../../../../services/toast.service';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-user-modal',
@@ -21,7 +22,8 @@ import {ToastService} from '../../../services/toast.service';
     ReactiveFormsModule,
   ],
   templateUrl: './add-edit-user-modal.component.html',
-  styleUrl: './add-edit-user-modal.component.css'
+  styleUrl: './add-edit-user-modal.component.css',
+  animations: [openCloseAnimation]
 })
 export class AddEditUserModalComponent implements OnInit {
 

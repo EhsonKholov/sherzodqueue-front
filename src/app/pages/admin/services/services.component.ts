@@ -8,11 +8,12 @@ import {ServicesService} from '../../../services/services.service';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {
   AddEditServiceModalComponent
-} from '../../../components/modals/add-edit-service-modal/add-edit-service-modal.component';
+} from './add-edit-service-modal/add-edit-service-modal.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {FloatLabelModule} from 'primeng/floatlabel';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {ServiceCategoryService} from '../../../services/service-category.service';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-services',
@@ -29,7 +30,7 @@ import {ServiceCategoryService} from '../../../services/service-category.service
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.css',
-  animations: [slideLeftMargin]
+  animations: [slideLeftMargin, openCloseAnimation]
 })
 export class ServicesComponent implements OnInit, OnDestroy {
 

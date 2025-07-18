@@ -17,10 +17,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import {CalendarModule} from 'primeng/calendar';
 import {Subject, takeUntil} from 'rxjs';
-import {RecordsService} from '../../services/records.service';
-import {ToastService} from '../../services/toast.service';
-import {AddEditRecordModalComponent} from '../modals/add-edit-record-modal/add-edit-record-modal.component';
-import {UtilsService} from '../../services/utils.service';
+import {RecordsService} from '../../../../services/records.service';
+import {ToastService} from '../../../../services/toast.service';
+import {AddEditRecordModalComponent} from '../add-edit-record-modal/add-edit-record-modal.component';
+import {UtilsService} from '../../../../services/utils.service';
 import {Validators} from '@angular/forms';
 
 @Component({

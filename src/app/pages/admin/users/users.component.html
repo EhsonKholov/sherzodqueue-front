@@ -84,10 +84,10 @@
                 </td>
                 <td class="px-4">
                   <div class="essp-table-actions justify-content-end">
-                    <span class="cursor-pointer" (click)="editUser(item)">
+                    <span class="btn-icon cursor-pointer" (click)="editUser(item)">
                       <i class="bi bi-pencil-square text-warning" title="Изменить"></i>
                     </span>
-                    <span class="cursor-pointer" (click)="resetPasswordInit(item)">
+                    <span class="btn-icon cursor-pointer" (click)="resetPasswordInit(item)">
                       <i class="ri-key-line" title="Сбросить пароль"></i>
                     </span>
                   </div>
@@ -103,24 +103,24 @@
   </div>
 </div>
 
-
-<div class="modal" style="background: rgba(0,0,0,.7)" [class.show]="isResetPassModal()">
-  <div class="modal-dialog modal-dialog-centered modal-md">
-    <div class="modal-content">
-      <form [formGroup]="passResetFormGroup" (submit)="resetPassword()">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">Изменить пароль</h1>
-          <button (click)="isResetPassModal.set(false)" type="button" class="btn-close" data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row ms-0 me-0 gy-3">
-            <div class="form-group">
-              <label class="form-label required mb-0" for="password">Новый пароль</label>
-              <div class="position-relative">
-                <input formControlName="password" id="password" type="{{passwordShow() ? 'text' : 'password'}}"
-                       class="form-control" required>
-                <span class="toggle-password text-black" (click)="passwordShow.set(!passwordShow())">
+@if (isResetPassModal()) {
+  <div class="modal fade show d-block" style="background: rgba(0,0,0,.7)">
+    <div @openClose class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-content">
+        <form [formGroup]="passResetFormGroup" (submit)="resetPassword()">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Изменить пароль</h1>
+            <button (click)="isResetPassModal.set(false)" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row ms-0 me-0 gy-3">
+              <div class="form-group">
+                <label class="form-label required mb-0" for="password">Новый пароль</label>
+                <div class="position-relative">
+                  <input formControlName="password" id="password" type="{{passwordShow() ? 'text' : 'password'}}"
+                         class="form-control" required>
+                  <span class="toggle-password text-black" (click)="passwordShow.set(!passwordShow())">
                   @if (passwordShow()) {
                     <span class="password-show-icon">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -137,27 +137,28 @@
                     </span>
                   }
                 </span>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group mt-4">
-              <div class="alert alert-light" role="alert">
-                <div class="fw-bold fs-6 mb-2">ВНИМАНИЕ!</div>
-                <div>Пароль должен содержать от 5 до 25 символов, включая цифры, латинские буквы и символы !&#x40;#&.+-</div>
+              <div class="form-group mt-4">
+                <div class="alert alert-light" role="alert">
+                  <div class="fw-bold fs-6 mb-2">ВНИМАНИЕ!</div>
+                  <div>Пароль должен содержать от 5 до 25 символов, включая цифры, латинские буквы и символы !&#x40;#&.+-</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button (click)="isResetPassModal.set(false)" type="button" class="btn btn-outline-secondary"
-                  data-bs-dismiss="modal">
-            Отмена
-          </button>
-          <button type="submit" [disabled]="passResetFormGroup.invalid" class="btn btn-success">
-            Сохранить
-          </button>
-        </div>
-      </form>
+          <div class="modal-footer">
+            <button (click)="isResetPassModal.set(false)" type="button" class="btn btn-outline-secondary"
+                    data-bs-dismiss="modal">
+              Отмена
+            </button>
+            <button type="submit" [disabled]="passResetFormGroup.invalid" class="btn btn-success">
+              Сохранить
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+}

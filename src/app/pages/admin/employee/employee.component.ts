@@ -1,15 +1,16 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastService} from '../../../services/toast.service';
 import {EmployeeService} from '../../../services/employee.service';
 import {DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {
   AddEditEmployeeModalComponent
-} from '../../../components/modals/add-edit-employee-modal/add-edit-employee-modal.component';
+} from './add-edit-employee-modal/add-edit-employee-modal.component';
 import {slideLeftMargin} from '../../../animations/slide-left-margin.animation';
 import {Subject, takeUntil} from 'rxjs';
 import {DialogModule} from 'primeng/dialog';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-employee',
@@ -24,7 +25,7 @@ import {DialogModule} from 'primeng/dialog';
   ],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css',
-  animations: [slideLeftMargin]
+  animations: [slideLeftMargin, openCloseAnimation]
 })
 export class EmployeeComponent implements OnInit, OnDestroy {
 

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {
   AddEditServiceModalComponent
-} from "../../../components/modals/add-edit-service-modal/add-edit-service-modal.component";
+} from "../services/add-edit-service-modal/add-edit-service-modal.component";
 import {CurrencyPipe, DatePipe} from "@angular/common";
 import {PaginationComponent} from "../../../components/pagination/pagination.component";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -11,10 +11,11 @@ import {ToastService} from '../../../services/toast.service';
 import {ServiceCategoryService} from '../../../services/service-category.service';
 import {
   AddEditServiceCategoryModalComponent
-} from '../../../components/modals/add-edit-service-category-modal/add-edit-service-category-modal.component';
+} from './add-edit-service-category-modal/add-edit-service-category-modal.component';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
 import {DropdownModule} from 'primeng/dropdown';
 import {FloatLabelModule} from 'primeng/floatlabel';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-service-category',
@@ -28,7 +29,8 @@ import {FloatLabelModule} from 'primeng/floatlabel';
     FloatLabelModule
   ],
   templateUrl: './service-category.component.html',
-  styleUrl: './service-category.component.css'
+  styleUrl: './service-category.component.css',
+  animations: [openCloseAnimation]
 })
 export class ServiceCategoryComponent implements OnInit, OnDestroy {
 

@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Subject, takeUntil} from 'rxjs';
-import {ToastService} from '../../../services/toast.service';
-import {ServicesService} from '../../../services/services.service';
-import {UtilsService} from '../../../services/utils.service';
-import {SelectComponent} from '../../select/select.component';
+import {ToastService} from '../../../../services/toast.service';
+import {ServicesService} from '../../../../services/services.service';
+import {UtilsService} from '../../../../services/utils.service';
+import {SelectComponent} from '../../../../components/select/select.component';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import {ServiceCategoryService} from '../../../services/service-category.service';
+import {ServiceCategoryService} from '../../../../services/service-category.service';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-service-modal',
@@ -18,7 +19,10 @@ import {ServiceCategoryService} from '../../../services/service-category.service
     NgMultiSelectDropDownModule
   ],
   templateUrl: './add-edit-service-modal.component.html',
-  styleUrl: './add-edit-service-modal.component.css'
+  styleUrl: './add-edit-service-modal.component.css',
+  animations: [
+    openCloseAnimation
+  ]
 })
 export class AddEditServiceModalComponent implements OnInit, OnDestroy {
 

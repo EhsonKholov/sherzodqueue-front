@@ -80,6 +80,8 @@ export class EmployeeSalaryComponent implements OnInit {
   getTotalAmountSalary() {
     if (this.employeesSalaries() == null || this.employeesSalaries().length == 0) return 0
 
+    console.log(this.employeesSalaries())
+
     return this.employeesSalaries().reduce(function(sum, item) {
       return sum + +item?.salary
     }, 0)

@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ToastService} from '../../../services/toast.service';
-import {EmployeeService} from '../../../services/employee.service';
+import {ToastService} from '../../../../services/toast.service';
+import {EmployeeService} from '../../../../services/employee.service';
 import {Subject, takeUntil} from 'rxjs';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-employee-modal',
@@ -12,7 +13,10 @@ import {Subject, takeUntil} from 'rxjs';
     ReactiveFormsModule
   ],
   templateUrl: './add-edit-employee-modal.component.html',
-  styleUrl: './add-edit-employee-modal.component.css'
+  styleUrl: './add-edit-employee-modal.component.css',
+  animations: [
+    openCloseAnimation
+  ]
 })
 export class AddEditEmployeeModalComponent implements OnInit, OnDestroy {
 

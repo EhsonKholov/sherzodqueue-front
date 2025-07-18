@@ -1,8 +1,4 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {
-  AddEditServiceModalComponent
-} from '../../../components/modals/add-edit-service-modal/add-edit-service-modal.component';
-import {CurrencyPipe, DatePipe} from '@angular/common';
 import {PaginationComponent} from '../../../components/pagination/pagination.component';
 import {PaginatorModule} from 'primeng/paginator';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -11,24 +7,23 @@ import {ToastService} from '../../../services/toast.service';
 import {ChairsService} from '../../../services/chairs.service';
 import {
   AddEditChairModalComponent
-} from '../../../components/modals/add-edit-chair-modal/add-edit-chair-modal.component';
+} from './add-edit-chair-modal/add-edit-chair-modal.component';
 import {SecondsToDatePipe} from '../../../pipes/seconds-to-date.pipe';
+import {openCloseAnimation} from '../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-chairs',
   standalone: true,
   imports: [
-    AddEditServiceModalComponent,
-    CurrencyPipe,
     PaginationComponent,
     PaginatorModule,
     ReactiveFormsModule,
-    DatePipe,
     AddEditChairModalComponent,
     SecondsToDatePipe
   ],
   templateUrl: './chairs.component.html',
-  styleUrl: './chairs.component.css'
+  styleUrl: './chairs.component.css',
+  animations: [openCloseAnimation]
 })
 export class ChairsComponent implements OnInit, OnDestroy {
 

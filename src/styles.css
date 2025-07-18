@@ -1130,3 +1130,14 @@ input[id="radio-3"]:checked ~ .glider {
 
 /*-----------Tab-------------*/
 
+.btn-icon {
+  transition: all 100ms linear;
+}
+
+.btn-icon:hover {
+  transform: scale(1.1);
+}
+
+.btn-icon:active {
+  transform: scale(1.0);
+}

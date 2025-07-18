@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div @openClose class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header p-4">
         <h1 class="modal-title fs-5" id="addCustomerModalLabel">{{!!service ? 'Изменить услугу' : 'Добавить новую услугу'}}</h1>

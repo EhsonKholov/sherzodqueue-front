@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Subject, takeUntil} from 'rxjs';
-import {ServicesService} from '../../../services/services.service';
-import {ToastService} from '../../../services/toast.service';
-import {ServiceCategoryService} from '../../../services/service-category.service';
+import {ServicesService} from '../../../../services/services.service';
+import {ToastService} from '../../../../services/toast.service';
+import {ServiceCategoryService} from '../../../../services/service-category.service';
+import {openCloseAnimation} from '../../../../animations/openClose.animation';
 
 @Component({
   selector: 'app-add-edit-service-category-modal',
@@ -12,7 +13,8 @@ import {ServiceCategoryService} from '../../../services/service-category.service
     ReactiveFormsModule
   ],
   templateUrl: './add-edit-service-category-modal.component.html',
-  styleUrl: './add-edit-service-category-modal.component.css'
+  styleUrl: './add-edit-service-category-modal.component.css',
+  animations: [openCloseAnimation]
 })
 export class AddEditServiceCategoryModalComponent implements OnInit, OnDestroy {
 

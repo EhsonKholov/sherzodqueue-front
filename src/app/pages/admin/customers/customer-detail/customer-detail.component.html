@@ -1,0 +1,62 @@
+<p-dialog class="right-full-p-modal" header="Подробная информация"
+          [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [dismissableMask]="true" [draggable]="false"
+          [modal]="true" [(visible)]="modalShow" (onHide)="closeModal()" [position]="'right'" [style]="{ width: '40%' }">
+  <div class="p-4 pt-2 border-top">
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Фамилия</label>
+      <div class="text-dark">{{ customer()?.surname || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Имя</label>
+      <div class="text-dark">{{ customer()?.name || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Отчество</label>
+      <div class="text-dark">{{ customer()?.lastname || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Телефон</label>
+      <div class="text-dark">{{ customer()?.phoneNumber || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Email</label>
+      <div class="text-dark">{{ customer()?.email || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Документ</label>
+      <div class="text-dark">{{ customer()?.docNumber || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Адрес</label>
+      <div class="text-dark">{{ customer()?.address || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Город</label>
+      <div class="text-dark">{{ customer()?.city || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Улица</label>
+      <div class="text-dark">{{ customer()?.street || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Квартира</label>
+      <div class="text-dark">{{ customer()?.homeNumber || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Год рождения</label>
+      <div class="text-dark">{{ customer()?.birhday || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Пол</label>
+      <div class="text-dark">{{ customer()?.gender == 'M' ? 'Мужской' : (customer()?.gender == 'F' ? 'Женский' : '—') }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Создан</label>
+      <div class="text-dark">{{ customer()?.dateCreated | date: 'yyyy.MM.dd HH:MM' || '—' }}</div>
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted fw-light">Описание</label>
+      <div class="text-dark">{{ customer()?.details || '—' }}</div>
+    </div>
+  </div>
+</p-dialog>
