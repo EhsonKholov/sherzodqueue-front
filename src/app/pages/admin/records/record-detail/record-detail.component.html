@@ -1,0 +1,99 @@
+<p-dialog class="right-full-p-modal" header="Подробная информация"
+          [transitionOptions]="'250ms cubic-bezier(0, 0, 0.2, 1)'" [draggable]="false" [dismissableMask]="true"
+          [modal]="true" [(visible)]="recordDetailModalShow" [position]="'right'" (onHide)="closeModal()" [style]="{ width: (print() ? '100%' : '70%') }">
+  <div class="p-4 pt-2 border-top">
+    <div class="row m-0">
+      <div class="col-4">
+        <div class="form-group mb-3">
+          <label class="text-muted fw-light">Пациент</label>
+          <div
+            class="text-dark">{{ record()?.customer?.surname }} {{ record()?.customer?.name }} {{ record()?.customer?.lastname }}
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="text-muted fw-light">Номер телефона</label>
+          <div class="text-dark">{{ record()?.customer?.phoneNumber || '—' }}</div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="text-muted fw-light">Лечащий врач</label>
+          <div
+            class="text-dark">{{ record()?.customer?.surname }} {{ record()?.customer?.name }} {{ record()?.customer?.lastname }}
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="text-muted fw-light">Кресло</label>
+          <div class="text-dark">{{ record()?.chair?.name || '—' }}</div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="text-muted fw-light">Время записи</label>
+          <div class="text-dark">{{ record()?.recordingTime | secondsToDate }}</div>
+        </div>
+        <!--<div class="form-group mb-3">
+          <label class="text-muted fw-light">Предоплата</label>
+          <div class="text-dark">{{ (record()?.amountPaid | currency: '':'') || 0 }}</div>
+        </div>-->
+        <!--<div class="form-group mb-3">
+          <label class="text-muted fw-light">Сумма техника</label>
+          <div class="text-dark">{{ (record()?.techniqueAmount | currency: '':'') || 0 }}</div>
+        </div>-->
+        <!--<div class="form-group mb-3">
+          <label class="text-muted fw-light">Сумма доктора</label>
+          <div class="text-dark">{{ (record()?.employeeAmount | currency: '':'') || 0 }}</div>
+        </div>-->
+        <div class="form-group mb-3">
+          <label class="text-muted fw-light">Общая сумма</label>
+          <div class="text-dark">{{ (record()?.totalPrice | currency: '':'') || 0 }}</div>
+        </div>
+        <!--<div class="form-group mb-3">
+          <label class="text-muted fw-light">Дата создания</label>
+          <div class="text-dark">{{ (record()?.dateCreated | secondsToDate) || '—' }}</div>
+        </div>-->
+        <!--<div class="form-group mb-3">
+          <label class="text-muted fw-light">Статус</label>
+          <div class="text-dark">
+            @switch (this.record()?.status) {
+              @case (0) {
+                <span class="badge rounded-pill bg-label-secondary">Создан</span>  &lt;!&ndash;Created&ndash;&gt;
+              }
+              @case (1) {
+                <span class="badge rounded-pill bg-label-info">Принят</span>  &lt;!&ndash;In Line&ndash;&gt;
+              }
+              @case (2) {
+                <span class="badge rounded-pill bg-label-warning">В процессе</span>  &lt;!&ndash;In Progress&ndash;&gt;
+              }
+              @case (3) {
+                <span class="essp-table-info essp-status-active">Выполнен</span>  &lt;!&ndash;Completed&ndash;&gt;
+              }
+              @case (4) {
+                <span class="badge rounded-pill bg-label-danger">Отменен</span>  &lt;!&ndash;Canceled&ndash;&gt;
+              }
+            }
+          </div>
+        </div>-->
+
+      </div>
+
+      <div class="col-4 border-start border-end">
+        <div class="text-center d-flex justify-content-center align-items-center">
+          Зубная формула
+        </div>
+        <app-tooth-dental-formula [selectedTooth]="getSelectedToothFromRecordAsSignal(this.record())"/>
+      </div>
+
+      <div class="col-3">
+        <div class="text-center">Услуги</div>
+
+        <div>
+          @for (item of this.record()?.details; track $index) {
+            <div class="mb-2 mt-3">Зуб: {{ item.toothId }}</div>
+            <ul class="list-group list-group-flush border-bottom ms-3">
+              @for (service of item.services; track $index) {
+                <li class="list-group-item">{{ service?.name }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

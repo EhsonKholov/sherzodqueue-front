@@ -10,10 +10,10 @@ import {RecordsService} from '../../../../services/records.service';
 import {ToastService} from '../../../../services/toast.service';
 import {UtilsService} from '../../../../services/utils.service';
 import {DialogModule} from 'primeng/dialog';
-import {ToothDentalFormulaComponent} from '../../../../components/tooth-dental-formula/tooth-dental-formula.component';
 import {
   AddEditRecordModalComponent
 } from '../add-edit-record-modal/add-edit-record-modal.component';
+import {RecordDetailComponent} from '../record-detail/record-detail.component';
 
 @Component({
   selector: 'app-records-table',
@@ -26,14 +26,13 @@ import {
     ReactiveFormsModule,
     SecondsToDatePipe,
     DialogModule,
-    ToothDentalFormulaComponent,
-    AddEditRecordModalComponent
+    AddEditRecordModalComponent,
+    RecordDetailComponent
   ],
   templateUrl: './records-table.component.html',
   styleUrl: './records-table.component.css'
 })
 export class RecordsTableComponent implements OnInit {
-
   private destroy$ = new Subject<void>()
   records: WritableSignal<any[]> = signal([])
   page_num: number = 1
@@ -41,9 +40,9 @@ export class RecordsTableComponent implements OnInit {
   total_pages: number = 0
   totalElements: number = 0
   deleteRecordModalShow: WritableSignal<boolean> = signal(false)
-  record: any
+  record = signal<any>(null)
+  isPrintRecord = signal<boolean>(false)
 
-  additionalInformationModalShow: WritableSignal<boolean> = signal(false);
   statuses = signal<any[]>([
     /*{code: null, text: 'Все'},*/
     {code: 0, text: 'Ожидается'},
@@ -54,6 +53,7 @@ export class RecordsTableComponent implements OnInit {
   ]);
 
   addRecordModalShow = signal(false)
+  recordDetailModalShow = signal(false)
 
   @Input() set addRecord(arg: boolean) {
     this.addRecordFn(arg)
@@ -115,7 +115,7 @@ export class RecordsTableComponent implements OnInit {
   }
 
   deleteRecord() {
-    this.recordService.deleteRecord(this.record.id)
+    this.recordService.deleteRecord(this.record().id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -137,21 +137,21 @@ export class RecordsTableComponent implements OnInit {
   closeAddRecordModal(event: any) {
     this.addRecordModalShow.set(event)
     this.closeAddRecord.emit()
-    this.record = null
+    this.record.set(null)
   }
 
   editRecord(item: any) {
     this.addRecordModalShow.set(true)
-    this.record = item
+    this.record.set(item)
   }
 
   addRecordFn(arg: boolean) {
     this.addRecordModalShow.set(arg)
-    this.record = null
+    this.record.set(null)
   }
 
   deleteRecordInit(item: any) {
-    this.record = item
+    this.record.set(item)
     this.deleteRecordModalShow.set(true)
   }
 
@@ -168,8 +168,9 @@ export class RecordsTableComponent implements OnInit {
 
   detailRecord(item: any) {
     console.log(item)
-    this.additionalInformationModalShow.set(true)
-    this.record = item
+    this.recordDetailModalShow.set(true)
+    this.record.set(item)
+    this.isPrintRecord.set(false)
   }
 
   changeRecordStatus(event: any, item: any) {
@@ -205,17 +206,6 @@ export class RecordsTableComponent implements OnInit {
       })
   }
 
-  getSelectedToothFromRecordAsSignal(record: any) {
-    let selectedTooth: WritableSignal<any[]> = signal([])
-    if (record?.details != null && record?.details.length > 0) {
-      for (let detail of this.record?.details) {
-        selectedTooth().push(detail?.toothId)
-      }
-    }
-
-    return selectedTooth;
-  }
-
   getClassBgByStatus(statusCode: any): any {
     switch (statusCode) {
       case 0:
@@ -246,5 +236,15 @@ export class RecordsTableComponent implements OnInit {
       default:
         return ''
     }
+  }
+
+  closeRecordDetailModal($event: any) {
+    this.recordDetailModalShow.set(false)
+  }
+
+  printRecord(item: any) {
+    this.record.set(item)
+    this.recordDetailModalShow.set(true)
+    this.isPrintRecord.set(true)
   }
 }

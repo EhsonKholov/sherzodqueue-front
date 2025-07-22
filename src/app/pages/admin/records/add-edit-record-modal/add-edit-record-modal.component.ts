@@ -16,6 +16,7 @@ import {ToothDentalFormulaComponent} from '../../../../components/tooth-dental-f
 import {ServiceCategoryService} from '../../../../services/service-category.service';
 import {HttpHeaders} from '@angular/common/http';
 import {openCloseAnimation} from '../../../../animations/openClose.animation';
+import {RecordDetailComponent} from '../record-detail/record-detail.component';
 
 @Component({
   selector: 'app-add-edit-record-modal',
@@ -29,6 +30,7 @@ import {openCloseAnimation} from '../../../../animations/openClose.animation';
     CalendarModule,
     DropdownModule,
     ToothDentalFormulaComponent,
+    RecordDetailComponent,
   ],
   templateUrl: './add-edit-record-modal.component.html',
   styleUrl: './add-edit-record-modal.component.css',
@@ -45,6 +47,8 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
 
   @Input() startDate!: any;
   @Input() endDate!: any;
+
+  print = signal(false)
 
   activeToothCode: WritableSignal<any> = signal(null)
   selectedTooth: WritableSignal<any[]> = signal([])
@@ -450,5 +454,13 @@ export class AddEditRecordModalComponent implements OnInit, OnDestroy {
     this.addRecordFormGroup.controls?.totalPrice.setValue(totalPrice)
     this.addRecordFormGroup.controls?.techniqueAmount.setValue(techniqueAmount)
     this.addRecordFormGroup.controls?.employeeAmount.setValue(employeeAmount)
+  }
+
+  printData() {
+    this.print.set(true)
+  }
+
+  closeRecordDetailModal($event: any) {
+    this.print.set(false)
   }
 }

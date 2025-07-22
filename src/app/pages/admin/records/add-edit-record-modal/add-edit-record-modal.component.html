@@ -1,3 +1,7 @@
+@if(print()) {
+  <app-record-detail [record]="record" (close)="closeRecordDetailModal($event)" [print]="print()" />
+}
+
 <!-- Modal -->
 <div class="modal fade show d-block" id="addCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="addCustomerModalLabel" style="background: rgba(0, 0, 0, .7);">
@@ -173,8 +177,15 @@
           </div>
         </div>
         <div class="modal-footer p-4">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Отмена</button>
-          <button type="submit" class="btn btn-primary" [disabled]="addRecordFormGroup.invalid">Сохранить</button>
+          <div class="d-flex justify-content-between w-100">
+            <div>
+              <button type="button" class="btn btn-outline-secondary" (click)="printData()">Печать</button>
+            </div>
+            <div>
+              <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">Отмена</button>
+              <button type="submit" class="btn btn-primary" [disabled]="addRecordFormGroup.invalid">Сохранить</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
