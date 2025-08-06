@@ -23,9 +23,21 @@
           [options]="statuses()"
           [checkmark]="true"
           [showClear]="true"
-          optionLabel="text"/>
+          optionLabel="text"
+          placeholder="Статус"
+        />
       </div>
-
+      <div class="col-sm-2">
+        <p-dropdown
+          styleClass="custom-dropdown w-100"
+          formControlName="employeeId"
+          [options]="employees()"
+          [checkmark]="true"
+          [showClear]="true"
+          optionLabel="name"
+          placeholder="Сотрудник"
+        />
+      </div>
 
       <div class="col d-flex align-items-center">
         <button type="submit" class="btn btn-light me-3">

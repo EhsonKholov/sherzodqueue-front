@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, WritableSignal} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
 import {DropdownModule} from 'primeng/dropdown';
 import {PaginationComponent} from '../../../../components/pagination/pagination.component';
@@ -14,6 +14,7 @@ import {
   AddEditRecordModalComponent
 } from '../add-edit-record-modal/add-edit-record-modal.component';
 import {RecordDetailComponent} from '../record-detail/record-detail.component';
+import {EmployeeService} from '../../../../services/employee.service';
 
 @Component({
   selector: 'app-records-table',
@@ -32,7 +33,7 @@ import {RecordDetailComponent} from '../record-detail/record-detail.component';
   templateUrl: './records-table.component.html',
   styleUrl: './records-table.component.css'
 })
-export class RecordsTableComponent implements OnInit {
+export class RecordsTableComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>()
   records: WritableSignal<any[]> = signal([])
   page_num: number = 1
@@ -42,6 +43,7 @@ export class RecordsTableComponent implements OnInit {
   deleteRecordModalShow: WritableSignal<boolean> = signal(false)
   record = signal<any>(null)
   isPrintRecord = signal<boolean>(false)
+  employees = signal([])
 
   statuses = signal<any[]>([
     /*{code: null, text: 'Все'},*/
@@ -71,11 +73,16 @@ export class RecordsTableComponent implements OnInit {
   @Output() closeAddRecord = new EventEmitter<any>();
 
 
-  constructor(private recordService: RecordsService, private toastService: ToastService, private utilsService: UtilsService) {
-  }
+  constructor(
+    private recordService: RecordsService,
+    private toastService: ToastService,
+    private utilsService: UtilsService,
+    private employeeService: EmployeeService,
+  ) {}
 
   ngOnInit(): void {
     this.getRecords()
+    this.getEmployees()
   }
 
   ngOnDestroy(): void {
@@ -84,6 +91,8 @@ export class RecordsTableComponent implements OnInit {
   }
 
   getRecords() {
+    console.log(this.filter.controls)
+
     let body = {
       "page": this.page_num,
       "pageSize": this.page_size,
@@ -110,6 +119,29 @@ export class RecordsTableComponent implements OnInit {
         }, error: (error: any) => {
           if (error.status != 401) return
           this.toastService.error('Ошибка получения данных!')
+        }
+      })
+  }
+
+  getEmployees() {
+    let body = {
+      enabled: true,
+    }
+    this.employeeService.getEmployeesList(body)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          //this.employees.set(res?.items)
+          if (res?.items != null && res?.items?.length > 0) {
+            this.employees.set(
+              res?.items?.map((emp: any) => {
+                return {
+                  ...emp,
+                  fio: emp?.first_name + ' ' + emp?.last_name
+                }
+              })
+            )
+          }
         }
       })
   }
