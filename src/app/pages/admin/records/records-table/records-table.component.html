@@ -21,10 +21,10 @@
           styleClass="custom-dropdown w-100"
           formControlName="status"
           [options]="statuses()"
-          [checkmark]="true"
           [showClear]="true"
           optionLabel="text"
           placeholder="Статус"
+          (onClear)="getRecords()"
         />
       </div>
       <div class="col-sm-2">
@@ -32,10 +32,12 @@
           styleClass="custom-dropdown w-100"
           formControlName="employeeId"
           [options]="employees()"
-          [checkmark]="true"
           [showClear]="true"
-          optionLabel="name"
+          [filter]="true"
+          filterBy="fio"
+          optionLabel="fio"
           placeholder="Сотрудник"
+          (onClear)="getRecords()"
         />
       </div>
 

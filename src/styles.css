@@ -641,6 +641,26 @@ p-multiselect.p-multiselect {
   padding: 0.5rem 0.75rem !important;
 }
 
+.custom-dropdown timesicon svg {
+  margin-top: -8px;
+  margin-right: -9px;
+}
+
+.custom-dropdown .p-dropdown-header {
+  padding: 5px !important;
+}
+
+.custom-dropdown .p-dropdown-header searchicon svg {
+  margin-top: -6px;
+  margin-right: -5px;
+  width: 13px;
+  height: 13px;
+}
+
+.custom-dropdown .p-dropdown-header input {
+  padding: 2px !important;
+  font-size: 14px;
+}
 
 /*---------info block--------*/
 .ib-info-block-l {

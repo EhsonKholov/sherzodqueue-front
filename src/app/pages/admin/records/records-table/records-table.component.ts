@@ -91,8 +91,6 @@ export class RecordsTableComponent implements OnInit, OnDestroy {
   }
 
   getRecords() {
-    console.log(this.filter.controls)
-
     let body = {
       "page": this.page_num,
       "pageSize": this.page_size,
@@ -100,7 +98,7 @@ export class RecordsTableComponent implements OnInit, OnDestroy {
         fromDate: this.filter.controls.fromDate.value,
         toDate: this.filter.controls.toDate.value,
         customerId: this.filter.controls.customerId.value,
-        employeeId: this.filter.controls.employeeId.value,
+        employeeId: this.filter.controls.employeeId.value?.id,
         chairId: this.filter.controls.chairId.value,
         status: this.filter.controls.status?.value?.code,
         includeDependencies: true
@@ -137,7 +135,7 @@ export class RecordsTableComponent implements OnInit, OnDestroy {
               res?.items?.map((emp: any) => {
                 return {
                   ...emp,
-                  fio: emp?.first_name + ' ' + emp?.last_name
+                  fio: emp?.name + ' ' + emp?.surname
                 }
               })
             )

@@ -158,7 +158,7 @@ export class RecordsListComponent implements OnInit {
   }
 
   isIndicatorLive(startTime: Date) {
-    return startTime.getHours() >= this.startHour || startTime.getHours() <= this.endHour;
+    return startTime.getHours() >= this.startHour || startTime.getHours() < this.endHour;
   }
 
   calculateTopForIndicator(startTime: Date): number {
