@@ -17,15 +17,7 @@
         <input type="datetime-local" class="form-control" placeholder="Дата конца" formControlName="toDate">
       </div>
       <div class="col-sm-2">
-        <p-dropdown
-          styleClass="custom-dropdown w-100"
-          formControlName="status"
-          [options]="statuses()"
-          [showClear]="true"
-          optionLabel="text"
-          placeholder="Статус"
-          (onClear)="getRecords()"
-        />
+        <input type="text" class="form-control" placeholder="ФИО пациента" formControlName="customerFIO">
       </div>
       <div class="col-sm-2">
         <p-dropdown
@@ -37,6 +29,17 @@
           filterBy="fio"
           optionLabel="fio"
           placeholder="Сотрудник"
+          (onClear)="getRecords()"
+        />
+      </div>
+      <div class="col-sm-2">
+        <p-dropdown
+          styleClass="custom-dropdown w-100"
+          formControlName="status"
+          [options]="statuses()"
+          [showClear]="true"
+          optionLabel="text"
+          placeholder="Статус"
           (onClear)="getRecords()"
         />
       </div>
